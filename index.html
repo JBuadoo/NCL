@@ -1,0 +1,3117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Creation Living — Structured Housing on Fixed Income</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --navy: #1B2B5E;
+      --navy-deep: #131F45;
+      --gold: #C9A84C;
+      --gold-light: #E4CE8C;
+      --cream: #FAF7F1;
+      --charcoal: #232B3D;
+      --sage: #7A9B7E;
+      --sage-light: #E8F0E6;
+      --line: #E4DDD0;
+      --white: #FFFFFF;
+      --shadow: 0 8px 30px rgba(19, 31, 69, 0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--charcoal);
+      background: var(--cream);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.15;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    section {
+      scroll-margin-top: 88px;
+    }
+
+    /* Skip to content for accessibility */
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      background: var(--navy);
+      color: white;
+      padding: 12px 20px;
+      z-index: 200;
+    }
+
+    .skip-link:focus {
+      left: 16px;
+      top: 16px;
+    }
+
+    /* ===== NAV ===== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250, 247, 241, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 32px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .brand-logo svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+
+    .brand-text strong {
+      font-family: 'Fraunces', serif;
+      font-size: 1.05rem;
+      color: var(--navy);
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .brand-text span {
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2px;
+      align-items: center;
+      position: relative;
+    }
+
+    .nav-links button {
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      transition: background 0.15s, color 0.15s;
+      position: relative;
+      z-index: 2;
+    }
+
+    .nav-links button:hover,
+    .nav-links button:focus-visible {
+      background: rgba(27, 43, 94, 0.07);
+      color: var(--navy);
+    }
+
+    .nav-links button.active {
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    .nav-links button.active::after {
+      display: none;
+      /* replaced by JS indicator on desktop */
+    }
+
+    .nav-indicator {
+      position: absolute;
+      bottom: 4px;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 10px;
+      transition: left 0.35s cubic-bezier(0.25, 1, 0.5, 1), width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+      pointer-events: none;
+      z-index: 1;
+      display: none;
+    }
+
+    @media(max-width:900px) {
+      .nav-links button.active::after {
+        content: "";
+        position: absolute;
+        bottom: auto;
+        left: 6px;
+        top: 16px;
+        bottom: 16px;
+        width: 4px;
+        height: auto;
+        right: auto;
+        background: var(--gold);
+        border-radius: 10px;
+        display: block;
+        /* show vertical line on mobile */
+      }
+    }
+
+    .nav-cta {
+      background: var(--navy) !important;
+      color: white !important;
+      padding: 10px 20px !important;
+      border-radius: 8px !important;
+      margin-left: 8px;
+      font-weight: 600 !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--navy-deep) !important;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      padding: 8px;
+    }
+
+    .nav-toggle svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    @media(max-width:900px) {
+      .nav-links {
+        position: fixed;
+        inset: 64px 0 0 0;
+        background: var(--cream);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px;
+        gap: 6px;
+        transform: translateX(100%);
+        transition: transform 0.25s ease;
+        overflow-y: auto;
+      }
+
+      .nav-links.open {
+        transform: translateX(0);
+      }
+
+      .nav-links button {
+        text-align: left;
+        padding: 16px;
+        font-size: 1.05rem;
+        border-bottom: 1px solid var(--line);
+        border-radius: 0;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+    }
+
+    /* ===== PAGE SECTIONS SCROLLING ===== */
+    .page {
+      scroll-margin-top: 88px;
+      animation: fadein 0.35s ease;
+    }
+
+    .page:not(#page-home) {
+      border-top: 1px solid var(--line);
+    }
+
+    @keyframes fadein {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 40px 32px 36px;
+    }
+
+    .hero-slides {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .hero-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.8s ease-in-out;
+    }
+
+    .hero-slide.active {
+      opacity: 0.8;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      background:
+        linear-gradient(to right, rgba(250, 247, 241, 0.95) 35%, rgba(250, 247, 241, 0.6) 65%, rgba(250, 247, 241, 0.15) 100%),
+        radial-gradient(ellipse 900px 500px at 15% -10%, rgba(201, 168, 76, 0.18), transparent),
+        radial-gradient(ellipse 700px 500px at 100% 10%, rgba(27, 43, 94, 0.08), transparent);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 3;
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(201, 168, 76, 0.12);
+      padding: 7px 14px;
+      border-radius: 100px;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.3rem, 4.4vw, 3.4rem);
+      margin-bottom: 22px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero p.lead {
+      font-size: 1.15rem;
+      color: #4A5468;
+      max-width: 520px;
+      margin-bottom: 32px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 15px 28px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.98rem;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+
+    .btn-primary {
+      background: var(--navy);
+      color: white;
+      box-shadow: 0 6px 20px rgba(27, 43, 94, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: var(--navy-deep);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: white;
+      color: var(--navy);
+      border: 1.5px solid var(--line);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--navy);
+      transform: translateY(-1px);
+    }
+
+    .btn:focus-visible {
+      outline: 2.5px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    /* Cost comparison — the signature element */
+    .cost-card {
+      background: var(--navy);
+      border-radius: 20px;
+      padding: 24px 28px;
+      color: white;
+      box-shadow: 0 20px 60px rgba(19, 31, 69, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cost-card::before {
+      content: "";
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.25), transparent 70%);
+    }
+
+    .cost-big {
+      font-family: 'Fraunces', serif;
+      font-size: 4.2rem;
+      font-weight: 700;
+      line-height: 1;
+      position: relative;
+    }
+
+    .cost-big span {
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--gold-light);
+    }
+
+    .cost-sub {
+      color: rgba(255, 255, 255, 0.7);
+      margin: 10px 0 26px;
+      font-size: 0.98rem;
+      position: relative;
+    }
+
+    .cost-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    .cost-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 11px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 0.93rem;
+    }
+
+    .cost-row span:first-child {
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .cost-row span:last-child {
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cost-row.total {
+      border-bottom: none;
+      padding-top: 16px;
+      margin-top: 6px;
+      border-top: 1.5px solid var(--gold);
+    }
+
+    .cost-row.total span {
+      color: var(--gold-light);
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .cost-save {
+      margin-top: 18px;
+      background: rgba(122, 155, 126, 0.25);
+      border: 1px solid rgba(122, 155, 126, 0.5);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #C6E2C8;
+      position: relative;
+    }
+
+    /* ===== SECTION HEADERS ===== */
+    .sec-head {
+      max-width: 680px;
+      margin: 0 auto 52px;
+      text-align: center;
+    }
+
+    .sec-head .eyebrow {
+      margin-bottom: 16px;
+    }
+
+    .sec-head h2 {
+      font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+      margin-bottom: 14px;
+    }
+
+    .sec-head p {
+      color: #5B6478;
+      font-size: 1.05rem;
+    }
+
+    section.band {
+      padding: 88px 0;
+    }
+
+    section.band.alt {
+      background: white;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    /* ===== WHAT WE DO (About) ===== */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-bottom: 64px;
+    }
+
+    .pillar {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 32px 28px;
+    }
+
+    .pillar-num {
+      width: 42px;
+      height: 42px;
+      border-radius: 11px;
+      background: var(--sage-light);
+      color: var(--sage);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .pillar-num svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--sage);
+    }
+
+    .pillar h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .pillar p {
+      color: #5B6478;
+      font-size: 0.95rem;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+      margin-top: 20px;
+    }
+
+    .flow-step {
+      padding: 0 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 23px;
+      right: -10%;
+      width: 20%;
+      height: 2px;
+      background: repeating-linear-gradient(90deg, var(--gold) 0 6px, transparent 6px 12px);
+    }
+
+    .flow-dot {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .flow-step h4 {
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .flow-step p {
+      font-size: 0.88rem;
+      color: #5B6478;
+    }
+
+    @media(max-width:800px) {
+      .flow {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .flow-step::after {
+        display: none;
+      }
+    }
+
+    .whowe-serve {
+      margin-top: 64px;
+      background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 100%);
+      border-top: 4px solid var(--gold);
+      border-radius: 24px;
+      padding: 48px;
+      color: white;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 48px;
+      align-items: center;
+      box-shadow: 0 20px 40px rgba(19, 31, 69, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .whowe-serve::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 300px;
+      height: 300px;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 30px 30px;
+      mask-image: radial-gradient(circle, black 30%, transparent 70%);
+      -webkit-mask-image: radial-gradient(circle, black 30%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .whowe-serve h3 {
+      color: white;
+      font-size: 2rem;
+      margin-bottom: 16px;
+      font-family: 'Fraunces', serif;
+    }
+
+    .whowe-serve p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+
+    .recipient-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      z-index: 1;
+    }
+
+    .recipient-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      transition: transform 0.25s, background-color 0.25s, border-color 0.25s, box-shadow 0.25s;
+      cursor: default;
+    }
+
+    .recipient-card:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .recipient-check {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(201, 168, 76, 0.2);
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .recipient-check svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--gold-light);
+    }
+
+    .recipient-card span {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: white;
+      line-height: 1.3;
+    }
+
+    @media(max-width: 900px) {
+      .whowe-serve {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 36px 28px;
+        margin-top: 48px;
+      }
+    }
+
+    @media(max-width: 520px) {
+      .recipient-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+
+    /* ===== FAQ ===== */
+    .faq-tabs {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .faq-tab {
+      padding: 11px 20px;
+      border-radius: 100px;
+      border: 1.5px solid var(--line);
+      background: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--charcoal);
+      transition: all 0.15s;
+    }
+
+    .faq-tab:hover {
+      border-color: var(--gold);
+    }
+
+    .faq-tab.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+    }
+
+    .faq-group {
+      display: none;
+    }
+
+    .faq-group.active {
+      display: block;
+      animation: fadein 0.3s ease;
+    }
+
+    .accordion {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      background: white;
+    }
+
+    .accordion-head {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 26px;
+      text-align: left;
+      gap: 20px;
+    }
+
+    .accordion-head:hover {
+      background: rgba(201, 168, 76, 0.05);
+    }
+
+    .accordion-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sage);
+      background: var(--sage-light);
+      padding: 3px 10px;
+      border-radius: 5px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .accordion-tag.obj {
+      color: #B5762A;
+      background: #FBEEDA;
+    }
+
+    .accordion-q {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 1.08rem;
+      color: var(--navy);
+    }
+
+    .accordion-icon {
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s;
+    }
+
+    .accordion-icon svg {
+      width: 15px;
+      height: 15px;
+      stroke: var(--navy);
+      stroke-width: 2.4;
+    }
+
+    .accordion.open .accordion-icon {
+      transform: rotate(45deg);
+      background: var(--gold);
+    }
+
+    .accordion.open .accordion-icon svg {
+      stroke: white;
+    }
+
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .accordion-body-inner {
+      padding: 0 26px 26px;
+      color: #4A5468;
+      font-size: 0.97rem;
+    }
+
+    .accordion-body-inner .say-this {
+      margin-top: 14px;
+      background: var(--cream);
+      border-left: 3px solid var(--gold);
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      color: var(--navy);
+      font-size: 0.94rem;
+    }
+
+    .accordion-body-inner table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 0.88rem;
+    }
+
+    .accordion-body-inner th {
+      background: var(--navy);
+      color: white;
+      text-align: left;
+      padding: 10px 12px;
+      font-weight: 600;
+    }
+
+    .accordion-body-inner td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .accordion-body-inner tr.hl td {
+      background: var(--sage-light);
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* ===== REFERRAL PAGE ===== */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    @media(max-width:900px) {
+      .split {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .info-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 20px;
+    }
+
+    .info-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .info-card h3 svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .info-card ul {
+      margin-top: 10px;
+    }
+
+    .info-card li {
+      padding: 9px 0 9px 26px;
+      position: relative;
+      color: #4A5468;
+      font-size: 0.94rem;
+      border-bottom: 1px solid #F0ECE3;
+    }
+
+    .info-card li:last-child {
+      border-bottom: none;
+    }
+
+    .info-card li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--sage);
+      font-weight: 700;
+    }
+
+    .form-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 38px;
+    }
+
+    .form-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+    }
+
+    .form-card>p {
+      color: #5B6478;
+      font-size: 0.94rem;
+      margin-bottom: 26px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 7px;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 13px 15px;
+      border: 1.5px solid var(--line);
+      border-radius: 9px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      background: var(--cream);
+      color: var(--charcoal);
+      transition: border-color 0.15s;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--navy);
+      background: white;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media(max-width:520px) {
+      .field-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .radio-pill {
+      border: 1.5px solid var(--line);
+      padding: 10px 18px;
+      border-radius: 100px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      background: var(--cream);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .radio-pill input {
+      display: none;
+    }
+
+    .radio-pill:has(input:checked) {
+      background: var(--navy);
+      color: white;
+      border-color: var(--navy);
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--navy);
+      color: white;
+      padding: 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-top: 8px;
+      transition: background 0.15s;
+    }
+
+    .submit-btn:hover {
+      background: var(--navy-deep);
+    }
+
+    .form-note {
+      font-size: 0.82rem;
+      color: #8A8F9E;
+      margin-top: 14px;
+      text-align: center;
+    }
+
+    .confirm-box {
+      display: none;
+      background: var(--sage-light);
+      border: 1.5px solid var(--sage);
+      border-radius: 14px;
+      padding: 28px;
+      text-align: center;
+    }
+
+    .confirm-box.show {
+      display: block;
+      animation: fadein 0.4s ease;
+    }
+
+    .confirm-box svg {
+      width: 44px;
+      height: 44px;
+      stroke: var(--sage);
+      margin-bottom: 14px;
+    }
+
+    .confirm-box h4 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .confirm-box p {
+      color: #3F5A42;
+      font-size: 0.94rem;
+    }
+
+    /* ===== LOCATIONS ===== */
+    .loc-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      margin-bottom: 28px;
+    }
+
+    @media(max-width:760px) {
+      .loc-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .loc-map {
+      background: linear-gradient(135deg, var(--navy), var(--navy-deep));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      position: relative;
+      min-height: 200px;
+    }
+
+    .loc-map svg {
+      width: 60px;
+      height: 60px;
+      stroke: var(--gold-light);
+    }
+
+    .loc-body {
+      padding: 32px;
+    }
+
+    .loc-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--sage);
+      background: var(--sage-light);
+      padding: 5px 13px;
+      border-radius: 100px;
+      margin-bottom: 14px;
+    }
+
+    .loc-status::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--sage);
+    }
+
+    .loc-body h3 {
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+    }
+
+    .loc-addr {
+      color: #5B6478;
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+    }
+
+    .loc-feats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .loc-feat {
+      font-size: 0.82rem;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      padding: 6px 12px;
+      border-radius: 100px;
+      color: #4A5468;
+    }
+
+    .loc-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .loc-actions .btn {
+      padding: 11px 20px;
+      font-size: 0.88rem;
+    }
+
+    .expansion-note {
+      margin-top: 36px;
+      background: var(--cream);
+      border: 1.5px dashed var(--gold);
+      border-radius: 16px;
+      padding: 28px 32px;
+      text-align: center;
+    }
+
+    .expansion-note h4 {
+      margin-bottom: 8px;
+    }
+
+    .expansion-note p {
+      color: #5B6478;
+      font-size: 0.94rem;
+    }
+
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--navy-deep);
+      color: rgba(255, 255, 255, 0.65);
+      padding: 56px 32px 28px;
+    }
+
+    .footer-grid {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      margin-top: 14px;
+      line-height: 1.7;
+      max-width: 320px;
+    }
+
+    footer h5 {
+      color: white;
+      font-size: 0.85rem;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    footer ul li {
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+
+    footer a:hover {
+      color: var(--gold-light);
+    }
+
+    .footer-bottom {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    @media(max-width:800px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 44px;
+      }
+
+      .pillars {
+        grid-template-columns: 1fr;
+      }
+
+      .pillars-2 {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .split {
+        gap: 32px;
+      }
+
+      section.band {
+        padding: 60px 0;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .flow-3-col {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+    }
+
+    /* ===== PHILOSOPHY SHOWCASE REDESIGN ===== */
+    .philosophy-showcase {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 64px;
+      align-items: center;
+      margin-bottom: 64px;
+      margin-top: 10px;
+    }
+
+    .philosophy-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .philosophy-title {
+      font-size: clamp(2rem, 3.8vw, 2.7rem);
+      margin: 12px 0 18px;
+      letter-spacing: -0.5px;
+      color: var(--navy);
+      line-height: 1.15;
+    }
+
+    .philosophy-lead {
+      font-size: 1.1rem;
+      color: #5B6478;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .philosophy-pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .phil-pillar {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 22px;
+      background: #FFFFFF;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      box-shadow: 0 4px 20px rgba(19, 31, 69, 0.02);
+    }
+
+    .phil-pillar:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(19, 31, 69, 0.06);
+      border-color: var(--gold);
+    }
+
+    .phil-pillar-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--sage-light);
+      color: var(--sage);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .phil-pillar-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--sage);
+    }
+
+    .phil-pillar-body h3 {
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+      color: var(--navy);
+      font-family: 'Fraunces', serif;
+    }
+
+    .phil-pillar-body p {
+      font-size: 0.95rem;
+      color: #5B6478;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Philosophy Image Column */
+    .philosophy-image-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .philosophy-image-wrapper {
+      position: relative;
+      width: 100%;
+      border-radius: 24px;
+      padding: 12px;
+      background: #FFFFFF;
+      border: 1px solid var(--line);
+      box-shadow: 0 20px 50px rgba(19, 31, 69, 0.07);
+      transition: transform 0.3s ease;
+    }
+
+    .philosophy-image-wrapper:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 60px rgba(19, 31, 69, 0.12);
+    }
+
+    .philosophy-img {
+      width: 100%;
+      height: 440px;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+    }
+
+    /* Floating Real Estate Badge */
+    .philosophy-image-badge {
+      position: absolute;
+      bottom: 32px;
+      left: 32px;
+      background: var(--navy);
+      color: #FFFFFF;
+      padding: 14px 18px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 10px 30px rgba(19, 31, 69, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: floating-badge 4s ease-in-out infinite;
+    }
+
+    @keyframes floating-badge {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    .badge-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(201, 168, 76, 0.15);
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .badge-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--gold-light);
+    }
+
+    .badge-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+    }
+
+    .badge-text strong {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .badge-text span {
+      font-size: 0.72rem;
+      color: var(--gold-light);
+      letter-spacing: 0.5px;
+    }
+
+    /* Responsive styling for philosophy section */
+    @media(max-width: 900px) {
+      .philosophy-showcase {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .philosophy-img {
+        height: 340px;
+      }
+    }
+
+    /* ===== PARTNER CAROUSEL ===== */
+    .partner-card {
+      margin-top: 56px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .partner-carousel-container {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      padding: 4px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .partner-carousel-container::before,
+    .partner-carousel-container::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 10%;
+      max-width: 120px;
+      min-width: 40px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .partner-carousel-container::before {
+      left: 0;
+      background: linear-gradient(to right, #FFFFFF 20%, transparent 100%);
+    }
+
+    .partner-carousel-container::after {
+      right: 0;
+      background: linear-gradient(to left, #FFFFFF 20%, transparent 100%);
+    }
+
+    .partner-carousel-row {
+      padding: 8px 0;
+      overflow: hidden;
+      width: 100%;
+      display: flex;
+    }
+
+    .partner-track {
+      display: flex;
+      gap: 16px;
+      width: max-content;
+      white-space: nowrap;
+      will-change: transform;
+    }
+
+    .partner-track.scroll-left {
+      animation: scroll-left-animation 45s linear infinite;
+    }
+
+    .partner-track.scroll-right {
+      animation: scroll-right-animation 45s linear infinite;
+    }
+
+    .partner-track:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes scroll-left-animation {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      100% {
+        transform: translate3d(-50%, 0, 0);
+      }
+    }
+
+    @keyframes scroll-right-animation {
+      0% {
+        transform: translate3d(-50%, 0, 0);
+      }
+
+      100% {
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    .partner-track .tag {
+      display: inline-block;
+      flex-shrink: 0;
+      cursor: default;
+      transition: background-color 0.25s, border-color 0.25s, color 0.25s, transform 0.25s;
+      border-radius: 100px;
+      padding: 9px 18px;
+      border: 1px solid var(--line);
+    }
+
+    .partner-track .tag:hover {
+      background-color: var(--navy) !important;
+      border-color: var(--navy) !important;
+      color: var(--white) !important;
+      transform: translateY(-2px);
+    }
+
+    .tag {
+      background: var(--cream);
+      border: 1.5px solid var(--line);
+      color: var(--charcoal);
+      padding: 9px 18px;
+      border-radius: 100px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      display: inline-block;
+    }
+
+    /* ===== FREE SCREENING REDESIGN ===== */
+    .free-screening-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.07) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      padding: 44px 36px;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+    }
+    .free-screening-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 60px rgba(201, 168, 76, 0.12);
+      border-color: rgba(201, 168, 76, 0.4);
+    }
+    .free-screening-card::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, rgba(201, 168, 76, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .screening-icon-wrap {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      color: var(--navy-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      box-shadow: 0 10px 24px rgba(201, 168, 76, 0.3);
+    }
+    .screening-icon-wrap svg {
+      width: 32px;
+      height: 32px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+    }
+    .free-screening-card h4 {
+      color: white;
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      font-family: 'Fraunces', serif;
+    }
+    .free-screening-card p {
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .screening-benefits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+      max-width: 240px;
+      margin: 0 auto;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+    }
+    .screening-benefit-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 500;
+    }
+    .screening-benefit-item svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--gold-light);
+      stroke-width: 2.5;
+      flex-shrink: 0;
+    }
+
+    /* ===== ABOUT US / WHAT WE DO REDESIGN ===== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 56px;
+      align-items: start;
+      margin-bottom: 56px;
+    }
+    .about-intro {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: sticky;
+      top: 120px;
+    }
+    .about-intro h2 {
+      font-size: clamp(2rem, 3.8vw, 2.7rem);
+      margin: 12px 0 20px;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+    }
+    .about-text-border {
+      border-left: 3px solid var(--gold);
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .about-text-border p {
+      font-size: 1.08rem;
+      color: #4A5468;
+      line-height: 1.65;
+    }
+    .about-pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .about-pillar-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 4px 20px rgba(19, 31, 69, 0.02);
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .about-pillar-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(19, 31, 69, 0.06);
+      border-color: var(--gold);
+    }
+    .about-pillar-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .about-pillar-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--sage-light);
+      color: var(--sage);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .about-pillar-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--sage);
+    }
+    .about-pillar-card h3 {
+      font-size: 1.3rem;
+      color: var(--navy);
+      font-family: 'Fraunces', serif;
+    }
+    .about-pillar-card p {
+      font-size: 0.98rem;
+      color: #5B6478;
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+    .benefits-cta-btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      justify-content: center;
+      background: white;
+      border: 1.5px solid var(--line);
+      color: var(--navy);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .benefits-cta-btn:hover {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+    }
+
+    /* ===== HOW IT WORKS REDESIGN ===== */
+    .how-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 32px 0 48px;
+      flex-wrap: wrap;
+    }
+    .how-tab {
+      padding: 12px 24px;
+      border-radius: 100px;
+      border: 1.5px solid var(--line);
+      background: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--charcoal);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .how-tab:hover {
+      border-color: var(--gold);
+      color: var(--navy);
+    }
+    .how-tab.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+      box-shadow: 0 4px 12px rgba(27, 43, 94, 0.15);
+    }
+    
+    .how-flow {
+      display: none;
+    }
+    .how-flow.active-flow {
+      display: block;
+      animation: fadein 0.35s ease;
+    }
+    
+    /* Timeline Grid */
+    .how-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      position: relative;
+    }
+    .how-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      position: relative;
+    }
+    
+    .how-step-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 32px 24px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      box-shadow: 0 4px 20px rgba(19, 31, 69, 0.02);
+    }
+    .how-step-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(19, 31, 69, 0.06);
+      border-color: var(--gold);
+    }
+    .how-step-num {
+      font-family: 'Fraunces', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1;
+      color: rgba(201, 168, 76, 0.18);
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      transition: color 0.25s;
+    }
+    .how-step-card:hover .how-step-num {
+      color: var(--gold);
+    }
+    .how-step-card h4 {
+      font-size: 1.15rem;
+      color: var(--navy);
+      font-family: 'Fraunces', serif;
+      margin-bottom: 12px;
+      padding-right: 36px; /* Avoid overlapping number */
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .how-step-card p {
+      font-size: 0.9rem;
+      color: #5B6478;
+      line-height: 1.55;
+      margin-bottom: 0;
+    }
+    .how-step-card .btn-ghost {
+      margin-top: 16px;
+      padding: 8px 16px;
+      font-size: 0.82rem;
+      border-radius: 6px;
+      width: 100%;
+      justify-content: center;
+    }
+
+
+    /* ===== BACK TO TOP ===== */
+    .back-to-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: white;
+      box-shadow: 0 4px 20px rgba(19, 31, 69, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, background-color 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .back-to-top:hover {
+      background: var(--gold);
+      transform: translateY(-2px);
+      color: var(--navy-deep);
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .partner-track.scroll-left,
+      .partner-track.scroll-right {
+        animation: none;
+      }
+
+      .partner-carousel-row {
+        overflow-x: auto;
+      }
+    }
+
+    @media(max-width: 960px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .about-intro {
+        position: static;
+      }
+      .how-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .how-grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width: 580px) {
+      .how-grid-4 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header>
+    <nav aria-label="Main navigation">
+      <a href="#" class="brand" onclick="scrollToSection('home');return false;">
+        <div class="brand-logo" aria-hidden="true">
+          <svg viewBox="140 20 400 310" fill="none" style="width: 100%; height: 100%;">
+            <clipPath id="cardClip">
+              <rect x="140" y="20" width="400" height="310" rx="22" ry="22"/>
+            </clipPath>
+            <g clip-path="url(#cardClip)">
+              <rect x="140" y="20" width="400" height="310" fill="#1B2E52"/>
+              <rect x="140" y="155" width="400" height="60" fill="#253F6E"/>
+              <g stroke="#3A4A5C" stroke-width="3" opacity="0.8">
+                <line x1="340" y1="95" x2="145" y2="22"/>
+                <line x1="340" y1="95" x2="190" y2="22"/>
+                <line x1="340" y1="95" x2="240" y2="22"/>
+                <line x1="340" y1="95" x2="290" y2="22"/>
+                <line x1="340" y1="95" x2="340" y2="22"/>
+                <line x1="340" y1="95" x2="390" y2="22"/>
+                <line x1="340" y1="95" x2="440" y2="22"/>
+                <line x1="340" y1="95" x2="490" y2="22"/>
+                <line x1="340" y1="95" x2="535" y2="22"/>
+              </g>
+              <path d="M 300 125 A 40 40 0 0 1 380 125" fill="none" stroke="#B8963E" stroke-width="2.5"/>
+              <circle cx="340" cy="128" r="18" fill="#B8963E"/>
+              <polygon points="140,330 200,210 255,270 310,190 365,250 420,185 480,250 540,215 540,330" fill="#1E3060"/>
+              <polygon points="140,330 175,255 220,290 270,230 330,280 390,225 450,270 510,240 540,265 540,330" fill="#162850"/>
+              <polygon points="270,230 280,248 260,248" fill="#D0D8E8"/>
+              <polygon points="390,225 400,244 380,244" fill="#D0D8E8"/>
+              <polygon points="175,255 183,270 167,270" fill="#D0D8E8"/>
+              <polygon points="510,240 518,255 502,255" fill="#D0D8E8"/>
+              <rect x="332" y="188" width="16" height="95" rx="2" fill="white"/>
+              <rect x="308" y="218" width="64" height="16" rx="2" fill="white"/>
+              <rect x="140" y="20" width="400" height="310" rx="22" ry="22" fill="none" stroke="#B8963E" stroke-width="2.5"/>
+              <rect x="147" y="27" width="386" height="296" rx="18" ry="18" fill="none" stroke="#B8963E" stroke-width="0.8" opacity="0.5"/>
+            </g>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <strong>New Creation Living</strong>
+          <span>From Benefits to Belonging</span>
+        </div>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle menu" onclick="toggleNav()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1B2B5E" stroke-width="2">
+          <path d="M3 6h18M3 12h18M3 18h18" />
+        </svg>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <button data-page="home" onclick="scrollToSection('home')">Home</button>
+        <button data-page="about" onclick="scrollToSection('about')">About Us</button>
+        <button data-page="benefits" onclick="scrollToSection('benefits')">Get Benefits</button>
+        <button data-page="faq" onclick="scrollToSection('faq')">FAQ</button>
+        <button data-page="referral" onclick="scrollToSection('referral')">Referral</button>
+        <button data-page="locations" onclick="scrollToSection('locations')">Locations</button>
+        <button class="nav-cta" onclick="scrollToSection('referral')">(404) 731-2371</button>
+        <div class="nav-indicator" id="navIndicator"></div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ HOME ============ -->
+    <div class="page" id="page-home">
+      <section class="hero">
+        <div class="hero-slides">
+          <div class="hero-slide active" style="background-image: url('img/IhmE7JRA.jpeg');"></div>
+          <div class="hero-slide" style="background-image: url('img/s4HJJoUA.jpeg');"></div>
+          <div class="hero-slide" style="background-image: url('img/y4YPXGDQ.jpeg');"></div>
+          <div class="hero-slide" style="background-image: url('img/zY7wDXjw.jpeg');"></div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-inner">
+          <div>
+            <span class="eyebrow"
+              style="background: rgba(27,43,94,0.08); color: var(--navy); border: 1px solid var(--line); font-size: 0.85rem;">From
+              Benefits to Belonging</span>
+            <h1 style="margin-top: 10px;">New Creation Living</h1>
+            <p class="lead" style="font-size: 1.35rem; font-weight: 600; color: var(--navy); margin-bottom: 8px;">An
+              All-Inclusive Home for Independent Adults on a Fixed Income</p>
+            <p
+              style="font-size: 1.1rem; color: var(--gold); font-weight: 700; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;">
+              Locations Available in Atlanta &amp; Middle GA</p>
+            <p style="font-size: 1.15rem; color: #4A5468; margin-bottom: 30px; line-height: 1.5;">Enjoy high end living on a fixed income!</p>
+            <div class="hero-ctas">
+              <button class="btn btn-primary" onclick="scrollToSection('benefits')">See If You Qualify</button>
+              <button class="btn btn-ghost" onclick="scrollToSection('referral')">Schedule a Tour</button>
+            </div>
+          </div>
+          <div class="cost-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+            <h3
+              style="color: var(--gold-light); font-family: 'Fraunces', serif; font-size: 1.3rem; margin-bottom: 12px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 8px;">
+              All-Inclusive Living</h3>
+            <div class="cost-rows" style="margin-bottom: 14px;">
+              <div class="cost-row" style="border-bottom: 1px solid rgba(255,255,255,0.08); padding: 4.5px 0;"><span>✓ furnished room</span></div>
+              <div class="cost-row" style="border-bottom: 1px solid rgba(255,255,255,0.08); padding: 4.5px 0;"><span>✓ Water,gas &amp; electricity</span></div>
+              <div class="cost-row" style="border-bottom: 1px solid rgba(255,255,255,0.08); padding: 4.5px 0;"><span>✓ wifi</span></div>
+              <div class="cost-row" style="border-bottom: 1px solid rgba(255,255,255,0.08); padding: 4.5px 0;"><span>✓ laundRy</span></div>
+              <div class="cost-row" style="border-bottom: 1px solid rgba(255,255,255,0.08); padding: 4.5px 0;"><span>✓ High end finishes &amp; high standard of living</span></div>
+              <div class="cost-row" style="border-bottom: 1px solid rgba(255,255,255,0.08); padding: 4.5px 0;"><span>✓ Sober &amp; Drug free environment</span></div>
+              <div class="cost-row" style="border-bottom: 1px solid rgba(255,255,255,0.08); padding: 4.5px 0;"><span>✓ Access to public transportation</span></div>
+              <div class="cost-row" style="border-bottom: 1px solid rgba(255,255,255,0.08); padding: 4.5px 0;"><span>✓ Community Support</span></div>
+              <div class="cost-row" style="border-bottom: none; padding: 4.5px 0;"><span>✓ On Site manageent</span></div>
+            </div>
+            <div style="text-align: center; border-top: 1.5px solid var(--gold); padding-top: 10px;">
+              <div class="cost-big"
+                style="font-size: 3.4rem; justify-content: center; display: flex; align-items: baseline;">$25<span
+                  style="font-size: 1.3rem; color: var(--gold-light);">/day</span></div>
+              <p style="color: rgba(255,255,255,0.85); font-size: 0.85rem; margin-top: 2px; font-weight: 500;">
+                (Everything included. No hidden deposits/fees)</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band alt">
+        <div class="wrap">
+          <div class="philosophy-showcase">
+            <div class="philosophy-content">
+              <span class="eyebrow">Our Philosophy</span>
+              <h2 class="philosophy-title">Independence forged through structure and Accountability</h2>
+              <p class="philosophy-lead">We build our homes around structure and support to secure your peace of mind.
+              </p>
+
+              <div class="philosophy-pillars">
+                <div class="phil-pillar">
+                  <div class="phil-pillar-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="M12 7v5l3 3" />
+                    </svg>
+                  </div>
+                  <div class="phil-pillar-body">
+                    <h3>Move in within 48 hours</h3>
+                    <p>No months-long waitlists. Once your application clears, you have keys — usually the same week.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="phil-pillar">
+                  <div class="phil-pillar-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                      <path d="M4 21V8l8-5 8 5v13M9 21v-6h6v6" />
+                    </svg>
+                  </div>
+                  <div class="phil-pillar-body">
+                    <h3>A home, not just a house</h3>
+                    <p>New Creation Living provides a community for all residents through community collaboration,
+                      events and support.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="philosophy-image-container">
+              <div class="philosophy-image-wrapper">
+                <img src="img/MaLg3QiA.jpeg" alt="High-end home interior with warm light and staged furniture"
+                  class="philosophy-img">
+                <div class="philosophy-image-badge">
+                  <div class="badge-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                      <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                  </div>
+                  <div class="badge-text">
+                    <strong>Premium Living</strong>
+                    <span>Atlanta &amp; Middle GA</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="whowe-serve" style="margin-bottom: 40px;">
+            <div>
+              <h3>Who we are built for</h3>
+              <p>Independent adults who receive fixed government benefits and need stable, structured housing.</p>
+            </div>
+            <div class="recipient-grid">
+              <div class="recipient-card">
+                <div class="recipient-check">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <span>SSI Reciepients</span>
+              </div>
+
+              <div class="recipient-card">
+                <div class="recipient-check">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <span>SSDI RECIEPIENTS</span>
+              </div>
+
+              <div class="recipient-card">
+                <div class="recipient-check">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <span>VA PENSION &amp; DISABILITY RECIPEIENTS</span>
+              </div>
+
+              <div class="recipient-card">
+                <div class="recipient-check">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <span>SOCIAL SECURITY RETIREMENT RECIEPIENTS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="partner-card">
+            <div>
+              <h3 style="font-family: 'Fraunces', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 14px;">
+                Who We Partner With</h3>
+              <p style="color: #5B6478; font-size: 1rem; margin-bottom: 0;">We collaborate closely with healthcare
+                professionals, advocates, and families to coordinate placements and support.</p>
+            </div>
+
+            <div class="partner-carousel-container">
+              <!-- Row 1: scrolls left -->
+              <div class="partner-carousel-row">
+                <div class="partner-track scroll-left">
+                  <!-- Original set -->
+                  <span class="tag">SOCAIL WORKERS &amp; CASE MANAGERS</span>
+                  <span class="tag">Rehabilitation Hospitals &amp; EMERGENCY DEPARTMENTS</span>
+                  <span class="tag">BEHAVORIAL HEALTH ORGANIZATIONS</span>
+                  <span class="tag">SUBSTANCE USE TREATMENT CENTERS</span>
+                  <span class="tag">Skilled Nursing Facilities</span>
+                  <span class="tag">Veteran Housing, SHELTERS &amp; HOSPITALS</span>
+                  <span class="tag">FAMILY MEMBERS/FREINDS</span>
+                  <!-- Duplicate set for seamless loop -->
+                  <span class="tag">SOCAIL WORKERS &amp; CASE MANAGERS</span>
+                  <span class="tag">Rehabilitation Hospitals &amp; EMERGENCY DEPARTMENTS</span>
+                  <span class="tag">BEHAVORIAL HEALTH ORGANIZATIONS</span>
+                  <span class="tag">SUBSTANCE USE TREATMENT CENTERS</span>
+                  <span class="tag">Skilled Nursing Facilities</span>
+                  <span class="tag">Veteran Housing, SHELTERS &amp; HOSPITALS</span>
+                  <span class="tag">FAMILY MEMBERS/FREINDS</span>
+                </div>
+              </div>
+
+              <!-- Row 2: scrolls right -->
+              <div class="partner-carousel-row">
+                <div class="partner-track scroll-right">
+                  <!-- Original set -->
+                  <span class="tag">COUNSELORS</span>
+                  <span class="tag">SENIOR CENTERS &amp; AREA AGENCIES ON AGING</span>
+                  <span class="tag">NON PROFIT ORGANZATIONS AND MORE</span>
+                  <span class="tag">DETOX &amp; OUTPATIENT PROGRAMS</span>
+                  <span class="tag">FAITH COMMUNITIES &amp; CHURCHS</span>
+                  <span class="tag">PRIMARY CARE CLINICS</span>
+                  <!-- Duplicate set for seamless loop -->
+                  <span class="tag">COUNSELORS</span>
+                  <span class="tag">SENIOR CENTERS &amp; AREA AGENCIES ON AGING</span>
+                  <span class="tag">NON PROFIT ORGANZATIONS AND MORE</span>
+                  <span class="tag">DETOX &amp; OUTPATIENT PROGRAMS</span>
+                  <span class="tag">FAITH COMMUNITIES &amp; CHURCHS</span>
+                  <span class="tag">PRIMARY CARE CLINICS</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ NAVIGATION ASSISTANCE SECTION ============ -->
+      <section class="band alt"
+        style="background: var(--navy); color: white; border: none; background-image: radial-gradient(ellipse 900px 500px at 15% -10%, rgba(201,168,76,0.1), transparent);">
+        <div class="wrap">
+          <div class="split" style="align-items: center;">
+            <div>
+              <span class="eyebrow"
+                style="background: rgba(201,168,76,0.2); color: var(--gold-light); border: 1px solid rgba(201,168,76,0.3);">Benefits
+                Assistance</span>
+              <h2 style="color: white; font-size: clamp(1.8rem, 3.2vw, 2.5rem); margin-top: 10px; margin-bottom: 18px;">
+                We Help You Navigate Benefits, Too</h2>
+              <p style="color: rgba(255,255,255,0.85); font-size: 1.1rem; margin-bottom: 24px; line-height: 1.6;">
+                Countless people are eligible for benefits they haven't yet claimed. Our team helps navigate the
+                paperwork — from disability and Social Security benefits to other assistance programs — so nothing gets
+                left on the table.</p>
+              <button class="btn" style="background: var(--gold); color: var(--navy-deep); font-weight: 700;"
+                onclick="scrollToSection('benefits')">Get my benefits</button>
+            </div>
+            <div style="display: flex; justify-content: center; position: relative; width: 100%;">
+              <div class="free-screening-card">
+                <div class="screening-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+                </div>
+                <h4>Free Screening</h4>
+                <p>Find out what benefits you qualify for at no cost.</p>
+                <div class="screening-benefits-list">
+                  <div class="screening-benefit-item">
+                    <svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>2-Minute Evaluation</span>
+                  </div>
+                  <div class="screening-benefit-item">
+                    <svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Vetted by Attorneys</span>
+                  </div>
+                  <div class="screening-benefit-item">
+                    <svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Zero Out-of-Pocket</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ============ ABOUT / WHAT WE DO ============ -->
+    <div class="page" id="page-about">
+      <section class="band" style="padding-top:56px;">
+        <div class="wrap">
+          <div class="about-grid">
+            <div class="about-intro">
+              <span class="eyebrow">About Us</span>
+              <h2>What we do</h2>
+              <div class="about-text-border">
+                <p>New Creation Living is a structured independent living housing provider — not a shelter, not a personal care home. We give adults on fixed government income a safe, stable, affordable place to live while shattering traditional "low-quality" housing assumptions, proving that a fixed income doesn't have to mean compromising on quality or dignity.</p>
+              </div>
+            </div>
+            
+            <div class="about-pillars">
+              <div class="about-pillar-card">
+                <div class="about-pillar-header">
+                  <div class="about-pillar-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="M12 2a5 5 0 0 1 5 5v3a5 5 0 0 1-10 0V7a5 5 0 0 1 5-5z" />
+                      <path d="M8 21h8M12 17v4" />
+                    </svg>
+                  </div>
+                  <h3>Structure</h3>
+                </div>
+                <p>A house manager on-site, a daily rhythm, weekly chores, and a community of people who want the same thing: safety,stability, structure with a high standard of living</p>
+              </div>
+              
+              <div class="about-pillar-card">
+                <div class="about-pillar-header">
+                  <div class="about-pillar-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="M20 21a8 8 0 10-16 0" />
+                      <circle cx="12" cy="7" r="4" />
+                    </svg>
+                  </div>
+                  <h3>Benefits Support</h3>
+                </div>
+                <p>If you're waiting on SSI, SSDI, VA benefits, or Social Security, we help you navigate the process — at no upfront cost to you.</p>
+                <button class="benefits-cta-btn" onclick="scrollToSection('benefits')">
+                  <span>Get my benefits</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sec-head" style="margin-top:80px;">
+            <span class="eyebrow">How It Works</span>
+            <h2>From first call to move-in</h2>
+          </div>
+
+          <div class="how-tabs">
+            <button class="how-tab active" onclick="showHowFlow('fixed', this)">I am on fixed income</button>
+            <button class="how-tab" onclick="showHowFlow('need', this)">I need my benefits</button>
+          </div>
+
+          <!-- Flow for fixed income (4 steps) -->
+          <div id="flow-fixed" class="how-flow active-flow">
+            <div class="how-grid-4">
+              <div class="how-step-card">
+                <span class="how-step-num">01</span>
+                <h4>Apply</h4>
+                <p>A short application — online, by phone, or with help from a caseworker or family member.</p>
+                <button class="btn btn-ghost" onclick="scrollToSection('referral')">Apply now</button>
+              </div>
+              
+              <div class="how-step-card">
+                <span class="how-step-num">02</span>
+                <h4>We Review</h4>
+                <p>We confirm benefit eligibility and run a standard background check — Within a day or two.</p>
+              </div>
+              
+              <div class="how-step-card">
+                <span class="how-step-num">03</span>
+                <h4>We Connect</h4>
+                <p>Approved applicants are matched to an available room based on location and needs.</p>
+              </div>
+              
+              <div class="how-step-card">
+                <span class="how-step-num">04</span>
+                <h4>Move In</h4>
+                <p>Usually within 48 hours of approval. Onboarding covers house rules, your room, and your community.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Flow for needing benefits (3 steps) -->
+          <div id="flow-need" class="how-flow">
+            <div class="how-grid-3">
+              <div class="how-step-card">
+                <span class="how-step-num">01</span>
+                <h4>FREE SCREENING</h4>
+                <p>We evaluate your eligibility for SSI, SSDI, VA PENSION OR SOCIAL SECURITY AT NO COST. WE IDENTIFY THE STRONGEST PATH TO APPROVAL FOR YOUR SPECIFIC SITUATION.</p>
+                <button class="btn btn-primary" style="margin-top: 16px; width: 100%; justify-content: center;" onclick="scrollToSection('benefits')">Get My Benefits</button>
+              </div>
+              
+              <div class="how-step-card">
+                <span class="how-step-num">02</span>
+                <h4>We FILE YOUR CASE</h4>
+                <p>OUR ATTORNEYS HANDLE EVERY DOCUMENT, FORM, AND SUBMISSION ON YOUR BEHALF. FROM APPLICATIONS, HEARINGS AND SUBMSSIONS, YOU HAVE A VETTED AND EXPEIRIECNED TEMA FIGHTING FOR YOU. IF DENIED, WE APPEAL. WE DONT WALK AWAY. WE DONT CHARGE YOU UPFRONT NOR OUT OF POCKET</p>
+              </div>
+              
+              <div class="how-step-card">
+                <span class="how-step-num">03</span>
+                <h4>YOU COME HOME</h4>
+                <p>YOUR APPROVED BENEFITS PAY YOUR RENT AT NEW CREATION LIVING: FROM BENEFITS TO BELONGING</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============ GET BENEFITS ============ -->
+    <div class="page" id="page-benefits">
+      <section class="band" style="padding-top:56px;">
+        <div class="wrap">
+          <div class="sec-head" style="margin-bottom:44px;">
+            <span class="eyebrow">Free Eligibility Screening</span>
+            <h2>We Help You Navigate Benefits</h2>
+            <p>Evaluate your eligibility for SSI, SSDI, VA Pension, or Social Security at no cost. We identify the
+              strongest path to approval for your specific situation.</p>
+          </div>
+
+          <div class="split">
+            <div>
+              <div class="info-card">
+                <h3><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke="var(--navy)">
+                    <path d="M12 2v20M2 12h20" />
+                  </svg>No Upfront Cost</h3>
+                <p>We work on a contingency basis. Our attorneys handle the paperwork, applications, and hearings on
+                  your behalf — and we do not charge you upfront or out-of-pocket.</p>
+              </div>
+              <div class="info-card">
+                <h3><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke="var(--navy)">
+                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                    <path d="M22 4L12 14.01l-3-3" />
+                  </svg>Vetted &amp; Experienced Team</h3>
+                <p>From initial applications to hearings and appeals, we stand by you. If your application is denied, we
+                  appeal. We don't walk away.</p>
+              </div>
+              <div class="info-card" style="background:var(--navy);border:none;">
+                <h3 style="color:white;"><svg viewBox="0 0 24 24" fill="none" stroke="#E4CE8C" stroke-width="1.8">
+                    <path
+                      d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+                  </svg>Prefer to call?</h3>
+                <p style="color:rgba(255,255,255,0.75);font-size:1.3rem;font-weight:700;margin-top:8px;">(404) 731-2371
+                </p>
+                <p style="color:rgba(255,255,255,0.6);font-size:0.88rem;margin-top:4px;">info@blacknetllc.com</p>
+              </div>
+            </div>
+
+            <div class="form-card">
+              <h3>Benefits Screening Form</h3>
+              <p>Takes about 2 minutes. We will identify your options and follow up within 72 hours.</p>
+
+              <form id="benefitsForm" onsubmit="handleSubmit(event,'benefits')">
+                <div class="field-row">
+                  <div class="field">
+                    <label for="ben-first">First name</label>
+                    <input type="text" id="ben-first" required>
+                  </div>
+                  <div class="field">
+                    <label for="ben-last">Last name</label>
+                    <input type="text" id="ben-last" required>
+                  </div>
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="ben-phone">Phone number</label>
+                    <input type="tel" id="ben-phone" required>
+                  </div>
+                  <div class="field">
+                    <label for="ben-email">Email address</label>
+                    <input type="email" id="ben-email" required>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Which benefit are you seeking help with?</label>
+                  <div class="radio-group">
+                    <label class="radio-pill"><input type="radio" name="ben-type" required>SSI</label>
+                    <label class="radio-pill"><input type="radio" name="ben-type">SSDI</label>
+                    <label class="radio-pill"><input type="radio" name="ben-type">VA Pension</label>
+                    <label class="radio-pill"><input type="radio" name="ben-type">Social Security</label>
+                    <label class="radio-pill"><input type="radio" name="ben-type">Not Sure</label>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Have you ever applied for this benefit in the past?</label>
+                  <div class="radio-group">
+                    <label class="radio-pill"><input type="radio" name="ben-applied" required>No, never</label>
+                    <label class="radio-pill"><input type="radio" name="ben-applied">Yes, and was denied</label>
+                    <label class="radio-pill"><input type="radio" name="ben-applied">Yes, application is pending</label>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="ben-notes">Briefly describe your situation or health conditions</label>
+                  <textarea id="ben-notes" rows="4"
+                    placeholder="This helps us evaluate your path to approval..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Screening Request</button>
+                <p class="form-note">Free screening. No obligation. Confidential submission.</p>
+              </form>
+
+              <div class="confirm-box" id="benefits-confirm">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                  <path d="M22 4L12 14.01l-3-3" />
+                </svg>
+                <h4>Submitted</h4>
+                <p>We will be in touch within 72 hours.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============ FAQ ============ -->
+    <div class="page" id="page-faq">
+      <section class="band" style="padding-top:56px;">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="eyebrow">Frequently Asked Questions</span>
+            <h2>Questions, answered honestly</h2>
+            <p>Find answers to common questions about housing, costs, benefits, and eligibility.</p>
+          </div>
+
+          <div style="max-width: 1000px; margin: 0 auto;">
+
+            <div class="accordion">
+              <button class="accordion-head" onclick="toggleAccordion(this)">
+                <div><span class="accordion-tag">Cost</span>
+                  <div class="accordion-q">How much does it actually cost?</div>
+                </div>
+                <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                    <path d="M12 5v14M5 12h14" />
+                  </svg></div>
+              </button>
+              <div class="accordion-body">
+                <div class="accordion-body-inner">
+                  It's $25 a day — $775 a month — and that includes your furnished room, all utilities, Wi-Fi, laundry
+                  access, on-site management and more. There's no separate deposit stack and no surprise bills.
+                  <div class="say-this">Think of it like this: if you tried to piece together a room, electric, water,
+                    gas, Wi-Fi, and laundry on your own, you'd likely spend $1,600–$1,800 a month. We give you all of it
+                    for $775.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion">
+              <button class="accordion-head" onclick="toggleAccordion(this)">
+                <div><span class="accordion-tag">Eligibility</span>
+                  <div class="accordion-q">Who is New Creation Living for?</div>
+                </div>
+                <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                    <path d="M12 5v14M5 12h14" />
+                  </svg></div>
+              </button>
+              <div class="accordion-body">
+                <div class="accordion-body-inner">
+                  Adults who receive SSI, SSDI, VA Pension, VA Disability, or Social Security — and who can manage their
+                  own daily life independently. We're not a personal care home or clinical facility, so residents need
+                  to be able to handle their own basic self-care.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion">
+              <button class="accordion-head" onclick="toggleAccordion(this)">
+                <div><span class="accordion-tag">Timeline</span>
+                  <div class="accordion-q">How fast can someone move in?</div>
+                </div>
+                <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                    <path d="M12 5v14M5 12h14" />
+                  </svg></div>
+              </button>
+              <div class="accordion-body">
+                <div class="accordion-body-inner">
+                  Most approved applicants move in within 24–48 hours. There's no months-long waitlist like traditional
+                  affordable housing or Section 8.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion">
+              <button class="accordion-head" onclick="toggleAccordion(this)">
+                <div><span class="accordion-tag">Comparison</span>
+                  <div class="accordion-q">IS NEW CREATION LIVING A PERSONAL CARE HOME or a nursing home? if not, what
+                    are the differences?</div>
+                </div>
+                <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                    <path d="M12 5v14M5 12h14" />
+                  </svg></div>
+              </button>
+              <div class="accordion-body">
+                <div class="accordion-body-inner">
+                  New Creation Living provides an All-Inclusive home for independent adults on fixed income. We do not
+                  provide personal care residences. The difference is level of care. A personal care home provides
+                  housing and assistance with daily tasks (like bathing or eating meals) in a residential, independent
+                  setting. Nursing homes offer 24/7 medical supervision and skilled clinical care for individuals with
+                  chronic illnesses or complex health needs. Since our residents are independent of intensive care &amp;
+                  assistance, we do not operate as a PCH (personal care home) or Nursing home.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion">
+              <button class="accordion-head" onclick="toggleAccordion(this)">
+                <div><span class="accordion-tag">Benefits</span>
+                  <div class="accordion-q">What if I don't have my benefits approved yet?</div>
+                </div>
+                <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                    <path d="M12 5v14M5 12h14" />
+                  </svg></div>
+              </button>
+              <div class="accordion-body">
+                <div class="accordion-body-inner">
+                  That's not a dead end — it's something we can help with. We work with individuals in the process of
+                  applying for SSI, SSDI, VA benefits, or Social Security, at no upfront cost to you. Once approved,
+                  you'd have the income to move in.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion">
+              <button class="accordion-head" onclick="toggleAccordion(this)">
+                <div><span class="accordion-tag">Referrals</span>
+                  <div class="accordion-q">I'm a social worker/discharge planner — how does referring someone work?
+                  </div>
+                </div>
+                <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                    <path d="M12 5v14M5 12h14" />
+                  </svg></div>
+              </button>
+              <div class="accordion-body">
+                <div class="accordion-body-inner">
+                  Use the Referral tab above. Submit the person's basic information and their benefit type, and we'll
+                  follow up directly — usually the same day. We can place most referrals within 24–48 hours.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============ REFERRAL ============ -->
+    <div class="page" id="page-referral">
+      <section class="band" style="padding-top:56px;">
+        <div class="wrap">
+          <div class="sec-head" style="margin-bottom:44px;">
+            <span class="eyebrow">For Professionals &amp; Families</span>
+            <h2>Refer someone to New Creation Living</h2>
+            <p>Hospital discharge planners, social workers, case managers, and family members — submit a referral and
+              we'll follow up the same day.</p>
+          </div>
+
+          <div class="split">
+            <div>
+              <div class="info-card">
+                <h3><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 7v5l3 3" />
+                  </svg>What happens after you submit</h3>
+                <ul>
+                  <li>We review the referral and confirm benefit type and eligibility</li>
+                  <li>We contact you or the individual directly, usually within a few hours</li>
+                  <li>If it's a fit, we can place most referrals within 24–48 hours</li>
+                  <li>You'll get a direct line to our team for follow-up — no call centers</li>
+                </ul>
+              </div>
+              <div class="info-card">
+                <h3><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                    <path d="M20 21a8 8 0 10-16 0" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>Who we accept referrals for</h3>
+                <ul>
+                  <li>Adults on SSI, SSDI, VA Pension, VA Disability, or Social Security</li>
+                  <li>Patients being discharged from acute care, rehab, or skilled nursing</li>
+                  <li>Veterans transitioning from VA housing programs</li>
+                  <li>Individuals who can manage their own daily care independently</li>
+                </ul>
+              </div>
+              <div class="info-card" style="background:var(--navy);border:none;">
+                <h3 style="color:white;"><svg viewBox="0 0 24 24" fill="none" stroke="#E4CE8C" stroke-width="1.8">
+                    <path
+                      d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+                  </svg>Prefer to call?</h3>
+                <p style="color:rgba(255,255,255,0.75);font-size:1.3rem;font-weight:700;margin-top:8px;">(404) 731-2371
+                </p>
+                <p style="color:rgba(255,255,255,0.6);font-size:0.88rem;margin-top:4px;">info@blacknetllc.com</p>
+              </div>
+            </div>
+
+            <div class="form-card">
+              <h3>Referral form</h3>
+              <p>Takes about 2 minutes. We'll follow up directly.</p>
+
+              <form id="referralForm" onsubmit="handleSubmit(event,'referral')">
+                <div class="field-row">
+                  <div class="field">
+                    <label for="ref-name">Your name</label>
+                    <input type="text" id="ref-name" required>
+                  </div>
+                  <div class="field">
+                    <label for="ref-role">Your role</label>
+                    <select id="ref-role" required>
+                      <option value="">Select one</option>
+                      <option>Hospital discharge planner</option>
+                      <option>Social worker / case manager</option>
+                      <option>VA / veteran services staff</option>
+                      <option>Family member</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="ref-org">Organization (if applicable)</label>
+                    <input type="text" id="ref-org">
+                  </div>
+                  <div class="field">
+                    <label for="ref-phone">Your phone number</label>
+                    <input type="tel" id="ref-phone" required>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="ref-client">Name of person being referred</label>
+                  <input type="text" id="ref-client" required>
+                </div>
+                <div class="field">
+                  <label>Their benefit type</label>
+                  <div class="radio-group">
+                    <label class="radio-pill"><input type="radio" name="ref-benefit" required>SSI</label>
+                    <label class="radio-pill"><input type="radio" name="ref-benefit">SSDI</label>
+                    <label class="radio-pill"><input type="radio" name="ref-benefit">VA Benefits</label>
+                    <label class="radio-pill"><input type="radio" name="ref-benefit">Social Security</label>
+                    <label class="radio-pill"><input type="radio" name="ref-benefit">Not yet approved</label>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="ref-notes">Anything we should know about their situation?</label>
+                  <textarea id="ref-notes" rows="4"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Referral</button>
+                <p class="form-note">We typically respond within a few hours during business hours.</p>
+              </form>
+
+              <div class="confirm-box" id="referral-confirm">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                  <path d="M22 4L12 14.01l-3-3" />
+                </svg>
+                <h4>Referral received</h4>
+                <p>Thank you — our team will follow up shortly. For anything urgent, call us directly at (404) 731-2371.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+    <!-- ============ LOCATIONS ============ -->
+    <div class="page" id="page-locations">
+      <section class="band" style="padding-top:56px;">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="eyebrow">Locations</span>
+            <h2>Where we are</h2>
+            <p>Every property is chosen for proximity to public transit, so you don't need a car to get where you're
+              going.</p>
+          </div>
+
+          <div class="loc-card">
+            <div class="loc-map" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6">
+                <path d="M12 21s7-6.5 7-11.5A7 7 0 005 9.5C5 14.5 12 21 12 21z" />
+                <circle cx="12" cy="9.5" r="2.5" />
+              </svg>
+            </div>
+            <div class="loc-body">
+              <span class="loc-status">Open &amp; Accepting Residents</span>
+              <h3>Atlanta — Southwest</h3>
+              <p class="loc-addr">3790 Village Dr SW, Atlanta, GA 30331</p>
+              <div class="loc-feats">
+                <span class="loc-feat">Near MARTA bus routes</span>
+                <span class="loc-feat">All-inclusive $25/day</span>
+                <span class="loc-feat">On-site house manager</span>
+                <span class="loc-feat">Shared common areas</span>
+              </div>
+              <div class="loc-actions">
+                <button class="btn btn-primary" onclick="scrollToSection('referral')">Apply to This Location</button>
+                <button class="btn btn-ghost"
+                  onclick="window.open('https://maps.google.com/?q=3790+Village+Dr+SW+Atlanta+GA+30331','_blank')">View
+                  on Map</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="expansion-note">
+            <h4>Expanding across Metro &amp; Middle Georgia</h4>
+            <p>We're actively adding new locations. Call (404) 731-2371 to ask about upcoming availability in your area.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand">
+          <div class="brand-logo">
+            <svg viewBox="140 20 400 310" fill="none" style="width: 100%; height: 100%;">
+              <clipPath id="cardClipFooter">
+                <rect x="140" y="20" width="400" height="310" rx="22" ry="22"/>
+              </clipPath>
+              <g clip-path="url(#cardClipFooter)">
+                <rect x="140" y="20" width="400" height="310" fill="#1B2E52"/>
+                <rect x="140" y="155" width="400" height="60" fill="#253F6E"/>
+                <g stroke="#3A4A5C" stroke-width="3" opacity="0.8">
+                  <line x1="340" y1="95" x2="145" y2="22"/>
+                  <line x1="340" y1="95" x2="190" y2="22"/>
+                  <line x1="340" y1="95" x2="240" y2="22"/>
+                  <line x1="340" y1="95" x2="290" y2="22"/>
+                  <line x1="340" y1="95" x2="340" y2="22"/>
+                  <line x1="340" y1="95" x2="390" y2="22"/>
+                  <line x1="340" y1="95" x2="440" y2="22"/>
+                  <line x1="340" y1="95" x2="490" y2="22"/>
+                  <line x1="340" y1="95" x2="535" y2="22"/>
+                </g>
+                <path d="M 300 125 A 40 40 0 0 1 380 125" fill="none" stroke="#B8963E" stroke-width="2.5"/>
+                <circle cx="340" cy="128" r="18" fill="#B8963E"/>
+                <polygon points="140,330 200,210 255,270 310,190 365,250 420,185 480,250 540,215 540,330" fill="#1E3060"/>
+                <polygon points="140,330 175,255 220,290 270,230 330,280 390,225 450,270 510,240 540,265 540,330" fill="#162850"/>
+                <polygon points="270,230 280,248 260,248" fill="#D0D8E8"/>
+                <polygon points="390,225 400,244 380,244" fill="#D0D8E8"/>
+                <polygon points="175,255 183,270 167,270" fill="#D0D8E8"/>
+                <polygon points="510,240 518,255 502,255" fill="#D0D8E8"/>
+                <rect x="332" y="188" width="16" height="95" rx="2" fill="white"/>
+                <rect x="308" y="218" width="64" height="16" rx="2" fill="white"/>
+                <rect x="140" y="20" width="400" height="310" rx="22" ry="22" fill="none" stroke="#B8963E" stroke-width="2.5"/>
+                <rect x="147" y="27" width="386" height="296" rx="18" ry="18" fill="none" stroke="#B8963E" stroke-width="0.8" opacity="0.5"/>
+              </g>
+            </svg>
+          </div>
+          <div class="brand-text"><strong style="color:white;">New Creation Living</strong><span>From Benefits to
+              Belonging</span></div>
+        </div>
+        <p>Structured independent living for adults on fixed government income across Metro Atlanta.</p>
+      </div>
+      <div>
+        <h5>Navigate</h5>
+        <ul>
+          <li><a href="#" onclick="scrollToSection('about');return false;">About Us</a></li>
+          <li><a href="#" onclick="scrollToSection('benefits');return false;">Get Benefits</a></li>
+          <li><a href="#" onclick="scrollToSection('faq');return false;">FAQ</a></li>
+          <li><a href="#" onclick="scrollToSection('referral');return false;">Referral</a></li>
+          <li><a href="#" onclick="scrollToSection('locations');return false;">Locations</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li>(404) 731-2371</li>
+          <li>info@blacknetllc.com</li>
+          <li>Atlanta &amp; Middle Georgia</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 New Creation Living. All rights reserved.</span>
+      <span>Structured Independent Living — Not a licensed personal care home.</span>
+    </div>
+  </footer>
+
+  <script>
+    function scrollToSection(id) {
+      const el = document.getElementById('page-' + id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+      document.getElementById('navLinks').classList.remove('open');
+    }
+
+    // legacy support
+    function showPage(id) {
+      scrollToSection(id);
+    }
+
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+
+    function toggleAccordion(headBtn) {
+      const acc = headBtn.parentElement;
+      const body = acc.querySelector('.accordion-body');
+      const isOpen = acc.classList.contains('open');
+      // close siblings in same group
+      acc.parentElement.querySelectorAll('.accordion').forEach(a => {
+        a.classList.remove('open');
+        a.querySelector('.accordion-body').style.maxHeight = null;
+      });
+      if (!isOpen) {
+        acc.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 40 + 'px';
+      }
+    }
+
+    function showFaqGroup(name, tabBtn) {
+      document.querySelectorAll('.faq-group').forEach(g => g.classList.remove('active'));
+      document.getElementById('faq-' + name).classList.add('active');
+      document.querySelectorAll('.faq-tab').forEach(t => t.classList.remove('active'));
+      tabBtn.classList.add('active');
+    }
+
+    function handleSubmit(e, type) {
+      e.preventDefault();
+      let formId;
+      if (type === 'referral') formId = 'referralForm';
+      else if (type === 'benefits') formId = 'benefitsForm';
+
+      if (formId) {
+        document.getElementById(formId).style.display = 'none';
+      }
+      document.getElementById(type + '-confirm').classList.add('show');
+    }
+
+    function showHowFlow(flowId, tabBtn) {
+      document.querySelectorAll('.how-flow').forEach(f => f.classList.remove('active-flow'));
+      const targetFlow = document.getElementById('flow-' + flowId);
+      if (targetFlow) {
+        targetFlow.classList.add('active-flow');
+      }
+      document.querySelectorAll('.how-tab').forEach(t => t.classList.remove('active'));
+      tabBtn.classList.add('active');
+    }
+
+
+    // Dynamic navigation indicator sliding update
+    function updateNavIndicator() {
+      if (window.innerWidth <= 900) {
+        const indicator = document.getElementById('navIndicator');
+        if (indicator) indicator.style.display = 'none';
+        return;
+      }
+      const activeBtn = document.querySelector('.nav-links button.active');
+      const indicator = document.getElementById('navIndicator');
+      if (activeBtn && indicator) {
+        indicator.style.display = 'block';
+        // Calculate offset and width subtract offsets for inner underline look
+        indicator.style.left = (activeBtn.offsetLeft + 16) + 'px';
+        indicator.style.width = (activeBtn.offsetWidth - 32) + 'px';
+      }
+    }
+
+    // Hero slideshow background transitions
+    function initHeroSlideshow() {
+      const slides = document.querySelectorAll('.hero-slide');
+      if (slides.length === 0) return;
+      let currentIndex = 0;
+      setInterval(() => {
+        slides[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add('active');
+      }, 5000);
+    }
+
+    // Smooth scroll back to top function
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Scroll spy active indicator sync
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('.page');
+      const navButtons = document.querySelectorAll('.nav-links button[data-page]');
+      let current = '';
+
+      // Check which section is in view, adjusting scroll margin offset
+      const scrollPosition = window.scrollY + 120;
+
+      sections.forEach(sec => {
+        const top = sec.offsetTop;
+        const height = sec.offsetHeight;
+        if (scrollPosition >= top && scrollPosition < top + height) {
+          current = sec.id.replace('page-', '');
+        }
+      });
+
+      // Handle home as default at top of screen
+      if (window.scrollY < 80) {
+        current = 'home';
+      }
+
+      navButtons.forEach(btn => {
+        if (btn.getAttribute('data-page') === current) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      // Sync sliding nav indicator position
+      updateNavIndicator();
+
+      // Toggle Back to Top arrow visibility
+      const btt = document.getElementById('backToTop');
+      if (btt) {
+        if (window.scrollY > 400) {
+          btt.classList.add('show');
+        } else {
+          btt.classList.remove('show');
+        }
+      }
+    });
+
+    // Run scroll handler on load to set initial state
+    window.dispatchEvent(new Event('scroll'));
+    initHeroSlideshow();
+    window.addEventListener('resize', updateNavIndicator);
+    window.addEventListener('load', updateNavIndicator);
+  </script>
+
+  <!-- Back to top button -->
+  <button id="backToTop" class="back-to-top" aria-label="Back to top" onclick="scrollToTop()">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+</body>
+
+</html>
