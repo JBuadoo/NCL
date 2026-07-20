@@ -857,7 +857,12 @@
       margin-bottom: 8px;
     }
 
-    .accordion-tag.obj {
+    .accordion-tag.general {
+      color: var(--sage);
+      background: var(--sage-light);
+    }
+
+    .accordion-tag.common {
       color: #B5762A;
       background: #FBEEDA;
     }
@@ -2600,120 +2605,216 @@
           </div>
 
           <div style="max-width: 1000px; margin: 0 auto;">
-
-            <div class="accordion">
-              <button class="accordion-head" onclick="toggleAccordion(this)">
-                <div><span class="accordion-tag">Cost</span>
-                  <div class="accordion-q">How much does it actually cost?</div>
-                </div>
-                <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
-                    <path d="M12 5v14M5 12h14" />
-                  </svg></div>
-              </button>
-              <div class="accordion-body">
-                <div class="accordion-body-inner">
-                  It's $25 a day — $775 a month — and that includes your furnished room, all utilities, Wi-Fi, laundry
-                  access, on-site management and more. There's no separate deposit stack and no surprise bills.
-                  <div class="say-this">Think of it like this: if you tried to piece together a room, electric, water,
-                    gas, Wi-Fi, and laundry on your own, you'd likely spend $1,600–$1,800 a month. We give you all of it
-                    for $775.</div>
-                </div>
-              </div>
+            <div class="faq-tabs">
+              <button class="faq-tab active" onclick="showFaqGroup('general', this)">General Questions</button>
+              <button class="faq-tab" onclick="showFaqGroup('common', this)">Common Questions</button>
             </div>
 
-            <div class="accordion">
-              <button class="accordion-head" onclick="toggleAccordion(this)">
-                <div><span class="accordion-tag">Eligibility</span>
-                  <div class="accordion-q">Who is New Creation Living for?</div>
-                </div>
-                <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
-                    <path d="M12 5v14M5 12h14" />
-                  </svg></div>
-              </button>
-              <div class="accordion-body">
-                <div class="accordion-body-inner">
-                  Adults who receive SSI, SSDI, VA Pension, VA Disability, or Social Security — and who can manage their
-                  own daily life independently. We're not a personal care home or clinical facility, so residents need
-                  to be able to handle their own basic self-care.
-                </div>
-              </div>
-            </div>
-
-            <div class="accordion">
-              <button class="accordion-head" onclick="toggleAccordion(this)">
-                <div><span class="accordion-tag">Timeline</span>
-                  <div class="accordion-q">How fast can someone move in?</div>
-                </div>
-                <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
-                    <path d="M12 5v14M5 12h14" />
-                  </svg></div>
-              </button>
-              <div class="accordion-body">
-                <div class="accordion-body-inner">
-                  Most approved applicants move in within 24–48 hours. There's no months-long waitlist like traditional
-                  affordable housing or Section 8.
-                </div>
-              </div>
-            </div>
-
-            <div class="accordion">
-              <button class="accordion-head" onclick="toggleAccordion(this)">
-                <div><span class="accordion-tag">Comparison</span>
-                  <div class="accordion-q">IS NEW CREATION LIVING A PERSONAL CARE HOME or a nursing home? if not, what
-                    are the differences?</div>
-                </div>
-                <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
-                    <path d="M12 5v14M5 12h14" />
-                  </svg></div>
-              </button>
-              <div class="accordion-body">
-                <div class="accordion-body-inner">
-                  New Creation Living provides an All-Inclusive home for independent adults on fixed income. We do not
-                  provide personal care residences. The difference is level of care. A personal care home provides
-                  housing and assistance with daily tasks (like bathing or eating meals) in a residential, independent
-                  setting. Nursing homes offer 24/7 medical supervision and skilled clinical care for individuals with
-                  chronic illnesses or complex health needs. Since our residents are independent of intensive care &amp;
-                  assistance, we do not operate as a PCH (personal care home) or Nursing home.
-                </div>
-              </div>
-            </div>
-
-            <div class="accordion">
-              <button class="accordion-head" onclick="toggleAccordion(this)">
-                <div><span class="accordion-tag">Benefits</span>
-                  <div class="accordion-q">What if I don't have my benefits approved yet?</div>
-                </div>
-                <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
-                    <path d="M12 5v14M5 12h14" />
-                  </svg></div>
-              </button>
-              <div class="accordion-body">
-                <div class="accordion-body-inner">
-                  That's not a dead end — it's something we can help with. We work with individuals in the process of
-                  applying for SSI, SSDI, VA benefits, or Social Security, at no upfront cost to you. Once approved,
-                  you'd have the income to move in.
-                </div>
-              </div>
-            </div>
-
-            <div class="accordion">
-              <button class="accordion-head" onclick="toggleAccordion(this)">
-                <div><span class="accordion-tag">Referrals</span>
-                  <div class="accordion-q">I'm a social worker/discharge planner — how does referring someone work?
+            <div id="faq-general" class="faq-group active">
+              <div class="accordion">
+                <button class="accordion-head" onclick="toggleAccordion(this)">
+                  <div><span class="accordion-tag general">Cost</span>
+                    <div class="accordion-q">How much does it actually cost?</div>
+                  </div>
+                  <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg></div>
+                </button>
+                <div class="accordion-body">
+                  <div class="accordion-body-inner">
+                    It's $25 a day — $775 a month — and that includes your furnished room, all utilities, Wi-Fi, laundry
+                    access, on-site management and more. There's no separate deposit stack and no surprise bills.
+                    <div class="say-this">Think of it like this: if you tried to piece together a room, electric, water,
+                      gas, Wi-Fi, and laundry on your own, you'd likely spend $1,600–$1,800 a month. We give you all of it
+                      for $775.</div>
                   </div>
                 </div>
-                <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
-                    <path d="M12 5v14M5 12h14" />
-                  </svg></div>
-              </button>
-              <div class="accordion-body">
-                <div class="accordion-body-inner">
-                  Use the Referral tab above. Submit the person's basic information and their benefit type, and we'll
-                  follow up directly — usually the same day. We can place most referrals within 24–48 hours.
+              </div>
+
+              <div class="accordion">
+                <button class="accordion-head" onclick="toggleAccordion(this)">
+                  <div><span class="accordion-tag general">Eligibility</span>
+                    <div class="accordion-q">Who is New Creation Living for?</div>
+                  </div>
+                  <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg></div>
+                </button>
+                <div class="accordion-body">
+                  <div class="accordion-body-inner">
+                    Adults who receive SSI, SSDI, VA Pension, VA Disability, or Social Security. Specifically for independent adults who can manage their own daily lives. We're not a personal care home or clinical facility, so residents need to be able to handle their own basic self-care.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion">
+                <button class="accordion-head" onclick="toggleAccordion(this)">
+                  <div><span class="accordion-tag general">Timeline</span>
+                    <div class="accordion-q">How fast can someone move in?</div>
+                  </div>
+                  <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg></div>
+                </button>
+                <div class="accordion-body">
+                  <div class="accordion-body-inner">
+                    Most approved applicants move in within 24–48 hours. There's no months-long waitlist like traditional
+                    affordable housing or Section 8.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion">
+                <button class="accordion-head" onclick="toggleAccordion(this)">
+                  <div><span class="accordion-tag general">Comparison</span>
+                    <div class="accordion-q">Is New Creation Living (NCL) a Personal Care Home(PCH) or a nursing home? If not, what are the differences?</div>
+                  </div>
+                  <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg></div>
+                </button>
+                <div class="accordion-body">
+                  <div class="accordion-body-inner">
+                    New Creation Living provides all-inclusive housing for independent adults living on a fixed income. We are not a Personal Care Home (PCH) or a nursing home.
+
+                    The key difference is the level of care provided. Personal Care Homes offer housing along with assistance with activities of daily living, such as bathing, dressing, medication reminders, and meal assistance. Nursing homes provide 24/7 medical supervision and skilled nursing care for individuals with chronic illnesses or complex medical needs.
+
+                    Our residents are able to live independently and do not require personal care services or skilled nursing. As a result, New Creation Living operates as an independent, all-inclusive housing provider, not as a Personal Care Home or nursing home.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion">
+                <button class="accordion-head" onclick="toggleAccordion(this)">
+                  <div><span class="accordion-tag general">Benefits</span>
+                    <div class="accordion-q">What if I don't have my benefits approved yet?</div>
+                  </div>
+                  <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg></div>
+                </button>
+                <div class="accordion-body">
+                  <div class="accordion-body-inner">
+                    That's not a dead end. We work with individuals in the process of applying for SSI, SSDI, VA benefits, or Social Security at no upfront cost to you. Once approved, you'd have the income to move in.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion">
+                <button class="accordion-head" onclick="toggleAccordion(this)">
+                  <div><span class="accordion-tag general">Section 8</span>
+                    <div class="accordion-q">Do we accept Section 8 Vouchers?</div>
+                  </div>
+                  <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg></div>
+                </button>
+                <div class="accordion-body">
+                  <div class="accordion-body-inner">
+                    No, we do not, but we have partners whom we can refer you to. Please complete the "Apply for Residency" form.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion">
+                <button class="accordion-head" onclick="toggleAccordion(this)">
+                  <div><span class="accordion-tag general">Referrals</span>
+                    <div class="accordion-q">I'm a social worker/discharge planner — how does referring someone work?
+                    </div>
+                  </div>
+                  <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg></div>
+                </button>
+                <div class="accordion-body">
+                  <div class="accordion-body-inner">
+                    Use the "Apply for residency" tab above. Submit the person's basic information and their benefit type, and we'll follow up directly. Usually the same day. We can place most referrals within 24–48 hours.
+                  </div>
                 </div>
               </div>
             </div>
 
+            <div id="faq-common" class="faq-group">
+              <div class="accordion">
+                <button class="accordion-head" onclick="toggleAccordion(this)">
+                  <div><span class="accordion-tag common">Cost</span>
+                    <div class="accordion-q">"That's too expensive, I can't afford that."</div>
+                  </div>
+                  <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg></div>
+                </button>
+                <div class="accordion-body">
+                  <div class="accordion-body-inner">
+                    New Creation Living isn't a waitlist program or a temporary stop. It's a home. One built specifically for people who value dignity and deserve better than the bare minimum most programs offer. Government assistance can bring your rent down, but you are often forced to accept a lower standard of living, often with undesirable housing conditions. Come see it for yourself. Schedule a tour today and experience the difference in person.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion">
+                <button class="accordion-head" onclick="toggleAccordion(this)">
+                  <div><span class="accordion-tag common">Structure</span>
+                    <div class="accordion-q">"I don't want to live with a bunch of rules. I like my freedom."</div>
+                  </div>
+                  <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg></div>
+                </button>
+                <div class="accordion-body">
+                  <div class="accordion-body-inner">
+                    The structure isn't there to control you — it's there to protect you. A curfew, a no-guest policy, and a clean and sober environment mean your neighbors are following the same rules you are. You get to sleep at night without worrying about who's coming and going. Most residents say the structure ends up being one of their favorite things about living here.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion">
+                <button class="accordion-head" onclick="toggleAccordion(this)">
+                  <div><span class="accordion-tag common">Community</span>
+                    <div class="accordion-q">"I don't want to share a house with strangers."</div>
+                  </div>
+                  <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg></div>
+                </button>
+                <div class="accordion-body">
+                  <div class="accordion-body-inner">
+                    Everyone living in the house went through the same screening you would. A background check and house rules orientation. They're not random strangers; they're adults in similar situations who want the same thing you do. Sharing the home is exactly what keeps the price at $25 a day, compared to $65 a night (the average price of a motel in GA).
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion">
+                <button class="accordion-head" onclick="toggleAccordion(this)">
+                  <div><span class="accordion-tag common">Location</span>
+                    <div class="accordion-q">"Where is it? What if it's not near where I need to be?"</div>
+                  </div>
+                  <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg></div>
+                </button>
+                <div class="accordion-body">
+                  <div class="accordion-body-inner">
+                    Our properties are chosen specifically for proximity to public transit, bus lines in particular, so you don't need a car to get around.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion">
+                <button class="accordion-head" onclick="toggleAccordion(this)">
+                  <div><span class="accordion-tag common">Timing</span>
+                    <div class="accordion-q">Let me think about it. I'll get back to you.</div>
+                  </div>
+                  <div class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg></div>
+                </button>
+                <div class="accordion-body">
+                  <div class="accordion-body-inner">
+                    Take all the time you need. There's no pressure. The one thing worth knowing: beds do fill up, and we can't hold a spot. The application itself is free, takes about two minutes, and doesn't commit you to anything.
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
