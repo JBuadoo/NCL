@@ -272,25 +272,6 @@
         margin-top: 4px;
       }
 
-      .mobile-nav-close {
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: white;
-        border: 1px solid var(--line);
-        box-shadow: 0 4px 12px rgba(19, 31, 69, 0.08);
-      }
-
-      .mobile-nav-close svg {
-        width: 18px;
-        height: 18px;
-        stroke: var(--navy);
-        stroke-width: 2.2;
-      }
-
       .mobile-phone-card {
         display: flex;
         flex-direction: column;
@@ -336,11 +317,40 @@
       background: none;
       border: none;
       padding: 8px;
+      color: var(--navy);
     }
 
     .nav-toggle svg {
       width: 24px;
       height: 24px;
+      stroke: currentColor;
+      stroke-width: 2;
+      transition: transform 0.25s ease;
+    }
+
+    .nav-toggle .icon-line {
+      transition: opacity 0.2s ease, transform 0.25s ease;
+      transform-origin: 12px 12px;
+    }
+
+    .nav-toggle .icon-line.top,
+    .nav-toggle .icon-line.middle,
+    .nav-toggle .icon-line.bottom {
+      opacity: 1;
+      transform: none;
+    }
+
+    .nav-toggle.is-open .icon-line.top {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    .nav-toggle.is-open .icon-line.middle {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .nav-toggle.is-open .icon-line.bottom {
+      transform: translateY(-6px) rotate(-45deg);
     }
 
     @media(max-width:900px) {
@@ -375,6 +385,10 @@
         font-size: 1.05rem;
         border-bottom: 1px solid var(--line);
         border-radius: 0;
+      }
+
+      .nav-links .nav-cta {
+        display: none;
       }
 
       .nav-toggle {
@@ -513,6 +527,39 @@
       display: flex;
       gap: 14px;
       flex-wrap: wrap;
+    }
+
+    .hero-scroll-down {
+      position: absolute;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      z-index: 4;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(250, 247, 241, 0.92);
+      color: var(--navy);
+      border: 1px solid rgba(27, 43, 94, 0.12);
+      box-shadow: 0 10px 24px rgba(19, 31, 69, 0.2);
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .hero-scroll-down:hover,
+    .hero-scroll-down:focus-visible {
+      transform: translateX(-50%) translateY(-2px);
+      background: white;
+      box-shadow: 0 14px 28px rgba(19, 31, 69, 0.24);
+      outline: none;
+    }
+
+    .hero-scroll-down svg {
+      width: 20px;
+      height: 20px;
     }
 
     .btn {
@@ -2417,9 +2464,11 @@
           <span>From Benefits to Belonging</span>
         </div>
       </a>
-      <button class="nav-toggle" aria-label="Toggle menu" onclick="toggleNav()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#1B2B5E" stroke-width="2">
-          <path d="M3 6h18M3 12h18M3 18h18" />
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" onclick="toggleNav()">
+        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path class="icon-line top" d="M3 6h18" />
+          <path class="icon-line middle" d="M3 12h18" />
+          <path class="icon-line bottom" d="M3 18h18" />
         </svg>
       </button>
       <div class="nav-links" id="navLinks">
@@ -2428,12 +2477,6 @@
             <p class="mobile-menu-label">Navigate</p>
             <p class="mobile-menu-title">New Creation Living</p>
           </div>
-          <button class="mobile-nav-close" aria-label="Close menu" onclick="toggleNav()">
-            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 6L6 18" />
-              <path d="M6 6l12 12" />
-            </svg>
-          </button>
         </div>
         <a class="mobile-phone-card" href="tel:+14047312371">
           <span class="mobile-phone-label">Call us today</span>
@@ -2504,7 +2547,7 @@
         </div>
       </section>
 
-      <section class="band alt">
+      <section id="philosophy" class="band alt">
         <div class="wrap">
           <div class="philosophy-showcase">
             <div class="philosophy-content">
@@ -3404,7 +3447,9 @@
         el.scrollIntoView({ behavior: 'smooth' });
       }
       const nav = document.getElementById('navLinks');
-      nav.classList.remove('open');
+      if (nav) {
+        nav.classList.remove('open');
+      }
       document.body.classList.remove('menu-open');
     }
 
@@ -3415,8 +3460,15 @@
 
     function toggleNav() {
       const nav = document.getElementById('navLinks');
+      const toggle = document.querySelector('.nav-toggle');
       const isOpen = nav.classList.toggle('open');
       document.body.classList.toggle('menu-open', isOpen);
+
+      if (toggle) {
+        toggle.classList.toggle('is-open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        toggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+      }
     }
 
     function toggleAccordion(headBtn) {
