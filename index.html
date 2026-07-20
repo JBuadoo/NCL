@@ -2484,10 +2484,11 @@
         </a>
         <button data-page="home" onclick="scrollToSection('home')">Home</button>
         <button data-page="about" onclick="scrollToSection('about')">About Us</button>
+        <button data-page="referral" onclick="scrollToSection('referral')">Apply for residency</button>
         <button data-page="benefits" onclick="scrollToSection('benefits')">Get Benefits</button>
-        <button data-page="faq" onclick="scrollToSection('faq')">FAQ</button>
-        <button data-page="referral" onclick="scrollToSection('referral')">Referral</button>
         <button data-page="locations" onclick="scrollToSection('locations')">Locations</button>
+        <button data-page="faq" onclick="scrollToSection('faq'); return false;">FAQ</button>
+
         <button class="nav-cta" onclick="scrollToSection('referral')">(404) 731-2371</button>
         <div class="nav-indicator" id="navIndicator"></div>
       </div>
@@ -2863,6 +2864,122 @@
       </section>
     </div>
 
+    <!-- ============ REFERRAL ============ -->
+    <div class="page" id="page-referral">
+      <section class="band" style="padding-top:56px;">
+        <div class="wrap">
+          <div class="sec-head" style="margin-bottom:44px;">
+            <span class="eyebrow">For Professionals &amp; Families</span>
+            <h2>Apply for Residency</h2>
+            <p>Whether you are filing it out for yourself, a family member, or referral partner, please complete the form below.</p>
+          </div>
+
+          <div class="split">
+            <div>
+              <div class="info-card">
+                <h3><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 7v5l3 3" />
+                  </svg>What happens after you submit</h3>
+                <ul>
+                  <li>We review the referral and confirm benefit type and eligibility</li>
+                  <li>We contact you or the individual directly, usually within a few hours</li>
+                  <li>If it's a fit, we can place most referrals within 24–48 hours</li>
+                  <li>You'll get a direct line to our team for follow-up</li>
+                </ul>
+              </div>
+              <div class="info-card">
+                <h3><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                    <path d="M20 21a8 8 0 10-16 0" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>Who we accept referrals for</h3>
+                <ul>
+                  <li>Adults on SSI, SSDI, VA Pension, VA Disability, or Social Security</li>
+                  <li>Patients being discharged from acute care, rehab, or skilled nursing</li>
+                  <li>Veterans transitioning from VA housing programs</li>
+                  <li>Anyone on fixed income!</li>
+                </ul>
+              </div>
+              <div class="info-card" style="background:var(--navy);border:none;">
+                <h3 style="color:white;"><svg viewBox="0 0 24 24" fill="none" stroke="#E4CE8C" stroke-width="1.8">
+                    <path
+                      d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+                  </svg>Prefer to call?</h3>
+                <p style="color:rgba(255,255,255,0.75);font-size:1.3rem;font-weight:700;margin-top:8px;">(404) 731-2371
+                </p>
+                <p style="color:rgba(255,255,255,0.6);font-size:0.88rem;margin-top:4px;">info@blacknetllc.com</p>
+              </div>
+            </div>
+
+            <div class="form-card">
+              <h3>Referral form</h3>
+              <p>Takes about 2 minutes. We'll follow up directly.</p>
+
+              <form id="referralForm" onsubmit="handleSubmit(event,'referral')">
+                <div class="field-row">
+                  <div class="field">
+                    <label for="ref-name">Your name</label>
+                    <input type="text" id="ref-name" required>
+                  </div>
+                  <div class="field">
+                    <label for="ref-role">Your role</label>
+                    <select id="ref-role" required>
+                      <option value="">Select one</option>
+                      <option>Hospital discharge planner</option>
+                      <option>Social worker / case manager</option>
+                      <option>VA / veteran services staff</option>
+                      <option>Family member</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="ref-org">Organization (if applicable)</label>
+                    <input type="text" id="ref-org">
+                  </div>
+                  <div class="field">
+                    <label for="ref-phone">Your phone number</label>
+                    <input type="tel" id="ref-phone" required>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="ref-client">Name of person being referred</label>
+                  <input type="text" id="ref-client" required>
+                </div>
+                <div class="field">
+                  <label>Their benefit type</label>
+                  <div class="radio-group">
+                    <label class="radio-pill"><input type="radio" name="ref-benefit" required>SSI</label>
+                    <label class="radio-pill"><input type="radio" name="ref-benefit">SSDI</label>
+                    <label class="radio-pill"><input type="radio" name="ref-benefit">VA Benefits</label>
+                    <label class="radio-pill"><input type="radio" name="ref-benefit">Social Security</label>
+                    <label class="radio-pill"><input type="radio" name="ref-benefit">Not yet approved</label>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="ref-notes">Anything we should know about their situation?</label>
+                  <textarea id="ref-notes" rows="4"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Referral</button>
+                <p class="form-note">We typically respond within a few hours during business hours.</p>
+              </form>
+
+              <div class="confirm-box" id="referral-confirm">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                  <path d="M22 4L12 14.01l-3-3" />
+                </svg>
+                <h4>Referral received</h4>
+                <p>Thank you — our team will follow up shortly. For anything urgent, call us directly at (404) 731-2371.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
     <!-- ============ GET BENEFITS ============ -->
     <div class="page" id="page-benefits">
       <section class="band" style="padding-top:56px;">
@@ -2968,8 +3085,54 @@
       </section>
     </div>
 
+    <!-- ============ LOCATIONS ============ -->
+    <div class="page" id="page-locations">
+
+          <section class="band" style="padding-top:56px;">
+            <div class="wrap">
+              <div class="sec-head">
+                <span class="eyebrow">Locations</span>
+            <h2>Where we are</h2>
+            <p>Every property is chosen for proximity to public transit, so you don't need a car to get where you're
+              going.</p>
+          </div>
+
+          <div class="loc-card">
+            <div class="loc-map" aria-label="Satellite view of the South Fulton location">
+              <iframe class="loc-map-frame"
+                src="https://www.google.com/maps?q=3790+Village+Dr+SW+Atlanta+GA+30331&z=18&output=embed&maptype=satellite"
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen></iframe>
+            </div>
+            <div class="loc-body">
+              <span class="loc-status">Open &amp; Accepting Residents</span>
+              <h3>South Fulton Location</h3>
+              <p class="loc-addr">3790 Village Dr SW, Atlanta, GA 30331</p>
+              <div class="loc-feats">
+                <span class="loc-feat">Near MARTA bus routes</span>
+                <span class="loc-feat">All-inclusive $25/day</span>
+                <span class="loc-feat">On-site house manager</span>
+                <span class="loc-feat">Shared common areas</span>
+              </div>
+              <div class="loc-actions">
+                <button class="btn btn-primary" type="button" onclick="scrollToSection('referral')">Apply to This Location</button>
+                <button class="btn btn-ghost" type="button" onclick="openLocationGallery(0)">View Location</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="expansion-note">
+            <h4>Expanding across Metro &amp; Middle Georgia</h4>
+            <p>We're actively adding new locations. Call (404) 731-2371 to ask about upcoming availability in your area.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
     <!-- ============ FAQ ============ -->
     <div class="page" id="page-faq">
+
       <section class="band" style="padding-top:56px;">
         <div class="wrap">
           <div class="sec-head">
@@ -3194,183 +3357,7 @@
       </section>
     </div>
 
-    <!-- ============ REFERRAL ============ -->
-    <div class="page" id="page-referral">
-      <section class="band" style="padding-top:56px;">
-        <div class="wrap">
-          <div class="sec-head" style="margin-bottom:44px;">
-            <span class="eyebrow">For Professionals &amp; Families</span>
-            <h2>Apply for Residency</h2>
-            <p>Whether you are filing it out for yourself, a family member, or referral partner, please complete the form below.</p>
-          </div>
-
-          <div class="split">
-            <div>
-              <div class="info-card">
-                <h3><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
-                    <circle cx="12" cy="12" r="9" />
-                    <path d="M12 7v5l3 3" />
-                  </svg>What happens after you submit</h3>
-                <ul>
-                  <li>We review the referral and confirm benefit type and eligibility</li>
-                  <li>We contact you or the individual directly, usually within a few hours</li>
-                  <li>If it's a fit, we can place most referrals within 24–48 hours</li>
-                  <li>You'll get a direct line to our team for follow-up</li>
-                </ul>
-              </div>
-              <div class="info-card">
-                <h3><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
-                    <path d="M20 21a8 8 0 10-16 0" />
-                    <circle cx="12" cy="7" r="4" />
-                  </svg>Who we accept referrals for</h3>
-                <ul>
-                  <li>Adults on SSI, SSDI, VA Pension, VA Disability, or Social Security</li>
-                  <li>Patients being discharged from acute care, rehab, or skilled nursing</li>
-                  <li>Veterans transitioning from VA housing programs</li>
-                  <li>Anyone on fixed income!</li>
-                </ul>
-              </div>
-              <div class="info-card" style="background:var(--navy);border:none;">
-                <h3 style="color:white;"><svg viewBox="0 0 24 24" fill="none" stroke="#E4CE8C" stroke-width="1.8">
-                    <path
-                      d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
-                  </svg>Prefer to call?</h3>
-                <p style="color:rgba(255,255,255,0.75);font-size:1.3rem;font-weight:700;margin-top:8px;">(404) 731-2371
-                </p>
-                <p style="color:rgba(255,255,255,0.6);font-size:0.88rem;margin-top:4px;">info@blacknetllc.com</p>
-              </div>
-            </div>
-
-            <div class="form-card">
-              <h3>Referral form</h3>
-              <p>Takes about 2 minutes. We'll follow up directly.</p>
-
-              <form id="referralForm" onsubmit="handleSubmit(event,'referral')">
-                <div class="field-row">
-                  <div class="field">
-                    <label for="ref-name">Your name</label>
-                    <input type="text" id="ref-name" required>
-                  </div>
-                  <div class="field">
-                    <label for="ref-role">Your role</label>
-                    <select id="ref-role" required>
-                      <option value="">Select one</option>
-                      <option>Hospital discharge planner</option>
-                      <option>Social worker / case manager</option>
-                      <option>VA / veteran services staff</option>
-                      <option>Family member</option>
-                      <option>Other</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="field-row">
-                  <div class="field">
-                    <label for="ref-org">Organization (if applicable)</label>
-                    <input type="text" id="ref-org">
-                  </div>
-                  <div class="field">
-                    <label for="ref-phone">Your phone number</label>
-                    <input type="tel" id="ref-phone" required>
-                  </div>
-                </div>
-                <div class="field">
-                  <label for="ref-client">Name of person being referred</label>
-                  <input type="text" id="ref-client" required>
-                </div>
-                <div class="field">
-                  <label>Their benefit type</label>
-                  <div class="radio-group">
-                    <label class="radio-pill"><input type="radio" name="ref-benefit" required>SSI</label>
-                    <label class="radio-pill"><input type="radio" name="ref-benefit">SSDI</label>
-                    <label class="radio-pill"><input type="radio" name="ref-benefit">VA Benefits</label>
-                    <label class="radio-pill"><input type="radio" name="ref-benefit">Social Security</label>
-                    <label class="radio-pill"><input type="radio" name="ref-benefit">Not yet approved</label>
-                  </div>
-                </div>
-                <div class="field">
-                  <label for="ref-notes">Anything we should know about their situation?</label>
-                  <textarea id="ref-notes" rows="4"></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Submit Referral</button>
-                <p class="form-note">We typically respond within a few hours during business hours.</p>
-              </form>
-
-              <div class="confirm-box" id="referral-confirm">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8">
-                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-                  <path d="M22 4L12 14.01l-3-3" />
-                </svg>
-                <h4>Referral received</h4>
-                <p>Thank you — our team will follow up shortly. For anything urgent, call us directly at (404) 731-2371.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-
-    <!-- ============ LOCATIONS ============ -->
-    <div class="page" id="page-locations">
-      <section class="band" style="padding-top:56px;">
-        <div class="wrap">
-          <div class="sec-head">
-            <span class="eyebrow">Locations</span>
-            <h2>Where we are</h2>
-            <p>Every property is chosen for proximity to public transit, so you don't need a car to get where you're
-              going.</p>
-          </div>
-
-          <div class="loc-card">
-            <div class="loc-map" aria-label="Satellite view of the South Fulton location">
-              <iframe class="loc-map-frame"
-                src="https://www.google.com/maps?q=3790+Village+Dr+SW+Atlanta+GA+30331&z=18&output=embed&maptype=satellite"
-                loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-                allowfullscreen></iframe>
-            </div>
-            <div class="loc-body">
-              <span class="loc-status">Open &amp; Accepting Residents</span>
-              <h3>South Fulton Location</h3>
-              <p class="loc-addr">3790 Village Dr SW, Atlanta, GA 30331</p>
-              <div class="loc-feats">
-                <span class="loc-feat">Near MARTA bus routes</span>
-                <span class="loc-feat">All-inclusive $25/day</span>
-                <span class="loc-feat">On-site house manager</span>
-                <span class="loc-feat">Shared common areas</span>
-              </div>
-              <div class="loc-actions">
-                <button class="btn btn-primary" type="button" onclick="scrollToSection('referral')">Apply to This Location</button>
-                <button class="btn btn-ghost" type="button" onclick="openLocationGallery(0)">View Location</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="expansion-note">
-            <h4>Expanding across Metro &amp; Middle Georgia</h4>
-            <p>We're actively adding new locations. Call (404) 731-2371 to ask about upcoming availability in your area.
-            </p>
-          </div>
-        </div>
-      </section>
-    </div>
-
   </main>
-
-  <div class="location-modal" id="locationModal" aria-hidden="true">
-    <div class="location-modal-backdrop" data-close-modal="true"></div>
-    <div class="location-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="locationModalTitle">
-      <button class="location-modal-close" type="button" aria-label="Close gallery" onclick="closeLocationGallery()">×</button>
-      <div class="location-modal-header">
-        <span class="loc-status">South Fulton Location</span>
-        <h3 id="locationModalTitle">Property views</h3>
-      </div>
-      <div class="location-gallery-main">
-        <img id="locationGalleryImage" src="img/IhmE7JRA.jpeg" alt="South Fulton location view">
-      </div>
-      <div class="location-gallery-thumbs" id="locationGalleryThumbs"></div>
-    </div>
-  </div>
 
   <footer>
     <div class="footer-grid">
