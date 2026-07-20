@@ -34,12 +34,22 @@
       scroll-behavior: smooth;
     }
 
+    html,
+    body {
+      overflow-x: hidden;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       color: var(--charcoal);
       background: var(--cream);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      padding-top: 76px;
     }
 
     h1,
@@ -101,12 +111,16 @@
 
     /* ===== NAV ===== */
     header {
-      position: sticky;
+      position: fixed;
       top: 0;
-      z-index: 100;
+      left: 0;
+      right: 0;
+      z-index: 300;
       background: rgba(250, 247, 241, 0.92);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--line);
+      overflow: visible;
+      width: 100%;
     }
 
     nav {
@@ -116,6 +130,9 @@
       max-width: 1180px;
       margin: 0 auto;
       padding: 14px 32px;
+      width: 100%;
+      max-width: 100%;
+      min-height: 76px;
     }
 
     .brand {
@@ -206,6 +223,14 @@
       display: none;
     }
 
+    .mobile-menu-top {
+      display: none;
+    }
+
+    .mobile-phone-card {
+      display: none;
+    }
+
     @media(max-width:900px) {
       .nav-links button.active::after {
         content: "";
@@ -221,6 +246,75 @@
         border-radius: 10px;
         display: block;
         /* show vertical line on mobile */
+      }
+
+      .mobile-menu-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 4px 18px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .mobile-menu-label {
+        font-size: 0.72rem;
+        letter-spacing: 1.3px;
+        text-transform: uppercase;
+        color: var(--gold);
+        font-weight: 700;
+      }
+
+      .mobile-menu-title {
+        font-family: 'Fraunces', serif;
+        font-size: 1.1rem;
+        color: var(--navy);
+        margin-top: 4px;
+      }
+
+      .mobile-nav-close {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        border: 1px solid var(--line);
+        box-shadow: 0 4px 12px rgba(19, 31, 69, 0.08);
+      }
+
+      .mobile-nav-close svg {
+        width: 18px;
+        height: 18px;
+        stroke: var(--navy);
+        stroke-width: 2.2;
+      }
+
+      .mobile-phone-card {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        padding: 14px 16px;
+        margin: 6px 0 14px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+        color: white;
+        box-shadow: 0 10px 24px rgba(19, 31, 69, 0.16);
+      }
+
+      .mobile-phone-label {
+        font-size: 0.72rem;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        color: var(--gold-light);
+        font-weight: 700;
+      }
+
+      .mobile-phone-number {
+        font-size: 1rem;
+        font-weight: 700;
+        color: white;
       }
     }
 
@@ -252,15 +346,23 @@
     @media(max-width:900px) {
       .nav-links {
         position: fixed;
-        inset: 64px 0 0 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        max-width: 100%;
+        min-height: 100dvh;
         background: var(--cream);
         flex-direction: column;
         align-items: stretch;
-        padding: 20px;
+        padding: calc(84px + env(safe-area-inset-top)) 20px calc(24px + env(safe-area-inset-bottom));
         gap: 6px;
         transform: translateX(100%);
         transition: transform 0.25s ease;
         overflow-y: auto;
+        overflow-x: hidden;
+        z-index: 130;
       }
 
       .nav-links.open {
@@ -277,6 +379,8 @@
 
       .nav-toggle {
         display: block;
+        position: relative;
+        z-index: 150;
       }
     }
 
@@ -307,6 +411,8 @@
       position: relative;
       overflow: hidden;
       padding: 40px 32px 36px;
+      width: 100%;
+      max-width: 100%;
     }
 
     .hero-slides {
@@ -316,6 +422,7 @@
       width: 100%;
       height: 100%;
       z-index: 1;
+      overflow: hidden;
     }
 
     .hero-slide {
@@ -324,8 +431,11 @@
       left: 0;
       width: 100%;
       height: 100%;
+      min-width: 0;
       background-size: cover;
-      background-position: center;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.03);
       opacity: 0;
       transition: opacity 1.8s ease-in-out;
     }
@@ -1164,8 +1274,9 @@
       border-radius: 18px;
       overflow: hidden;
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: minmax(320px, 360px) 1fr;
       margin-bottom: 28px;
+      box-shadow: var(--shadow);
     }
 
     @media(max-width:760px) {
@@ -1176,19 +1287,21 @@
 
     .loc-map {
       background: linear-gradient(135deg, var(--navy), var(--navy-deep));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 30px;
+      padding: 0;
       position: relative;
-      min-height: 200px;
+      min-height: 260px;
+      overflow: hidden;
     }
 
-    .loc-map svg {
-      width: 60px;
-      height: 60px;
-      stroke: var(--gold-light);
+    .loc-map-frame {
+      width: 100%;
+      height: 100%;
+      min-height: 260px;
+      border: 0;
+      display: block;
+      filter: saturate(0.95) contrast(1.06);
     }
+
 
     .loc-body {
       padding: 32px;
@@ -1269,6 +1382,152 @@
     .expansion-note p {
       color: #5B6478;
       font-size: 0.94rem;
+    }
+
+    .location-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 300;
+    }
+
+    .location-modal.open {
+      display: flex;
+    }
+
+    .location-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(7, 16, 34, 0.72);
+      backdrop-filter: blur(4px);
+    }
+
+    .location-modal-dialog {
+      position: relative;
+      width: min(920px, 100%);
+      max-height: 90vh;
+      overflow: auto;
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+      z-index: 1;
+    }
+
+    .location-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--cream);
+      color: var(--navy);
+      font-size: 1.35rem;
+      line-height: 1;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .location-modal-close:hover,
+    .location-modal-close:focus-visible {
+      transform: translateY(-1px);
+      background: var(--sage-light);
+    }
+
+    .location-modal-header {
+      margin-bottom: 18px;
+      padding-right: 48px;
+    }
+
+    .location-modal-header h3 {
+      font-size: 1.3rem;
+      margin-top: 10px;
+    }
+
+    .location-gallery-main {
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      background: var(--cream);
+      box-shadow: inset 0 0 0 1px rgba(27, 43, 94, 0.06);
+    }
+
+    .location-gallery-main img {
+      width: 100%;
+      height: min(460px, 60vh);
+      object-fit: cover;
+      display: block;
+      transition: transform 0.25s ease, filter 0.25s ease;
+    }
+
+    .location-gallery-main:hover img {
+      transform: scale(1.02);
+      filter: saturate(1.05);
+    }
+
+    .location-gallery-thumbs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .location-gallery-thumb {
+      width: 84px;
+      height: 84px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      padding: 0;
+      opacity: 0.7;
+      transition: transform 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 12px rgba(19, 31, 69, 0.06);
+    }
+
+    .location-gallery-thumb:hover,
+    .location-gallery-thumb:focus-visible {
+      transform: translateY(-2px);
+      opacity: 0.95;
+      box-shadow: 0 8px 20px rgba(19, 31, 69, 0.12);
+    }
+
+    .location-gallery-thumb.active {
+      border-color: var(--gold);
+      opacity: 1;
+      box-shadow: 0 10px 24px rgba(201, 168, 76, 0.22);
+    }
+
+    .location-gallery-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+
+    .location-gallery-thumb:hover img {
+      transform: scale(1.04);
+    }
+
+    @media(max-width:760px) {
+      .location-modal-dialog {
+        padding: 18px;
+      }
+
+      .location-gallery-main img {
+        height: min(300px, 55vh);
+      }
+
+      .location-actions {
+        flex-direction: column;
+      }
+
+      .loc-actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
     }
 
 
@@ -1355,6 +1614,62 @@
       .flow-3-col {
         grid-template-columns: 1fr;
         gap: 28px;
+      }
+    }
+
+    @media(max-width:640px) {
+      nav {
+        padding: 14px 20px;
+      }
+
+      .wrap {
+        padding: 0 20px;
+      }
+
+      .hero {
+        padding: 24px 20px 28px;
+      }
+
+      .hero-inner {
+        gap: 28px;
+      }
+
+      .hero h1 {
+        font-size: clamp(2rem, 8vw, 2.7rem);
+        margin-bottom: 16px;
+      }
+
+      .hero p.lead {
+        font-size: 1rem;
+        margin-bottom: 24px;
+      }
+
+      .hero-ctas {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-ctas .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .cost-card {
+        padding: 20px;
+        border-radius: 16px;
+      }
+
+      .cost-big {
+        font-size: 3rem;
+      }
+
+      .cost-row {
+        font-size: 0.9rem;
+      }
+
+      .cost-save {
+        padding: 11px 14px;
+        font-size: 0.86rem;
       }
     }
 
@@ -2108,6 +2423,22 @@
         </svg>
       </button>
       <div class="nav-links" id="navLinks">
+        <div class="mobile-menu-top">
+          <div>
+            <p class="mobile-menu-label">Navigate</p>
+            <p class="mobile-menu-title">New Creation Living</p>
+          </div>
+          <button class="mobile-nav-close" aria-label="Close menu" onclick="toggleNav()">
+            <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 6L6 18" />
+              <path d="M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <a class="mobile-phone-card" href="tel:+14047312371">
+          <span class="mobile-phone-label">Call us today</span>
+          <span class="mobile-phone-number">(404) 731-2371</span>
+        </a>
         <button data-page="home" onclick="scrollToSection('home')">Home</button>
         <button data-page="about" onclick="scrollToSection('about')">About Us</button>
         <button data-page="benefits" onclick="scrollToSection('benefits')">Get Benefits</button>
@@ -2949,15 +3280,16 @@
           </div>
 
           <div class="loc-card">
-            <div class="loc-map" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6">
-                <path d="M12 21s7-6.5 7-11.5A7 7 0 005 9.5C5 14.5 12 21 12 21z" />
-                <circle cx="12" cy="9.5" r="2.5" />
-              </svg>
+            <div class="loc-map" aria-label="Satellite view of the South Fulton location">
+              <iframe class="loc-map-frame"
+                src="https://www.google.com/maps?q=3790+Village+Dr+SW+Atlanta+GA+30331&z=18&output=embed&maptype=satellite"
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen></iframe>
             </div>
             <div class="loc-body">
               <span class="loc-status">Open &amp; Accepting Residents</span>
               <h3>South Fulton Location</h3>
+              <p class="loc-addr">3790 Village Dr SW, Atlanta, GA 30331</p>
               <div class="loc-feats">
                 <span class="loc-feat">Near MARTA bus routes</span>
                 <span class="loc-feat">All-inclusive $25/day</span>
@@ -2965,10 +3297,8 @@
                 <span class="loc-feat">Shared common areas</span>
               </div>
               <div class="loc-actions">
-                <button class="btn btn-primary" onclick="scrollToSection('referral')">Apply to This Location</button>
-                <button class="btn btn-ghost"
-                  onclick="window.open('https://maps.google.com/?q=3790+Village+Dr+SW+Atlanta+GA+30331','_blank')">View
-                  on Map</button>
+                <button class="btn btn-primary" type="button" onclick="scrollToSection('referral')">Apply to This Location</button>
+                <button class="btn btn-ghost" type="button" onclick="openLocationGallery(0)">View Location</button>
               </div>
             </div>
           </div>
@@ -2983,6 +3313,21 @@
     </div>
 
   </main>
+
+  <div class="location-modal" id="locationModal" aria-hidden="true">
+    <div class="location-modal-backdrop" data-close-modal="true"></div>
+    <div class="location-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="locationModalTitle">
+      <button class="location-modal-close" type="button" aria-label="Close gallery" onclick="closeLocationGallery()">×</button>
+      <div class="location-modal-header">
+        <span class="loc-status">South Fulton Location</span>
+        <h3 id="locationModalTitle">Property views</h3>
+      </div>
+      <div class="location-gallery-main">
+        <img id="locationGalleryImage" src="img/IhmE7JRA.jpeg" alt="South Fulton location view">
+      </div>
+      <div class="location-gallery-thumbs" id="locationGalleryThumbs"></div>
+    </div>
+  </div>
 
   <footer>
     <div class="footer-grid">
@@ -3058,7 +3403,9 @@
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' });
       }
-      document.getElementById('navLinks').classList.remove('open');
+      const nav = document.getElementById('navLinks');
+      nav.classList.remove('open');
+      document.body.classList.remove('menu-open');
     }
 
     // legacy support
@@ -3067,7 +3414,9 @@
     }
 
     function toggleNav() {
-      document.getElementById('navLinks').classList.toggle('open');
+      const nav = document.getElementById('navLinks');
+      const isOpen = nav.classList.toggle('open');
+      document.body.classList.toggle('menu-open', isOpen);
     }
 
     function toggleAccordion(headBtn) {
@@ -3114,6 +3463,82 @@
       tabBtn.classList.add('active');
     }
 
+    const locationGalleryImages = [
+      'img/IhmE7JRA.jpeg',
+      'img/MaLg3QiA.jpeg',
+      'img/s4HJJoUA.jpeg'
+    ];
+    let currentLocationImage = 0;
+
+    function renderLocationGallery() {
+      const mainImage = document.getElementById('locationGalleryImage');
+      const thumbContainer = document.getElementById('locationGalleryThumbs');
+      if (!mainImage || !thumbContainer) return;
+
+      mainImage.src = locationGalleryImages[currentLocationImage];
+      mainImage.alt = 'South Fulton location view ' + (currentLocationImage + 1);
+      thumbContainer.innerHTML = '';
+
+      if (locationGalleryImages.length <= 1) {
+        return;
+      }
+
+      locationGalleryImages.forEach((src, index) => {
+        const thumbBtn = document.createElement('button');
+        thumbBtn.className = 'location-gallery-thumb' + (index === currentLocationImage ? ' active' : '');
+        thumbBtn.type = 'button';
+        thumbBtn.setAttribute('aria-label', 'Show image ' + (index + 1));
+        thumbBtn.onclick = () => {
+          currentLocationImage = index;
+          renderLocationGallery();
+        };
+
+        const thumbImg = document.createElement('img');
+        thumbImg.src = src;
+        thumbImg.alt = 'Location thumbnail ' + (index + 1);
+        thumbBtn.appendChild(thumbImg);
+        thumbContainer.appendChild(thumbBtn);
+      });
+    }
+
+    function openLocationGallery(index = 0) {
+      currentLocationImage = index;
+      renderLocationGallery();
+      const modal = document.getElementById('locationModal');
+      if (modal) {
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeLocationGallery() {
+      const modal = document.getElementById('locationModal');
+      if (modal) {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderLocationGallery();
+
+      const modal = document.getElementById('locationModal');
+      if (modal) {
+        modal.addEventListener('click', (event) => {
+          if (event.target instanceof Element && event.target.hasAttribute('data-close-modal')) {
+            closeLocationGallery();
+          }
+        });
+      }
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          closeLocationGallery();
+        }
+      });
+    });
 
     // Dynamic navigation indicator sliding update
     function updateNavIndicator() {
