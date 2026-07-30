@@ -1,0 +1,36 @@
+export default function BrandLogo({ clipId }: { clipId: string }) {
+  return (
+    <svg viewBox="140 20 400 310" fill="none" style={{ width: "100%", height: "100%" }}>
+      <clipPath id={clipId}>
+        <rect x="140" y="20" width="400" height="310" rx="22" ry="22" />
+      </clipPath>
+      <g clipPath={`url(#${clipId})`}>
+        <rect x="140" y="20" width="400" height="310" fill="#1B2E52" />
+        <rect x="140" y="155" width="400" height="60" fill="#253F6E" />
+        <g stroke="#3A4A5C" strokeWidth="3" opacity="0.8">
+          <line x1="340" y1="95" x2="145" y2="22" />
+          <line x1="340" y1="95" x2="190" y2="22" />
+          <line x1="340" y1="95" x2="240" y2="22" />
+          <line x1="340" y1="95" x2="290" y2="22" />
+          <line x1="340" y1="95" x2="340" y2="22" />
+          <line x1="340" y1="95" x2="390" y2="22" />
+          <line x1="340" y1="95" x2="440" y2="22" />
+          <line x1="340" y1="95" x2="490" y2="22" />
+          <line x1="340" y1="95" x2="535" y2="22" />
+        </g>
+        <path d="M 300 125 A 40 40 0 0 1 380 125" fill="none" stroke="#B8963E" strokeWidth="2.5" />
+        <circle cx="340" cy="128" r="18" fill="#B8963E" />
+        <polygon points="140,330 200,210 255,270 310,190 365,250 420,185 480,250 540,215 540,330" fill="#1E3060" />
+        <polygon points="140,330 175,255 220,290 270,230 330,280 390,225 450,270 510,240 540,265 540,330" fill="#162850" />
+        <polygon points="270,230 280,248 260,248" fill="#D0D8E8" />
+        <polygon points="390,225 400,244 380,244" fill="#D0D8E8" />
+        <polygon points="175,255 183,270 167,270" fill="#D0D8E8" />
+        <polygon points="510,240 518,255 502,255" fill="#D0D8E8" />
+        <rect x="332" y="188" width="16" height="95" rx="2" fill="white" />
+        <rect x="308" y="218" width="64" height="16" rx="2" fill="white" />
+        <rect x="140" y="20" width="400" height="310" rx="22" ry="22" fill="none" stroke="#B8963E" strokeWidth="2.5" />
+        <rect x="147" y="27" width="386" height="296" rx="18" ry="18" fill="none" stroke="#B8963E" strokeWidth="0.8" opacity="0.5" />
+      </g>
+    </svg>
+  );
+}
