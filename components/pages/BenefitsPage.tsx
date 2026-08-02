@@ -145,6 +145,63 @@ export default function BenefitsPage() {
                   </div>
                 </div>
                 <div className="field">
+                  <label>Have you ever served in the U.S. military?</label>
+                  <div className="radio-group">
+                    {["Yes", "No"].map((option, index) => (
+                      <label className="radio-pill" key={option}>
+                        <input
+                          type="radio"
+                          name="ben-military"
+                          value={option}
+                          required={index === 0}
+                        />
+                        {option}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                <div className="field">
+                  <label>
+                    Do you have a disability or medical condition that prevents you from working,
+                    and has it lasted (or is it expected to last) at least 12 months?
+                  </label>
+                  <div className="radio-group">
+                    {["Yes", "No"].map((option, index) => (
+                      <label className="radio-pill" key={option}>
+                        <input
+                          type="radio"
+                          name="ben-disability"
+                          value={option}
+                          required={index === 0}
+                        />
+                        {option}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                <div className="field">
+                  <label htmlFor="ben-ss-history">
+                    How long have you worked and paid into Social Security?
+                  </label>
+                  <input type="text" id="ben-ss-history" name="ben-ss-history" required />
+                </div>
+                <div className="field">
+                  <label htmlFor="ben-last-worked">When was the last time you worked?</label>
+                  <input type="text" id="ben-last-worked" name="ben-last-worked" required />
+                </div>
+                <div className="field">
+                  <label htmlFor="ben-income-assets">
+                    What is your total monthly income and the rough value of your assets (savings,
+                    property, etc.)?
+                  </label>
+                  <textarea
+                    id="ben-income-assets"
+                    name="ben-income-assets"
+                    rows={3}
+                    required
+                  ></textarea>
+                </div>
+                <div className="field">
                   <label htmlFor="ben-notes">Briefly describe your situation or health conditions</label>
                   <textarea
                     id="ben-notes"

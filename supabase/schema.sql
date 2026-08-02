@@ -95,7 +95,12 @@ create table if not exists public.benefits_screenings (
   email text not null,
   benefit_type text not null,
   applied_before text not null,
-  notes text
+  notes text,
+  served_military text not null,
+  disability_12_months text not null,
+  ss_work_history text not null,
+  last_worked text not null,
+  monthly_income_assets text not null
 );
 
 -- ============ Row Level Security ============

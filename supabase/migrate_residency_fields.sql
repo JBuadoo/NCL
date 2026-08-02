@@ -88,3 +88,10 @@ create policy "Allow anonymous referral submissions"
 alter table public.referrals add column if not exists aggression_history text;
 alter table public.referrals add column if not exists elopement_risk text;
 alter table public.referrals add column if not exists communal_living_interference text;
+
+-- Benefits screening: new eligibility questions
+alter table public.benefits_screenings add column if not exists served_military text;
+alter table public.benefits_screenings add column if not exists disability_12_months text;
+alter table public.benefits_screenings add column if not exists ss_work_history text;
+alter table public.benefits_screenings add column if not exists last_worked text;
+alter table public.benefits_screenings add column if not exists monthly_income_assets text;

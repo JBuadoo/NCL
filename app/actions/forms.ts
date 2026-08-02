@@ -329,8 +329,25 @@ export async function submitBenefitsScreening(
   const benefit_type = text(formData, "ben-type");
   const applied_before = text(formData, "ben-applied");
   const notes = text(formData, "ben-notes");
+  const served_military = text(formData, "ben-military");
+  const disability_12_months = text(formData, "ben-disability");
+  const ss_work_history = text(formData, "ben-ss-history");
+  const last_worked = text(formData, "ben-last-worked");
+  const monthly_income_assets = text(formData, "ben-income-assets");
 
-  if (!first_name || !last_name || !phone || !email || !benefit_type || !applied_before) {
+  if (
+    !first_name ||
+    !last_name ||
+    !phone ||
+    !email ||
+    !benefit_type ||
+    !applied_before ||
+    !served_military ||
+    !disability_12_months ||
+    !ss_work_history ||
+    !last_worked ||
+    !monthly_income_assets
+  ) {
     return { ok: false, error: "Please fill in all required fields." };
   }
 
@@ -343,6 +360,11 @@ export async function submitBenefitsScreening(
       benefit_type,
       applied_before,
       notes: notes || null,
+      served_military,
+      disability_12_months,
+      ss_work_history,
+      last_worked,
+      monthly_income_assets,
     });
 
     if (error) {
@@ -359,6 +381,11 @@ export async function submitBenefitsScreening(
         Email: email,
         "Benefit type": benefit_type,
         "Applied before": applied_before,
+        "Served in military": served_military,
+        "Disability 12+ months": disability_12_months,
+        "SS work history": ss_work_history,
+        "Last worked": last_worked,
+        "Income & assets": monthly_income_assets,
         Notes: notes || "—",
       },
     });
