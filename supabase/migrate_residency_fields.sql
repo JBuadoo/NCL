@@ -52,6 +52,9 @@ create table public.referrals (
   medications_independent text not null,
   crime_conviction text not null,
   crime_explanation text,
+  aggression_history text not null,
+  elopement_risk text not null,
+  communal_living_interference text not null,
   monthly_benefit_amount text not null,
   medical_prescriptions text not null,
   medical_explanation text,
@@ -80,3 +83,8 @@ create policy "Allow anonymous referral submissions"
 -- alter table public.referrals rename column client_last_name to referee_last_name;
 -- alter table public.referrals rename column client_phone to referee_phone;
 -- alter table public.referrals rename column client_email to referee_email;
+
+-- If referrals already exists without the behavior fields, add them:
+alter table public.referrals add column if not exists aggression_history text;
+alter table public.referrals add column if not exists elopement_risk text;
+alter table public.referrals add column if not exists communal_living_interference text;

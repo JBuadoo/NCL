@@ -53,6 +53,9 @@ const initial = {
   medical_explanation: "",
   crime_conviction: "",
   crime_explanation: "",
+  aggression_history: "",
+  elopement_risk: "",
+  communal_living_interference: "",
   drug_free_commitment: "",
   value_understanding: "",
   home_not_short_term: "",
@@ -120,6 +123,13 @@ export default function ReferWizard() {
       if (!data.crime_conviction) return "Please answer the conviction question.";
       if (data.crime_conviction === "Yes" && !data.crime_explanation) {
         return "Please explain the conviction.";
+      }
+      if (
+        !data.aggression_history ||
+        !data.elopement_risk ||
+        !data.communal_living_interference
+      ) {
+        return "Please answer all behavior questions.";
       }
     }
     if (step === 6) {
@@ -366,7 +376,7 @@ export default function ReferWizard() {
             </div>
             <div className="field">
               <label htmlFor="living_with_others">
-                Is the referee applying alone, or will others be living with them?
+                Is the individual applying for themselves only, or will others be living with them?
               </label>
               <input
                 id="living_with_others"
@@ -415,14 +425,37 @@ export default function ReferWizard() {
         )}
 
         {step === 5 && (
-          <YesNoExplain
-            name="crime_conviction"
-            label="Has the referee been convicted of a crime within the past 7 years?"
-            value={data.crime_conviction}
-            explainValue={data.crime_explanation}
-            onChange={(v) => setField("crime_conviction", v)}
-            onExplainChange={(v) => setField("crime_explanation", v)}
-          />
+          <>
+            <YesNoExplain
+              name="crime_conviction"
+              label="Has the referee been convicted of a crime within the past 7 years?"
+              value={data.crime_conviction}
+              explainValue={data.crime_explanation}
+              onChange={(v) => setField("crime_conviction", v)}
+              onExplainChange={(v) => setField("crime_explanation", v)}
+            />
+            <RadioGroup
+              name="aggression_history"
+              label="Have they had any history of Aggression?"
+              options={YES_NO}
+              value={data.aggression_history}
+              onChange={(v) => setField("aggression_history", v)}
+            />
+            <RadioGroup
+              name="elopement_risk"
+              label="Do they have any elopement (wandering) risk?"
+              options={YES_NO}
+              value={data.elopement_risk}
+              onChange={(v) => setField("elopement_risk", v)}
+            />
+            <RadioGroup
+              name="communal_living_interference"
+              label="Have they shown any behaviors that would interfere with communal living?"
+              options={YES_NO}
+              value={data.communal_living_interference}
+              onChange={(v) => setField("communal_living_interference", v)}
+            />
+          </>
         )}
 
         {step === 6 && (
