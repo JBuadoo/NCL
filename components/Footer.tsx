@@ -60,6 +60,17 @@ export default function Footer() {
       </div>
       <div className="footer-bottom">
         <span>© 2026 New Creation Living. All rights reserved.</span>
+        <span>
+          Built by{" "}
+          <a
+            href="https://yetrontech.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-credit-link"
+          >
+            yetrontech.com
+          </a>
+        </span>
         <span>Structured Independent Living. Not a licensed personal care home.</span>
       </div>
     </footer>

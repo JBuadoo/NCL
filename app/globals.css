@@ -1824,6 +1824,16 @@
       color: var(--gold-light);
     }
 
+    .footer-credit-link {
+      color: var(--gold-light);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .footer-credit-link:hover {
+      color: white;
+    }
+
     .footer-bottom {
       max-width: 1180px;
       margin: 0 auto;
