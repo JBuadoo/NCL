@@ -37,10 +37,10 @@ create table public.referrals (
   referrer_role text not null,
   organization text,
   phone text not null,
-  client_first_name text not null,
-  client_last_name text not null,
-  client_phone text,
-  client_email text,
+  referee_first_name text not null,
+  referee_last_name text not null,
+  referee_phone text,
+  referee_email text,
   gender text not null,
   date_of_birth date not null,
   benefit_type text not null,
@@ -74,3 +74,9 @@ create policy "Allow anonymous referral submissions"
   for insert
   to anon
   with check (true);
+
+-- If you already created referrals with client_* columns, rename them:
+-- alter table public.referrals rename column client_first_name to referee_first_name;
+-- alter table public.referrals rename column client_last_name to referee_last_name;
+-- alter table public.referrals rename column client_phone to referee_phone;
+-- alter table public.referrals rename column client_email to referee_email;

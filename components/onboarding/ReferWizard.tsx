@@ -18,9 +18,9 @@ type Status = "idle" | "submitting" | "success" | "error";
 
 const STEPS = [
   "About you",
-  "About them",
+  "About the referee",
   "Benefits & timing",
-  "Their situation",
+  "Referee's situation",
   "Health & support",
   "Background",
   "Commitments",
@@ -32,10 +32,10 @@ const initial = {
   referrer_role: "",
   organization: "",
   phone: "",
-  client_first_name: "",
-  client_last_name: "",
-  client_phone: "",
-  client_email: "",
+  referee_first_name: "",
+  referee_last_name: "",
+  referee_phone: "",
+  referee_email: "",
   gender: "",
   date_of_birth: "",
   benefit_type: "",
@@ -79,12 +79,12 @@ export default function ReferWizard() {
     }
     if (step === 1) {
       if (
-        !data.client_first_name ||
-        !data.client_last_name ||
+        !data.referee_first_name ||
+        !data.referee_last_name ||
         !data.gender ||
         !data.date_of_birth
       ) {
-        return "Please complete the client's required fields.";
+        return "Please complete the referee's required fields.";
       }
     }
     if (step === 2) {
@@ -243,47 +243,47 @@ export default function ReferWizard() {
           <>
             <div className="field-row">
               <div className="field">
-                <label htmlFor="client_first_name">Client first name</label>
+                <label htmlFor="referee_first_name">Referee first name</label>
                 <input
-                  id="client_first_name"
+                  id="referee_first_name"
                   required
-                  value={data.client_first_name}
-                  onChange={(e) => setField("client_first_name", e.target.value)}
+                  value={data.referee_first_name}
+                  onChange={(e) => setField("referee_first_name", e.target.value)}
                 />
               </div>
               <div className="field">
-                <label htmlFor="client_last_name">Client last name</label>
+                <label htmlFor="referee_last_name">Referee last name</label>
                 <input
-                  id="client_last_name"
+                  id="referee_last_name"
                   required
-                  value={data.client_last_name}
-                  onChange={(e) => setField("client_last_name", e.target.value)}
+                  value={data.referee_last_name}
+                  onChange={(e) => setField("referee_last_name", e.target.value)}
                 />
               </div>
             </div>
             <div className="field-row">
               <div className="field">
-                <label htmlFor="client_phone">Client phone (if known)</label>
+                <label htmlFor="referee_phone">Referee phone (if known)</label>
                 <input
-                  id="client_phone"
+                  id="referee_phone"
                   type="tel"
-                  value={data.client_phone}
-                  onChange={(e) => setField("client_phone", e.target.value)}
+                  value={data.referee_phone}
+                  onChange={(e) => setField("referee_phone", e.target.value)}
                 />
               </div>
               <div className="field">
-                <label htmlFor="client_email">Client email (if known)</label>
+                <label htmlFor="referee_email">Referee email (if known)</label>
                 <input
-                  id="client_email"
+                  id="referee_email"
                   type="text"
-                  value={data.client_email}
-                  onChange={(e) => setField("client_email", e.target.value)}
+                  value={data.referee_email}
+                  onChange={(e) => setField("referee_email", e.target.value)}
                 />
               </div>
             </div>
             <div className="field-row">
               <div className="field">
-                <label htmlFor="date_of_birth">Client date of birth</label>
+                <label htmlFor="date_of_birth">Referee date of birth</label>
                 <input
                   id="date_of_birth"
                   type="date"
@@ -293,7 +293,7 @@ export default function ReferWizard() {
                 />
               </div>
               <div className="field">
-                <label htmlFor="gender">Client gender</label>
+                <label htmlFor="gender">Referee gender</label>
                 <select
                   id="gender"
                   required
@@ -314,14 +314,14 @@ export default function ReferWizard() {
           <>
             <RadioGroup
               name="benefit_type"
-              label="Their benefit type"
+              label="Referee's benefit type"
               options={BENEFIT_OPTIONS}
               value={data.benefit_type}
               onChange={(v) => setField("benefit_type", v)}
             />
             <div className="field">
               <label htmlFor="monthly_benefit_amount">
-                How much are they receiving from benefits monthly?
+                How much is the referee receiving from benefits monthly?
               </label>
               <input
                 id="monthly_benefit_amount"
@@ -333,7 +333,7 @@ export default function ReferWizard() {
             </div>
             <RadioGroup
               name="move_timeline"
-              label="How soon are they looking to move in?"
+              label="How soon is the referee looking to move in?"
               options={MOVE_TIMELINE_OPTIONS}
               value={data.move_timeline}
               onChange={(v) => setField("move_timeline", v)}
@@ -354,7 +354,7 @@ export default function ReferWizard() {
           <>
             <div className="field">
               <label htmlFor="situation_explanation">
-                Please give us a quick explanation of their current situation
+                Please give us a quick explanation of the referee&apos;s current situation
               </label>
               <textarea
                 id="situation_explanation"
@@ -366,7 +366,7 @@ export default function ReferWizard() {
             </div>
             <div className="field">
               <label htmlFor="living_with_others">
-                Are they applying alone, or will others be living with them?
+                Is the referee applying alone, or will others be living with them?
               </label>
               <input
                 id="living_with_others"
@@ -382,7 +382,7 @@ export default function ReferWizard() {
           <>
             <YesNoExplain
               name="mobility_limitations"
-              label="Do they have any mobility limitations?"
+              label="Does the referee have any mobility limitations?"
               value={data.mobility_limitations}
               explainValue={data.mobility_explanation}
               onChange={(v) => setField("mobility_limitations", v)}
@@ -390,7 +390,7 @@ export default function ReferWizard() {
             />
             <YesNoExplain
               name="mental_limitations"
-              label="Do they have any mental limitations?"
+              label="Does the referee have any mental limitations?"
               value={data.mental_limitations}
               explainValue={data.mental_explanation}
               onChange={(v) => setField("mental_limitations", v)}
@@ -398,14 +398,14 @@ export default function ReferWizard() {
             />
             <RadioGroup
               name="medications_independent"
-              label="Do they manage medications independently?"
+              label="Does the referee manage medications independently?"
               options={YES_NO}
               value={data.medications_independent}
               onChange={(v) => setField("medications_independent", v)}
             />
             <YesNoExplain
               name="medical_prescriptions"
-              label="Do they have any medical prescriptions/diagnosis?"
+              label="Does the referee have any medical prescriptions/diagnosis?"
               value={data.medical_prescriptions}
               explainValue={data.medical_explanation}
               onChange={(v) => setField("medical_prescriptions", v)}
@@ -417,7 +417,7 @@ export default function ReferWizard() {
         {step === 5 && (
           <YesNoExplain
             name="crime_conviction"
-            label="Have they been convicted of a crime within the past 7 years?"
+            label="Has the referee been convicted of a crime within the past 7 years?"
             value={data.crime_conviction}
             explainValue={data.crime_explanation}
             onChange={(v) => setField("crime_conviction", v)}
@@ -429,21 +429,21 @@ export default function ReferWizard() {
           <>
             <RadioGroup
               name="drug_free_commitment"
-              label="Our home is a drug and alcohol free environment. Are they able to commit to a drug-free lifestyle? Random drug testing is part of house rules."
+              label="Our home is a drug and alcohol free environment. Is the referee able to commit to a drug-free lifestyle? Random drug testing is part of house rules."
               options={YES_NO}
               value={data.drug_free_commitment}
               onChange={(v) => setField("drug_free_commitment", v)}
             />
             <RadioGroup
               name="value_understanding"
-              label="Do they understand that at $25 a day, New Creation Living provides more value than a motel (~$1,800/month) or shelter — a real home with peace and stability?"
+              label="Does the referee understand that at $25 a day, New Creation Living provides more value than a motel (~$1,800/month) or shelter — a real home with peace and stability?"
               options={YES_NO}
               value={data.value_understanding}
               onChange={(v) => setField("value_understanding", v)}
             />
             <RadioGroup
               name="home_not_short_term"
-              label="Do they understand that this is a home and not short-term housing?"
+              label="Does the referee understand that this is a home and not short-term housing?"
               options={YES_NO}
               value={data.home_not_short_term}
               onChange={(v) => setField("home_not_short_term", v)}
@@ -451,8 +451,8 @@ export default function ReferWizard() {
             <div className="field onboarding-callout">
               <p>
                 We are an approved representative payee through the Social Security Administration.
-                We receive the monthly benefit on their behalf, cover housing, and return what&apos;s
-                left so their home stays secure.
+                We receive the monthly benefit on the referee&apos;s behalf, cover housing, and return
+                what&apos;s left so their home stays secure.
               </p>
             </div>
             <RadioGroup
@@ -465,8 +465,8 @@ export default function ReferWizard() {
             <div className="field onboarding-callout">
               <p>
                 Housing is roommate-style with a personal bed, door code, and vetted housemates. By
-                continuing, you confirm they are ready to invest $25 a day in security, dignity, and
-                their future.
+                continuing, you confirm the referee is ready to invest $25 a day in security, dignity,
+                and their future.
               </p>
             </div>
             <RadioGroup
