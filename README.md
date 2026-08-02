@@ -18,9 +18,9 @@ The Residency/Referral form and the Benefits Screening form save submissions to 
 
 1. Create a project at [supabase.com](https://supabase.com).
 2. In the dashboard, open **SQL Editor** and run the contents of [`supabase/schema.sql`](supabase/schema.sql).
-   This creates three tables (`applications`, `referrals`, and `benefits_screenings`) with
-   row-level security that only allows anonymous inserts (visitors can submit, but cannot read
-   data back).
+   This creates four tables (`applications`, `referrals`, `tour_requests`, and
+   `benefits_screenings`) with row-level security that only allows anonymous inserts
+   (visitors can submit, but cannot read data back).
 3. Copy `.env.local.example` to `.env.local` and fill in your project URL and anon key
    (Dashboard → Project Settings → API).
 4. Restart the dev server. Submissions will now appear in the Supabase **Table Editor**.

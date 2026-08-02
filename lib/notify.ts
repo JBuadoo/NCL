@@ -1,4 +1,8 @@
-export type SubmissionKind = "application" | "referral" | "benefits_screening";
+export type SubmissionKind =
+  | "application"
+  | "referral"
+  | "tour_request"
+  | "benefits_screening";
 
 export type NotificationPayload = {
   kind: SubmissionKind;
@@ -9,6 +13,7 @@ export type NotificationPayload = {
 const KIND_LABEL: Record<SubmissionKind, string> = {
   application: "Self Application",
   referral: "Referral",
+  tour_request: "Tour Request",
   benefits_screening: "Benefits Screening",
 };
 

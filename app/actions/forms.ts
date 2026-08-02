@@ -127,6 +127,49 @@ export async function submitApplication(formData: FormData): Promise<FormActionR
   }
 }
 
+export async function submitTourRequest(formData: FormData): Promise<FormActionResult> {
+  const first_name = text(formData, "tour-first");
+  const last_name = text(formData, "tour-last");
+  const preferred_date = text(formData, "tour-date");
+  const gender = text(formData, "tour-gender");
+
+  if (!first_name || !last_name || !preferred_date || !gender) {
+    return { ok: false, error: "Please fill in all required fields." };
+  }
+
+  try {
+    const { error } = await getServerSupabase().from("tour_requests").insert({
+      first_name,
+      last_name,
+      preferred_date,
+      gender,
+    });
+
+    if (error) {
+      console.error("Tour request submission failed:", error);
+      return { ok: false, error: error.message };
+    }
+
+    await notifyNewSubmission({
+      kind: "tour_request",
+      summary: `${first_name} ${last_name} — ${preferred_date}`,
+      details: {
+        Name: `${first_name} ${last_name}`,
+        "Preferred date": preferred_date,
+        Gender: gender,
+      },
+    });
+
+    return { ok: true };
+  } catch (err) {
+    console.error("Tour request submission failed:", err);
+    return {
+      ok: false,
+      error: err instanceof Error ? err.message : "Submission failed.",
+    };
+  }
+}
+
 export async function submitBenefitsScreening(
   formData: FormData
 ): Promise<FormActionResult> {
