@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@supabase/supabase-js";
+import { notifyNewSubmission } from "@/lib/notify";
 
 export type FormActionResult =
   | { ok: true }
@@ -53,9 +54,72 @@ export async function submitReferral(formData: FormData): Promise<FormActionResu
       return { ok: false, error: error.message };
     }
 
+    await notifyNewSubmission({
+      kind: "referral",
+      summary: `${referrer_name} referred ${client_name}`,
+      details: {
+        "Referrer name": referrer_name,
+        "Referrer role": referrer_role,
+        Organization: organization || "—",
+        Phone: phone,
+        "Client name": client_name,
+        "Benefit type": benefit_type,
+        Notes: notes || "—",
+      },
+    });
+
     return { ok: true };
   } catch (err) {
     console.error("Referral submission failed:", err);
+    return {
+      ok: false,
+      error: err instanceof Error ? err.message : "Submission failed.",
+    };
+  }
+}
+
+export async function submitApplication(formData: FormData): Promise<FormActionResult> {
+  const first_name = text(formData, "app-first");
+  const last_name = text(formData, "app-last");
+  const phone = text(formData, "app-phone");
+  const email = text(formData, "app-email");
+  const benefit_type = text(formData, "app-benefit");
+  const notes = text(formData, "app-notes");
+
+  if (!first_name || !last_name || !phone || !email || !benefit_type) {
+    return { ok: false, error: "Please fill in all required fields." };
+  }
+
+  try {
+    const { error } = await getServerSupabase().from("applications").insert({
+      first_name,
+      last_name,
+      phone,
+      email,
+      benefit_type,
+      notes: notes || null,
+    });
+
+    if (error) {
+      console.error("Application submission failed:", error);
+      return { ok: false, error: error.message };
+    }
+
+    await notifyNewSubmission({
+      kind: "application",
+      summary: `${first_name} ${last_name}`,
+      details: {
+        Name: `${first_name} ${last_name}`,
+        Phone: phone,
+        Email: email,
+        "Benefit type": benefit_type,
+        Notes: notes || "—",
+      },
+    });
+
+    return { ok: true };
+  } catch (err) {
+    console.error("Application submission failed:", err);
     return {
       ok: false,
       error: err instanceof Error ? err.message : "Submission failed.",
@@ -93,6 +157,19 @@ export async function submitBenefitsScreening(
       console.error("Benefits screening submission failed:", error);
       return { ok: false, error: error.message };
     }
+
+    await notifyNewSubmission({
+      kind: "benefits_screening",
+      summary: `${first_name} ${last_name}`,
+      details: {
+        Name: `${first_name} ${last_name}`,
+        Phone: phone,
+        Email: email,
+        "Benefit type": benefit_type,
+        "Applied before": applied_before,
+        Notes: notes || "—",
+      },
+    });
 
     return { ok: true };
   } catch (err) {

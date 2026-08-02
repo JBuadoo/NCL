@@ -1538,6 +1538,75 @@
       border: 0;
     }
 
+    /* ===== TOUR / FORM MODAL ===== */
+    .form-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .form-modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .form-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(19, 31, 69, 0.75);
+      backdrop-filter: blur(8px);
+    }
+
+    .form-modal-dialog {
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+      background: white;
+      border-radius: 18px;
+      padding: 38px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+      border: 1.5px solid var(--gold);
+      z-index: 2;
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+    }
+
+    .form-modal.open .form-modal-dialog {
+      transform: scale(1);
+    }
+
+    .form-modal-close {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--cream);
+      color: var(--navy);
+      font-size: 26px;
+      line-height: 1;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      z-index: 3;
+      transition: background 0.15s, transform 0.15s;
+    }
+
+    .form-modal-close:hover {
+      background: var(--gold);
+      color: var(--navy-deep);
+      transform: scale(1.1);
+    }
+
     .loc-actions {
       display: flex;
       gap: 12px;

@@ -14,6 +14,28 @@ create table if not exists public.referrals (
   notes text
 );
 
+-- ============ Direct residency applications (self-apply) ============
+create table if not exists public.applications (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  first_name text not null,
+  last_name text not null,
+  phone text not null,
+  email text not null,
+  benefit_type text not null,
+  notes text
+);
+
+-- ============ Tour scheduling requests ============
+create table if not exists public.tour_requests (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  first_name text not null,
+  last_name text not null,
+  preferred_date date not null,
+  gender text not null
+);
+
 -- ============ Benefits screening form ============
 create table if not exists public.benefits_screenings (
   id uuid primary key default gen_random_uuid(),
@@ -32,11 +54,27 @@ create table if not exists public.benefits_screenings (
 -- or delete. Review submissions from the Supabase dashboard or an authenticated
 -- admin tool.
 alter table public.referrals enable row level security;
+alter table public.applications enable row level security;
+alter table public.tour_requests enable row level security;
 alter table public.benefits_screenings enable row level security;
 
 drop policy if exists "Allow anonymous referral submissions" on public.referrals;
 create policy "Allow anonymous referral submissions"
   on public.referrals
+  for insert
+  to anon
+  with check (true);
+
+drop policy if exists "Allow anonymous application submissions" on public.applications;
+create policy "Allow anonymous application submissions"
+  on public.applications
+  for insert
+  to anon
+  with check (true);
+
+drop policy if exists "Allow anonymous tour request submissions" on public.tour_requests;
+create policy "Allow anonymous tour request submissions"
+  on public.tour_requests
   for insert
   to anon
   with check (true);

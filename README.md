@@ -18,18 +18,39 @@ The Residency/Referral form and the Benefits Screening form save submissions to 
 
 1. Create a project at [supabase.com](https://supabase.com).
 2. In the dashboard, open **SQL Editor** and run the contents of [`supabase/schema.sql`](supabase/schema.sql).
-   This creates two tables (`referrals` and `benefits_screenings`) with row-level security that
-   only allows anonymous inserts (visitors can submit, but cannot read data back).
+   This creates three tables (`applications`, `referrals`, and `benefits_screenings`) with
+   row-level security that only allows anonymous inserts (visitors can submit, but cannot read
+   data back).
 3. Copy `.env.local.example` to `.env.local` and fill in your project URL and anon key
    (Dashboard → Project Settings → API).
 4. Restart the dev server. Submissions will now appear in the Supabase **Table Editor**.
+
+## Email + SMS notifications
+
+Every successful form submission (self application, referral, benefits screening) triggers:
+
+1. An **email** via [Resend](https://resend.com)
+2. An **SMS** via [Twilio](https://www.twilio.com)
+
+Add these to `.env.local` (see `.env.local.example`):
+
+| Variable | Purpose |
+|---|---|
+| `NOTIFY_EMAIL` | Inbox that receives alerts |
+| `NOTIFY_PHONE` | Phone that receives texts (E.164, e.g. `+14047312371`) |
+| `RESEND_API_KEY` | Resend API key |
+| `RESEND_FROM_EMAIL` | Verified From address |
+| `TWILIO_ACCOUNT_SID` / `TWILIO_AUTH_TOKEN` / `TWILIO_FROM_NUMBER` | Twilio credentials |
+
+If these are missing, the form still saves to Supabase — notifications are skipped and logged. Notification failures never fail the visitor's submit.
 
 ## Project structure
 
 - `app/` — Next.js App Router entry (`layout.tsx`, `page.tsx`) and `globals.css` (the original site styling, unchanged)
 - `components/` — header, footer, video modal, back-to-top, and one component per page section
-- `components/pages/ReferralPage.tsx` / `BenefitsPage.tsx` — the two forms (same UI as before)
-- `app/actions/forms.ts` — Next.js server actions that insert into Supabase
+- `components/pages/ReferralPage.tsx` / `BenefitsPage.tsx` — the residency + benefits forms
+- `app/actions/forms.ts` — Next.js server actions that insert into Supabase and trigger notify
+- `lib/notify.ts` — Resend email + Twilio SMS helper
 - `lib/supabase.ts` — shared Supabase client helper
 - `supabase/schema.sql` — database schema + RLS policies
 - `public/img/` — site images
