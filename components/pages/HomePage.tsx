@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { scrollToSection } from "@/lib/scroll";
 
 const HERO_SLIDES = [
@@ -392,13 +393,13 @@ export default function HomePage() {
                 Supplemental Security Income (SSI), Social Security Disability Insurance (SSDI), and
                 VA Pension.
               </p>
-              <button
+              <Link
+                href="/benefits"
                 className="btn"
                 style={{ background: "var(--gold)", color: "var(--navy-deep)", fontWeight: 700 }}
-                onClick={() => scrollToSection("benefits")}
               >
                 Get my benefits
-              </button>
+              </Link>
             </div>
             <div
               style={{

@@ -1,29 +1,8 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { submitBenefitsScreening } from "@/app/actions/forms";
-
-const BENEFIT_OPTIONS = ["SSI", "SSDI", "VA Pension", "Social Security", "Not Sure"];
-const APPLIED_OPTIONS = ["No, never", "Yes, and was denied", "Yes, application is pending"];
+import Link from "next/link";
 
 export default function BenefitsPage() {
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (status === "submitting") return;
-    const data = new FormData(e.currentTarget);
-    setStatus("submitting");
-
-    const result = await submitBenefitsScreening(data);
-    if (result.ok) {
-      setStatus("success");
-    } else {
-      console.error("Benefits screening submission failed:", result.error);
-      setStatus("error");
-    }
-  }
-
   return (
     <div className="page" id="page-benefits">
       <section className="band" style={{ paddingTop: 56 }}>
@@ -62,7 +41,7 @@ export default function BenefitsPage() {
                 </h3>
                 <p>
                   From initial applications to hearings and appeals, we stand by you. If your
-                  application is denied, we appeal. We don't walk away.
+                  application is denied, we appeal. We don&apos;t walk away.
                 </p>
               </div>
               <div className="info-card" style={{ background: "var(--navy)", border: "none" }}>
@@ -88,152 +67,15 @@ export default function BenefitsPage() {
               </div>
             </div>
 
-            <div className="form-card">
-              <h3>Benefits Screening Form</h3>
-              <p>Takes about 2 minutes. We will identify your options and follow up within 72 hours.</p>
-
-              <form
-                id="benefitsForm"
-                onSubmit={handleSubmit}
-                style={status === "success" ? { display: "none" } : undefined}
-              >
-                <div className="field-row">
-                  <div className="field">
-                    <label htmlFor="ben-first">First name</label>
-                    <input type="text" id="ben-first" name="ben-first" required />
-                  </div>
-                  <div className="field">
-                    <label htmlFor="ben-last">Last name</label>
-                    <input type="text" id="ben-last" name="ben-last" required />
-                  </div>
-                </div>
-                <div className="field-row">
-                  <div className="field">
-                    <label htmlFor="ben-phone">Phone number</label>
-                    <input type="tel" id="ben-phone" name="ben-phone" required />
-                  </div>
-                  <div className="field">
-                    <label htmlFor="ben-email">Email address</label>
-                    <input type="text" id="ben-email" name="ben-email" required />
-                  </div>
-                </div>
-                <div className="field">
-                  <label>Which benefit are you seeking help with?</label>
-                  <div className="radio-group">
-                    {BENEFIT_OPTIONS.map((option, index) => (
-                      <label className="radio-pill" key={option}>
-                        <input type="radio" name="ben-type" value={option} required={index === 0} />
-                        {option}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-                <div className="field">
-                  <label>Have you ever applied for this benefit in the past?</label>
-                  <div className="radio-group">
-                    {APPLIED_OPTIONS.map((option, index) => (
-                      <label className="radio-pill" key={option}>
-                        <input
-                          type="radio"
-                          name="ben-applied"
-                          value={option}
-                          required={index === 0}
-                        />
-                        {option}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-                <div className="field">
-                  <label>Have you ever served in the U.S. military?</label>
-                  <div className="radio-group">
-                    {["Yes", "No"].map((option, index) => (
-                      <label className="radio-pill" key={option}>
-                        <input
-                          type="radio"
-                          name="ben-military"
-                          value={option}
-                          required={index === 0}
-                        />
-                        {option}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-                <div className="field">
-                  <label>
-                    Do you have a disability or medical condition that prevents you from working,
-                    and has it lasted (or is it expected to last) at least 12 months?
-                  </label>
-                  <div className="radio-group">
-                    {["Yes", "No"].map((option, index) => (
-                      <label className="radio-pill" key={option}>
-                        <input
-                          type="radio"
-                          name="ben-disability"
-                          value={option}
-                          required={index === 0}
-                        />
-                        {option}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-                <div className="field">
-                  <label htmlFor="ben-ss-history">
-                    How long have you worked and paid into Social Security?
-                  </label>
-                  <input type="text" id="ben-ss-history" name="ben-ss-history" required />
-                </div>
-                <div className="field">
-                  <label htmlFor="ben-last-worked">When was the last time you worked?</label>
-                  <input type="text" id="ben-last-worked" name="ben-last-worked" required />
-                </div>
-                <div className="field">
-                  <label htmlFor="ben-income-assets">
-                    What is your total monthly income and the rough value of your assets (savings,
-                    property, etc.)?
-                  </label>
-                  <textarea
-                    id="ben-income-assets"
-                    name="ben-income-assets"
-                    rows={3}
-                    required
-                  ></textarea>
-                </div>
-                <div className="field">
-                  <label htmlFor="ben-notes">Briefly describe your situation or health conditions</label>
-                  <textarea
-                    id="ben-notes"
-                    name="ben-notes"
-                    rows={4}
-                    placeholder="This helps us evaluate your path to approval..."
-                  ></textarea>
-                </div>
-                <button type="submit" className="submit-btn" disabled={status === "submitting"}>
-                  {status === "submitting" ? "Submitting..." : "Submit Screening Request"}
-                </button>
-                {status === "error" && (
-                  <p className="form-note" style={{ color: "#C0392B" }}>
-                    Something went wrong submitting your request. Please try again or call (404)
-                    731-2371.
-                  </p>
-                )}
-                <p className="form-note">Free screening. No obligation. Confidential submission.</p>
-              </form>
-
-              <div
-                className={`confirm-box${status === "success" ? " show" : ""}`}
-                id="benefits-confirm"
-              >
-                <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.8">
-                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-                  <path d="M22 4L12 14.01l-3-3" />
-                </svg>
-                <h4>Submitted</h4>
-                <p>We will be in touch within 72 hours.</p>
-              </div>
-            </div>
+            <Link href="/benefits" className="path-card">
+              <span className="eyebrow">Start Here</span>
+              <h3>Benefits Screening</h3>
+              <p>
+                Answer a few guided questions about your work history, disability, and income. Takes
+                a few minutes — we follow up within 72 hours.
+              </p>
+              <span className="path-card-cta">Start benefits screening →</span>
+            </Link>
           </div>
         </div>
       </section>

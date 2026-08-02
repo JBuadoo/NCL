@@ -22,7 +22,7 @@ export default function OnboardingShell({
   return (
     <div className="onboarding-page">
       <header className="onboarding-header">
-        <Link href="/#page-referral" className="brand">
+        <Link href="/" className="brand">
           <div className="brand-logo" aria-hidden="true">
             <BrandLogo clipId="onboardClip" />
           </div>
@@ -31,7 +31,7 @@ export default function OnboardingShell({
             <span>From Benefits to Belonging</span>
           </div>
         </Link>
-        <Link href="/#page-referral" className="onboarding-exit">
+        <Link href="/" className="onboarding-exit">
           Back to site
         </Link>
       </header>

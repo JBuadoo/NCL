@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { scrollToSection } from "@/lib/scroll";
 
 export default function AboutPage() {
@@ -56,7 +57,7 @@ export default function AboutPage() {
                   If you're waiting on SSI, SSDI, VA benefits, or Social Security, we help you
                   navigate the process at no upfront cost to you.
                 </p>
-                <button className="benefits-cta-btn" onClick={() => scrollToSection("benefits")}>
+                <Link href="/benefits" className="benefits-cta-btn">
                   <span>Get my benefits</span>
                   <svg
                     viewBox="0 0 24 24"
@@ -68,7 +69,7 @@ export default function AboutPage() {
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
                   </svg>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -146,13 +147,13 @@ export default function AboutPage() {
                   We evaluate your eligibility for SSI, SSDI, VA pension, or Social Security at no
                   cost. We identify the strongest path to approval for your specific situation.
                 </p>
-                <button
+                <Link
+                  href="/benefits"
                   className="btn btn-primary"
                   style={{ marginTop: 16, width: "100%", justifyContent: "center" }}
-                  onClick={() => scrollToSection("benefits")}
                 >
                   Get my benefits
-                </button>
+                </Link>
               </div>
 
               <div className="how-step-card">

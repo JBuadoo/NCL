@@ -8,11 +8,11 @@ export default function BenefitsFormLink() {
         Not approved for benefits yet? We can help you get started at no upfront cost.
       </p>
       <a
-        href="/#page-benefits"
+        href="/benefits"
         className="btn btn-primary"
         style={{ justifyContent: "center", width: "100%" }}
       >
-        Fill out the Benefits Screening form →
+        Start the Benefits Screening →
       </a>
     </div>
   );
