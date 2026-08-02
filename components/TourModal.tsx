@@ -3,7 +3,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { submitTourRequest } from "@/app/actions/forms";
 
-const GENDER_OPTIONS = ["Male", "Female", "Non-binary", "Prefer not to say"];
+const GENDER_OPTIONS = ["Male", "Female"];
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 

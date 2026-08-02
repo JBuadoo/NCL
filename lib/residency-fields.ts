@@ -6,7 +6,7 @@ export const BENEFIT_OPTIONS = [
   "Not yet approved",
 ] as const;
 
-export const GENDER_OPTIONS = ["Male", "Female", "Non-binary", "Prefer not to say"] as const;
+export const GENDER_OPTIONS = ["Male", "Female"] as const;
 
 export const YES_NO = ["Yes", "No"] as const;
 

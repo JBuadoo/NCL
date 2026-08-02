@@ -114,7 +114,7 @@ export default function BenefitsPage() {
                   </div>
                   <div className="field">
                     <label htmlFor="ben-email">Email address</label>
-                    <input type="email" id="ben-email" name="ben-email" required />
+                    <input type="text" id="ben-email" name="ben-email" required />
                   </div>
                 </div>
                 <div className="field">

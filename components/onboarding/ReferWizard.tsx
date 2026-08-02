@@ -275,7 +275,7 @@ export default function ReferWizard() {
                 <label htmlFor="client_email">Client email (if known)</label>
                 <input
                   id="client_email"
-                  type="email"
+                  type="text"
                   value={data.client_email}
                   onChange={(e) => setField("client_email", e.target.value)}
                 />

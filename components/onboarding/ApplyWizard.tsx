@@ -213,7 +213,7 @@ export default function ApplyWizard() {
                 <label htmlFor="email">Email address</label>
                 <input
                   id="email"
-                  type="email"
+                  type="text"
                   required
                   value={data.email}
                   onChange={(e) => setField("email", e.target.value)}
