@@ -25,79 +25,95 @@ function text(formData: FormData, key: string): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
-export async function submitReferral(formData: FormData): Promise<FormActionResult> {
-  const referrer_name = text(formData, "ref-name");
-  const referrer_role = text(formData, "ref-role");
-  const organization = text(formData, "ref-org");
-  const phone = text(formData, "ref-phone");
-  const client_name = text(formData, "ref-client");
-  const benefit_type = text(formData, "ref-benefit");
-  const notes = text(formData, "ref-notes");
-
-  if (!referrer_name || !referrer_role || !phone || !client_name || !benefit_type) {
-    return { ok: false, error: "Please fill in all required fields." };
+function requireYesExplain(
+  answer: string,
+  explanation: string,
+  label: string
+): string | null {
+  if (answer === "Yes" && !explanation) {
+    return `Please explain for: ${label}`;
   }
-
-  try {
-    const { error } = await getServerSupabase().from("referrals").insert({
-      referrer_name,
-      referrer_role,
-      organization: organization || null,
-      phone,
-      client_name,
-      benefit_type,
-      notes: notes || null,
-    });
-
-    if (error) {
-      console.error("Referral submission failed:", error);
-      return { ok: false, error: error.message };
-    }
-
-    await notifyNewSubmission({
-      kind: "referral",
-      summary: `${referrer_name} referred ${client_name}`,
-      details: {
-        "Referrer name": referrer_name,
-        "Referrer role": referrer_role,
-        Organization: organization || "—",
-        Phone: phone,
-        "Client name": client_name,
-        "Benefit type": benefit_type,
-        Notes: notes || "—",
-      },
-    });
-
-    return { ok: true };
-  } catch (err) {
-    console.error("Referral submission failed:", err);
-    return {
-      ok: false,
-      error: err instanceof Error ? err.message : "Submission failed.",
-    };
-  }
+  return null;
 }
 
 export async function submitApplication(formData: FormData): Promise<FormActionResult> {
-  const first_name = text(formData, "app-first");
-  const last_name = text(formData, "app-last");
-  const phone = text(formData, "app-phone");
-  const email = text(formData, "app-email");
-  const benefit_type = text(formData, "app-benefit");
-  const notes = text(formData, "app-notes");
+  const payload = {
+    first_name: text(formData, "first_name"),
+    last_name: text(formData, "last_name"),
+    phone: text(formData, "phone"),
+    email: text(formData, "email"),
+    gender: text(formData, "gender"),
+    date_of_birth: text(formData, "date_of_birth"),
+    benefit_type: text(formData, "benefit_type"),
+    situation_explanation: text(formData, "situation_explanation"),
+    mobility_limitations: text(formData, "mobility_limitations"),
+    mobility_explanation: text(formData, "mobility_explanation"),
+    mental_limitations: text(formData, "mental_limitations"),
+    mental_explanation: text(formData, "mental_explanation"),
+    medications_independent: text(formData, "medications_independent"),
+    crime_conviction: text(formData, "crime_conviction"),
+    crime_explanation: text(formData, "crime_explanation"),
+    monthly_benefit_amount: text(formData, "monthly_benefit_amount"),
+    medical_prescriptions: text(formData, "medical_prescriptions"),
+    medical_explanation: text(formData, "medical_explanation"),
+    drug_free_commitment: text(formData, "drug_free_commitment"),
+    value_understanding: text(formData, "value_understanding"),
+    living_with_others: text(formData, "living_with_others"),
+    home_not_short_term: text(formData, "home_not_short_term"),
+    payee_agreement: text(formData, "payee_agreement"),
+    roommate_commitment: text(formData, "roommate_commitment"),
+    referring_party_info: text(formData, "referring_party_info"),
+    how_heard: text(formData, "how_heard"),
+    move_timeline: text(formData, "move_timeline"),
+    emergency_contact: text(formData, "emergency_contact"),
+  };
 
-  if (!first_name || !last_name || !phone || !email || !benefit_type) {
+  const required: (keyof typeof payload)[] = [
+    "first_name",
+    "last_name",
+    "phone",
+    "email",
+    "gender",
+    "date_of_birth",
+    "benefit_type",
+    "situation_explanation",
+    "mobility_limitations",
+    "mental_limitations",
+    "medications_independent",
+    "crime_conviction",
+    "monthly_benefit_amount",
+    "medical_prescriptions",
+    "drug_free_commitment",
+    "value_understanding",
+    "living_with_others",
+    "home_not_short_term",
+    "payee_agreement",
+    "roommate_commitment",
+    "referring_party_info",
+    "how_heard",
+    "move_timeline",
+  ];
+
+  if (required.some((key) => !payload[key])) {
     return { ok: false, error: "Please fill in all required fields." };
   }
 
+  const explainError =
+    requireYesExplain(payload.mobility_limitations, payload.mobility_explanation, "mobility limitations") ||
+    requireYesExplain(payload.mental_limitations, payload.mental_explanation, "mental limitations") ||
+    requireYesExplain(payload.crime_conviction, payload.crime_explanation, "crime conviction") ||
+    requireYesExplain(payload.medical_prescriptions, payload.medical_explanation, "medical prescriptions");
+
+  if (explainError) return { ok: false, error: explainError };
+
   try {
     const { error } = await getServerSupabase().from("applications").insert({
-      first_name,
-      last_name,
-      phone,
-      email,
-      benefit_type,
-      notes: notes || null,
+      ...payload,
+      mobility_explanation: payload.mobility_explanation || null,
+      mental_explanation: payload.mental_explanation || null,
+      crime_explanation: payload.crime_explanation || null,
+      medical_explanation: payload.medical_explanation || null,
+      emergency_contact: payload.emergency_contact || null,
     });
 
     if (error) {
@@ -107,19 +123,142 @@ export async function submitApplication(formData: FormData): Promise<FormActionR
 
     await notifyNewSubmission({
       kind: "application",
-      summary: `${first_name} ${last_name}`,
+      summary: `${payload.first_name} ${payload.last_name}`,
       details: {
-        Name: `${first_name} ${last_name}`,
-        Phone: phone,
-        Email: email,
-        "Benefit type": benefit_type,
-        Notes: notes || "—",
+        Name: `${payload.first_name} ${payload.last_name}`,
+        Phone: payload.phone,
+        Email: payload.email,
+        Gender: payload.gender,
+        DOB: payload.date_of_birth,
+        "Benefit type": payload.benefit_type,
+        "Monthly benefits": payload.monthly_benefit_amount,
+        "Move timeline": payload.move_timeline,
+        Situation: payload.situation_explanation,
+        "Drug-free commitment": payload.drug_free_commitment,
+        "Payee agreement": payload.payee_agreement,
+        "Emergency contact": payload.emergency_contact || "—",
       },
     });
 
     return { ok: true };
   } catch (err) {
     console.error("Application submission failed:", err);
+    return {
+      ok: false,
+      error: err instanceof Error ? err.message : "Submission failed.",
+    };
+  }
+}
+
+export async function submitReferral(formData: FormData): Promise<FormActionResult> {
+  const payload = {
+    referrer_name: text(formData, "referrer_name"),
+    referrer_role: text(formData, "referrer_role"),
+    organization: text(formData, "organization"),
+    phone: text(formData, "phone"),
+    client_first_name: text(formData, "client_first_name"),
+    client_last_name: text(formData, "client_last_name"),
+    client_phone: text(formData, "client_phone"),
+    client_email: text(formData, "client_email"),
+    gender: text(formData, "gender"),
+    date_of_birth: text(formData, "date_of_birth"),
+    benefit_type: text(formData, "benefit_type"),
+    situation_explanation: text(formData, "situation_explanation"),
+    mobility_limitations: text(formData, "mobility_limitations"),
+    mobility_explanation: text(formData, "mobility_explanation"),
+    mental_limitations: text(formData, "mental_limitations"),
+    mental_explanation: text(formData, "mental_explanation"),
+    medications_independent: text(formData, "medications_independent"),
+    crime_conviction: text(formData, "crime_conviction"),
+    crime_explanation: text(formData, "crime_explanation"),
+    monthly_benefit_amount: text(formData, "monthly_benefit_amount"),
+    medical_prescriptions: text(formData, "medical_prescriptions"),
+    medical_explanation: text(formData, "medical_explanation"),
+    drug_free_commitment: text(formData, "drug_free_commitment"),
+    value_understanding: text(formData, "value_understanding"),
+    living_with_others: text(formData, "living_with_others"),
+    home_not_short_term: text(formData, "home_not_short_term"),
+    payee_agreement: text(formData, "payee_agreement"),
+    roommate_commitment: text(formData, "roommate_commitment"),
+    how_heard: text(formData, "how_heard"),
+    move_timeline: text(formData, "move_timeline"),
+    emergency_contact: text(formData, "emergency_contact"),
+  };
+
+  const required: (keyof typeof payload)[] = [
+    "referrer_name",
+    "referrer_role",
+    "phone",
+    "client_first_name",
+    "client_last_name",
+    "gender",
+    "date_of_birth",
+    "benefit_type",
+    "situation_explanation",
+    "mobility_limitations",
+    "mental_limitations",
+    "medications_independent",
+    "crime_conviction",
+    "monthly_benefit_amount",
+    "medical_prescriptions",
+    "drug_free_commitment",
+    "value_understanding",
+    "living_with_others",
+    "home_not_short_term",
+    "payee_agreement",
+    "roommate_commitment",
+    "how_heard",
+    "move_timeline",
+  ];
+
+  if (required.some((key) => !payload[key])) {
+    return { ok: false, error: "Please fill in all required fields." };
+  }
+
+  const explainError =
+    requireYesExplain(payload.mobility_limitations, payload.mobility_explanation, "mobility limitations") ||
+    requireYesExplain(payload.mental_limitations, payload.mental_explanation, "mental limitations") ||
+    requireYesExplain(payload.crime_conviction, payload.crime_explanation, "crime conviction") ||
+    requireYesExplain(payload.medical_prescriptions, payload.medical_explanation, "medical prescriptions");
+
+  if (explainError) return { ok: false, error: explainError };
+
+  try {
+    const { error } = await getServerSupabase().from("referrals").insert({
+      ...payload,
+      organization: payload.organization || null,
+      client_phone: payload.client_phone || null,
+      client_email: payload.client_email || null,
+      mobility_explanation: payload.mobility_explanation || null,
+      mental_explanation: payload.mental_explanation || null,
+      crime_explanation: payload.crime_explanation || null,
+      medical_explanation: payload.medical_explanation || null,
+      emergency_contact: payload.emergency_contact || null,
+    });
+
+    if (error) {
+      console.error("Referral submission failed:", error);
+      return { ok: false, error: error.message };
+    }
+
+    await notifyNewSubmission({
+      kind: "referral",
+      summary: `${payload.referrer_name} referred ${payload.client_first_name} ${payload.client_last_name}`,
+      details: {
+        Referrer: payload.referrer_name,
+        Role: payload.referrer_role,
+        Organization: payload.organization || "—",
+        "Referrer phone": payload.phone,
+        Client: `${payload.client_first_name} ${payload.client_last_name}`,
+        "Benefit type": payload.benefit_type,
+        "Move timeline": payload.move_timeline,
+        Situation: payload.situation_explanation,
+      },
+    });
+
+    return { ok: true };
+  } catch (err) {
+    console.error("Referral submission failed:", err);
     return {
       ok: false,
       error: err instanceof Error ? err.message : "Submission failed.",

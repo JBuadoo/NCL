@@ -48,11 +48,14 @@ If these are missing, the form still saves to Supabase — notifications are ski
 
 - `app/` — Next.js App Router entry (`layout.tsx`, `page.tsx`) and `globals.css` (the original site styling, unchanged)
 - `components/` — header, footer, video modal, back-to-top, and one component per page section
-- `components/pages/ReferralPage.tsx` / `BenefitsPage.tsx` — the residency + benefits forms
+- `components/pages/ReferralPage.tsx` — residency CTAs (Apply / Refer) + tour card
+- `app/apply` / `app/refer` — guided multi-step onboarding flows
+- `components/pages/BenefitsPage.tsx` — benefits screening form
 - `app/actions/forms.ts` — Next.js server actions that insert into Supabase and trigger notify
 - `lib/notify.ts` — Resend email + Twilio SMS helper
 - `lib/supabase.ts` — shared Supabase client helper
 - `supabase/schema.sql` — database schema + RLS policies
+- `supabase/migrate_residency_fields.sql` — migration if older tables already exist
 - `public/img/` — site images
 
 ## Production build

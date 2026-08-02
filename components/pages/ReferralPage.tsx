@@ -1,47 +1,11 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { submitApplication, submitReferral } from "@/app/actions/forms";
+import { useState } from "react";
+import Link from "next/link";
 import TourModal from "@/components/TourModal";
 
-const BENEFIT_OPTIONS = ["SSI", "SSDI", "VA Benefits", "Social Security", "Not yet approved"];
-
-type FormStatus = "idle" | "submitting" | "success" | "error";
-
 export default function ReferralPage() {
-  const [appStatus, setAppStatus] = useState<FormStatus>("idle");
-  const [refStatus, setRefStatus] = useState<FormStatus>("idle");
   const [tourOpen, setTourOpen] = useState(false);
-
-  async function handleApplicationSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (appStatus === "submitting") return;
-    const data = new FormData(e.currentTarget);
-    setAppStatus("submitting");
-
-    const result = await submitApplication(data);
-    if (result.ok) {
-      setAppStatus("success");
-    } else {
-      console.error("Application submission failed:", result.error);
-      setAppStatus("error");
-    }
-  }
-
-  async function handleReferralSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (refStatus === "submitting") return;
-    const data = new FormData(e.currentTarget);
-    setRefStatus("submitting");
-
-    const result = await submitReferral(data);
-    if (result.ok) {
-      setRefStatus("success");
-    } else {
-      console.error("Referral submission failed:", result.error);
-      setRefStatus("error");
-    }
-  }
 
   return (
     <div className="page" id="page-referral">
@@ -53,12 +17,11 @@ export default function ReferralPage() {
               Residency
             </h2>
             <p style={{ fontSize: "1.2rem", color: "#2D3748" }}>
-              Applying for yourself? Use the form on the left. Referring someone else? Use the form
-              on the right. We typically respond within a few hours.
+              Choose how you&apos;d like to get started. We&apos;ll walk you through a short guided
+              application — typically a few minutes — and follow up within a few hours.
             </p>
           </div>
 
-          {/* Schedule a Tour Subsection */}
           <div
             id="schedule-tour"
             className="schedule-tour-card"
@@ -180,8 +143,8 @@ export default function ReferralPage() {
               <ul>
                 <li>We review the application or referral and confirm benefit type and eligibility</li>
                 <li>We contact you or the individual directly, usually within a few hours</li>
-                <li>If it's a fit, we can place most people within 24 to 48 hours</li>
-                <li>You'll get a direct line to our team for follow-up</li>
+                <li>If it&apos;s a fit, we can place most people within 24 to 48 hours</li>
+                <li>You&apos;ll get a direct line to our team for follow-up</li>
               </ul>
             </div>
             <div className="info-card" style={{ marginBottom: 0 }}>
@@ -202,176 +165,25 @@ export default function ReferralPage() {
           </div>
 
           <div className="split">
-            {/* Left: Apply for yourself */}
-            <div className="form-card">
-              <h3>Apply for yourself</h3>
-              <p>Applying for your own residency. Takes about 2 minutes.</p>
+            <Link href="/apply" className="path-card">
+              <span className="eyebrow">For You</span>
+              <h3>Applying for myself</h3>
+              <p>
+                Start a guided application for your own residency. We&apos;ll ask about your
+                situation, benefits, and readiness step by step.
+              </p>
+              <span className="path-card-cta">Start application →</span>
+            </Link>
 
-              <form
-                id="applicationForm"
-                onSubmit={handleApplicationSubmit}
-                style={appStatus === "success" ? { display: "none" } : undefined}
-              >
-                <div className="field-row">
-                  <div className="field">
-                    <label htmlFor="app-first">First name</label>
-                    <input type="text" id="app-first" name="app-first" required />
-                  </div>
-                  <div className="field">
-                    <label htmlFor="app-last">Last name</label>
-                    <input type="text" id="app-last" name="app-last" required />
-                  </div>
-                </div>
-                <div className="field-row">
-                  <div className="field">
-                    <label htmlFor="app-phone">Phone number</label>
-                    <input type="tel" id="app-phone" name="app-phone" required />
-                  </div>
-                  <div className="field">
-                    <label htmlFor="app-email">Email address</label>
-                    <input type="email" id="app-email" name="app-email" required />
-                  </div>
-                </div>
-                <div className="field">
-                  <label>Your benefit type</label>
-                  <div className="radio-group">
-                    {BENEFIT_OPTIONS.map((option, index) => (
-                      <label className="radio-pill" key={option}>
-                        <input
-                          type="radio"
-                          name="app-benefit"
-                          value={option}
-                          required={index === 0}
-                        />
-                        {option}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-                <div className="field">
-                  <label htmlFor="app-notes">Anything we should know about your situation?</label>
-                  <textarea id="app-notes" name="app-notes" rows={4}></textarea>
-                </div>
-                <button type="submit" className="submit-btn" disabled={appStatus === "submitting"}>
-                  {appStatus === "submitting" ? "Submitting..." : "Submit Application"}
-                </button>
-                {appStatus === "error" && (
-                  <p className="form-note" style={{ color: "#C0392B" }}>
-                    Something went wrong submitting your application. Please try again or call (404)
-                    731-2371.
-                  </p>
-                )}
-                <p className="form-note">
-                  We typically respond within a few hours during business hours.
-                </p>
-              </form>
-
-              <div
-                className={`confirm-box${appStatus === "success" ? " show" : ""}`}
-                id="application-confirm"
-              >
-                <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.8">
-                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-                  <path d="M22 4L12 14.01l-3-3" />
-                </svg>
-                <h4>Application received</h4>
-                <p>
-                  Thank you. Our team will follow up shortly. For anything urgent, call us directly
-                  at (404) 731-2371.
-                </p>
-              </div>
-            </div>
-
-            {/* Right: Referral form */}
-            <div className="form-card">
-              <h3>Referral form</h3>
-              <p>For professionals &amp; families referring someone else.</p>
-
-              <form
-                id="referralForm"
-                onSubmit={handleReferralSubmit}
-                style={refStatus === "success" ? { display: "none" } : undefined}
-              >
-                <div className="field-row">
-                  <div className="field">
-                    <label htmlFor="ref-name">Your name</label>
-                    <input type="text" id="ref-name" name="ref-name" required />
-                  </div>
-                  <div className="field">
-                    <label htmlFor="ref-role">Your role</label>
-                    <select id="ref-role" name="ref-role" required defaultValue="">
-                      <option value="">Select one</option>
-                      <option>Hospital discharge planner</option>
-                      <option>Social worker / case manager</option>
-                      <option>VA / veteran services staff</option>
-                      <option>Family member</option>
-                      <option>Other</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="field-row">
-                  <div className="field">
-                    <label htmlFor="ref-org">Organization (if applicable)</label>
-                    <input type="text" id="ref-org" name="ref-org" />
-                  </div>
-                  <div className="field">
-                    <label htmlFor="ref-phone">Your phone number</label>
-                    <input type="tel" id="ref-phone" name="ref-phone" required />
-                  </div>
-                </div>
-                <div className="field">
-                  <label htmlFor="ref-client">Name of person being referred</label>
-                  <input type="text" id="ref-client" name="ref-client" required />
-                </div>
-                <div className="field">
-                  <label>Their benefit type</label>
-                  <div className="radio-group">
-                    {BENEFIT_OPTIONS.map((option, index) => (
-                      <label className="radio-pill" key={option}>
-                        <input
-                          type="radio"
-                          name="ref-benefit"
-                          value={option}
-                          required={index === 0}
-                        />
-                        {option}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-                <div className="field">
-                  <label htmlFor="ref-notes">Anything we should know about their situation?</label>
-                  <textarea id="ref-notes" name="ref-notes" rows={4}></textarea>
-                </div>
-                <button type="submit" className="submit-btn" disabled={refStatus === "submitting"}>
-                  {refStatus === "submitting" ? "Submitting..." : "Submit Referral"}
-                </button>
-                {refStatus === "error" && (
-                  <p className="form-note" style={{ color: "#C0392B" }}>
-                    Something went wrong submitting your referral. Please try again or call (404)
-                    731-2371.
-                  </p>
-                )}
-                <p className="form-note">
-                  We typically respond within a few hours during business hours.
-                </p>
-              </form>
-
-              <div
-                className={`confirm-box${refStatus === "success" ? " show" : ""}`}
-                id="referral-confirm"
-              >
-                <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.8">
-                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-                  <path d="M22 4L12 14.01l-3-3" />
-                </svg>
-                <h4>Referral received</h4>
-                <p>
-                  Thank you. Our team will follow up shortly. For anything urgent, call us directly
-                  at (404) 731-2371.
-                </p>
-              </div>
-            </div>
+            <Link href="/refer" className="path-card">
+              <span className="eyebrow">For Professionals &amp; Families</span>
+              <h3>Referral</h3>
+              <p>
+                Refer someone else for placement. Walk through their eligibility and situation in a
+                short guided flow.
+              </p>
+              <span className="path-card-cta">Start referral →</span>
+            </Link>
           </div>
 
           <div
