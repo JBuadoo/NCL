@@ -9,7 +9,7 @@ const NAV_ITEMS: { page: string; label: string }[] = [
   { page: "about", label: "About Us" },
   { page: "life", label: "Life at NCL" },
   { page: "referral", label: "Residency" },
-  { page: "benefits", label: "Get Benefits" },
+  // { page: "benefits", label: "Get Benefits" },
   { page: "locations", label: "Locations" },
   { page: "faq", label: "FAQ" },
 ];

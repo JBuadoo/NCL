@@ -17,14 +17,11 @@ export default function LocationsPage({ onWatchVideo }: { onWatchVideo: () => vo
           </div>
 
           <div className="loc-card">
-            <div className="loc-map" aria-label="Satellite view of the South Fulton location">
-              <iframe
-                className="loc-map-frame"
-                src="https://www.google.com/maps?q=3790+Village+Dr+SW+Atlanta+GA+30331&z=18&output=embed&maptype=satellite"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-              ></iframe>
+            <div className="loc-photo">
+              <img
+                src="/img/south-fulton.jpeg"
+                alt="South Fulton location property"
+              />
             </div>
             <div className="loc-body">
               <span className="loc-status">Open &amp; Accepting Residents</span>

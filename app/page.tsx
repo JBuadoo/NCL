@@ -9,7 +9,7 @@ import HomePage from "@/components/pages/HomePage";
 import AboutPage from "@/components/pages/AboutPage";
 import LifePage from "@/components/pages/LifePage";
 import ReferralPage from "@/components/pages/ReferralPage";
-import BenefitsPage from "@/components/pages/BenefitsPage";
+// import BenefitsPage from "@/components/pages/BenefitsPage";
 import LocationsPage from "@/components/pages/LocationsPage";
 import FaqPage from "@/components/pages/FaqPage";
 
@@ -29,7 +29,9 @@ export default function Page() {
         <AboutPage />
         <LifePage />
         <ReferralPage />
+        {/* Benefits assistance section temporarily hidden
         <BenefitsPage />
+        */}
         <LocationsPage onWatchVideo={() => setVideoOpen(true)} />
         <FaqPage />
       </main>

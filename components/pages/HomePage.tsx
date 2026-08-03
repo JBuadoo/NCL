@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+// import Link from "next/link";
 import { scrollToSection } from "@/lib/scroll";
 
 const HERO_SLIDES = [
@@ -347,7 +347,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============ NAVIGATION ASSISTANCE SECTION ============ */}
+      {/* ============ BENEFITS ASSISTANCE SECTION (temporarily hidden) ============
       <section
         className="band alt"
         style={{
@@ -435,6 +435,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      */}
     </div>
   );
 }

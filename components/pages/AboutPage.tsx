@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+// import Link from "next/link";
 import { scrollToSection } from "@/lib/scroll";
 
 export default function AboutPage() {
-  const [activeFlow, setActiveFlow] = useState<"fixed" | "need">("fixed");
+  // Benefits assistance flow temporarily hidden — keep fixed-income path only
+  const [activeFlow] = useState<"fixed" | "need">("fixed");
 
   return (
     <div className="page" id="page-about">
@@ -43,6 +44,7 @@ export default function AboutPage() {
                 </p>
               </div>
 
+              {/* Benefits Support pillar temporarily hidden
               <div className="about-pillar-card">
                 <div className="about-pillar-header">
                   <div className="about-pillar-icon">
@@ -71,6 +73,7 @@ export default function AboutPage() {
                   </svg>
                 </Link>
               </div>
+              */}
             </div>
           </div>
 
@@ -79,6 +82,7 @@ export default function AboutPage() {
             <h2>From First Call to Move-In</h2>
           </div>
 
+          {/* Benefits tab temporarily hidden — fixed-income flow shown by default
           <div className="how-tabs">
             <button
               className={`how-tab${activeFlow === "fixed" ? " active" : ""}`}
@@ -93,6 +97,7 @@ export default function AboutPage() {
               I need my Benefits
             </button>
           </div>
+          */}
 
           {/* Flow for fixed income (4 steps) */}
           <div id="flow-fixed" className={`how-flow${activeFlow === "fixed" ? " active-flow" : ""}`}>
@@ -137,7 +142,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Flow for needing benefits (3 steps) */}
+          {/* Flow for needing benefits (temporarily hidden)
           <div id="flow-need" className={`how-flow${activeFlow === "need" ? " active-flow" : ""}`}>
             <div className="how-grid-3">
               <div className="how-step-card">
@@ -179,6 +184,7 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
+          */}
         </div>
       </section>
     </div>

@@ -6,7 +6,7 @@ import { scrollToSection } from "@/lib/scroll";
 const FOOTER_LINKS: { page: string; label: string }[] = [
   { page: "about", label: "About Us" },
   { page: "life", label: "Life at NCL" },
-  { page: "benefits", label: "Get Benefits" },
+  // { page: "benefits", label: "Get Benefits" },
   { page: "faq", label: "FAQ" },
   { page: "referral", label: "Residency" },
   { page: "locations", label: "Locations" },
