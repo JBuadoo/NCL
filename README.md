@@ -27,10 +27,11 @@ The Residency/Referral form and the Benefits Screening form save submissions to 
 
 ## Email + SMS notifications
 
-Every successful form submission (self application, referral, benefits screening) triggers:
+Every successful form submission (self application, referral, tour request, benefits screening) triggers:
 
-1. An **email** via [Resend](https://resend.com)
-2. An **SMS** via [Twilio](https://www.twilio.com)
+1. A **staff email** via [Resend](https://resend.com) to `NOTIFY_EMAIL`
+2. A **confirmation email** via Resend to the person who submitted the form
+3. An **SMS** via [Twilio](https://www.twilio.com) to `NOTIFY_PHONE`
 
 Add these to `.env.local` (see `.env.local.example`):
 

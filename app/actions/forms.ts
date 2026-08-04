@@ -124,6 +124,8 @@ export async function submitApplication(formData: FormData): Promise<FormActionR
     await notifyNewSubmission({
       kind: "application",
       summary: `${payload.first_name} ${payload.last_name}`,
+      userEmail: payload.email,
+      userName: payload.first_name,
       details: {
         Name: `${payload.first_name} ${payload.last_name}`,
         Phone: payload.phone,
@@ -156,6 +158,7 @@ export async function submitReferral(formData: FormData): Promise<FormActionResu
     referrer_role: text(formData, "referrer_role"),
     organization: text(formData, "organization"),
     phone: text(formData, "phone"),
+    email: text(formData, "email"),
     referee_first_name: text(formData, "referee_first_name"),
     referee_last_name: text(formData, "referee_last_name"),
     referee_phone: text(formData, "referee_phone"),
@@ -192,6 +195,7 @@ export async function submitReferral(formData: FormData): Promise<FormActionResu
     "referrer_name",
     "referrer_role",
     "phone",
+    "email",
     "referee_first_name",
     "referee_last_name",
     "gender",
@@ -250,11 +254,14 @@ export async function submitReferral(formData: FormData): Promise<FormActionResu
     await notifyNewSubmission({
       kind: "referral",
       summary: `${payload.referrer_name} referred ${payload.referee_first_name} ${payload.referee_last_name}`,
+      userEmail: payload.email,
+      userName: payload.referrer_name,
       details: {
         Referrer: payload.referrer_name,
         Role: payload.referrer_role,
         Organization: payload.organization || "—",
         "Referrer phone": payload.phone,
+        "Referrer email": payload.email,
         Referee: `${payload.referee_first_name} ${payload.referee_last_name}`,
         "Benefit type": payload.benefit_type,
         "Move timeline": payload.move_timeline,
@@ -279,10 +286,12 @@ export async function submitReferral(formData: FormData): Promise<FormActionResu
 export async function submitTourRequest(formData: FormData): Promise<FormActionResult> {
   const first_name = text(formData, "tour-first");
   const last_name = text(formData, "tour-last");
+  const phone = text(formData, "tour-phone");
+  const email = text(formData, "tour-email");
   const preferred_date = text(formData, "tour-date");
   const gender = text(formData, "tour-gender");
 
-  if (!first_name || !last_name || !preferred_date || !gender) {
+  if (!first_name || !last_name || !phone || !email || !preferred_date || !gender) {
     return { ok: false, error: "Please fill in all required fields." };
   }
 
@@ -290,6 +299,8 @@ export async function submitTourRequest(formData: FormData): Promise<FormActionR
     const { error } = await getServerSupabase().from("tour_requests").insert({
       first_name,
       last_name,
+      phone,
+      email,
       preferred_date,
       gender,
     });
@@ -302,8 +313,12 @@ export async function submitTourRequest(formData: FormData): Promise<FormActionR
     await notifyNewSubmission({
       kind: "tour_request",
       summary: `${first_name} ${last_name} — ${preferred_date}`,
+      userEmail: email,
+      userName: first_name,
       details: {
         Name: `${first_name} ${last_name}`,
+        Phone: phone,
+        Email: email,
         "Preferred date": preferred_date,
         Gender: gender,
       },
@@ -375,6 +390,8 @@ export async function submitBenefitsScreening(
     await notifyNewSubmission({
       kind: "benefits_screening",
       summary: `${first_name} ${last_name}`,
+      userEmail: email,
+      userName: first_name,
       details: {
         Name: `${first_name} ${last_name}`,
         Phone: phone,

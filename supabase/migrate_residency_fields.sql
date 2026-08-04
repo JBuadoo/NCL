@@ -37,6 +37,7 @@ create table public.referrals (
   referrer_role text not null,
   organization text,
   phone text not null,
+  email text not null,
   referee_first_name text not null,
   referee_last_name text not null,
   referee_phone text,

@@ -88,6 +88,16 @@ export default function TourModal({
             </div>
             <div className="field-row">
               <div className="field">
+                <label htmlFor="tour-phone">Phone number</label>
+                <input type="tel" id="tour-phone" name="tour-phone" required />
+              </div>
+              <div className="field">
+                <label htmlFor="tour-email">Email address</label>
+                <input type="text" id="tour-email" name="tour-email" required />
+              </div>
+            </div>
+            <div className="field-row">
+              <div className="field">
                 <label htmlFor="tour-date">Preferred tour date</label>
                 <input type="date" id="tour-date" name="tour-date" required />
               </div>

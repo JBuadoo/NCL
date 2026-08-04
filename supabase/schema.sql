@@ -43,6 +43,7 @@ create table if not exists public.referrals (
   referrer_role text not null,
   organization text,
   phone text not null,
+  email text not null,
   referee_first_name text not null,
   referee_last_name text not null,
   referee_phone text,
@@ -81,6 +82,8 @@ create table if not exists public.tour_requests (
   created_at timestamptz not null default now(),
   first_name text not null,
   last_name text not null,
+  phone text not null,
+  email text not null,
   preferred_date date not null,
   gender text not null
 );

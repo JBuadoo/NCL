@@ -33,6 +33,7 @@ const initial = {
   referrer_role: "",
   organization: "",
   phone: "",
+  email: "",
   referee_first_name: "",
   referee_last_name: "",
   referee_phone: "",
@@ -77,7 +78,7 @@ export default function ReferWizard() {
 
   function validateStep(): string | null {
     if (step === 0) {
-      if (!data.referrer_name || !data.referrer_role || !data.phone) {
+      if (!data.referrer_name || !data.referrer_role || !data.phone || !data.email) {
         return "Please complete all required referrer fields.";
       }
     }
@@ -246,6 +247,16 @@ export default function ReferWizard() {
                   onChange={(e) => setField("phone", e.target.value)}
                 />
               </div>
+            </div>
+            <div className="field">
+              <label htmlFor="email">Your email address</label>
+              <input
+                id="email"
+                type="text"
+                required
+                value={data.email}
+                onChange={(e) => setField("email", e.target.value)}
+              />
             </div>
           </>
         )}
