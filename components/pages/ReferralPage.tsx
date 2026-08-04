@@ -164,7 +164,7 @@ export default function ReferralPage() {
             </div>
           </div>
 
-          <div className="split equal-cards">
+          <div id="apply-options" className="split equal-cards">
             <Link href="/apply" className="path-card">
               <span className="eyebrow">For You</span>
               <h3>Applying for myself</h3>

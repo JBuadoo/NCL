@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import BrandLogo from "./BrandLogo";
-import { scrollToSection } from "@/lib/scroll";
+import { scrollToId, scrollToSection } from "@/lib/scroll";
 
-const FOOTER_LINKS: { page: string; label: string; href?: string }[] = [
+const FOOTER_LINKS: { page: string; label: string; href?: string; scrollId?: string }[] = [
   { page: "about", label: "About Us" },
   { page: "life", label: "Life at NCL" },
   { page: "benefits", label: "Get Benefits", href: "/benefits" },
   { page: "faq", label: "FAQ" },
-  { page: "referral", label: "Residency" },
+  { page: "referral", label: "Residency", scrollId: "apply-options" },
   { page: "locations", label: "Locations" },
 ];
 
@@ -35,7 +35,7 @@ export default function Footer() {
         <div>
           <h5>Navigate</h5>
           <ul>
-            {FOOTER_LINKS.map(({ page, label, href }) => (
+            {FOOTER_LINKS.map(({ page, label, href, scrollId }) => (
               <li key={page}>
                 {href ? (
                   <Link href={href}>{label}</Link>
@@ -44,6 +44,10 @@ export default function Footer() {
                     href="#"
                     onClick={(e) => {
                       e.preventDefault();
+                      if (scrollId) {
+                        scrollToId(scrollId);
+                        return;
+                      }
                       scrollToSection(page);
                     }}
                   >

@@ -407,6 +407,10 @@
       animation: fadein 0.35s ease;
     }
 
+    #apply-options {
+      scroll-margin-top: 96px;
+    }
+
     .page:not(#page-home) {
       border-top: 1px solid var(--line);
     }

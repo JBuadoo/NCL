@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 // import Link from "next/link";
-import { scrollToSection } from "@/lib/scroll";
+import { scrollToId } from "@/lib/scroll";
 
 export default function AboutPage() {
   // Benefits assistance flow temporarily hidden — keep fixed-income path only
@@ -109,7 +109,7 @@ export default function AboutPage() {
                   A short application: Click the link below, give us a call, or get help from a case
                   worker or a family member.
                 </p>
-                <button className="btn btn-ghost" onClick={() => scrollToSection("referral")}>
+                <button className="btn btn-ghost" onClick={() => scrollToId("apply-options")}>
                   Apply now
                 </button>
               </div>

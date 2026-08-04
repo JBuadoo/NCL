@@ -1,6 +1,6 @@
 "use client";
 
-import { scrollToSection } from "@/lib/scroll";
+import { scrollToId } from "@/lib/scroll";
 
 export default function LocationsPage({ onWatchVideo }: { onWatchVideo: () => void }) {
   return (
@@ -36,7 +36,7 @@ export default function LocationsPage({ onWatchVideo }: { onWatchVideo: () => vo
                 <button
                   className="btn btn-primary"
                   type="button"
-                  onClick={() => scrollToSection("referral")}
+                  onClick={() => scrollToId("apply-options")}
                 >
                   Apply to This Location
                 </button>

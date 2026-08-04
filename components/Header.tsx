@@ -3,13 +3,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import BrandLogo from "./BrandLogo";
-import { scrollToSection } from "@/lib/scroll";
+import { scrollToId, scrollToSection } from "@/lib/scroll";
 
-const NAV_ITEMS: { page: string; label: string; href?: string }[] = [
+const NAV_ITEMS: { page: string; label: string; href?: string; scrollId?: string }[] = [
   { page: "home", label: "Home" },
   { page: "about", label: "About Us" },
   { page: "life", label: "Life at NCL" },
-  { page: "referral", label: "Residency" },
+  { page: "referral", label: "Residency", scrollId: "apply-options" },
   { page: "benefits", label: "Get Benefits", href: "/benefits" },
   { page: "locations", label: "Locations" },
   { page: "faq", label: "FAQ" },
@@ -84,8 +84,12 @@ export default function Header() {
     };
   }, [updateNavIndicator]);
 
-  const handleNavClick = (page: string) => {
+  const handleNavClick = (page: string, scrollId?: string) => {
     setMenuOpen(false);
+    if (scrollId) {
+      scrollToId(scrollId);
+      return;
+    }
     scrollToSection(page);
   };
 
@@ -131,7 +135,7 @@ export default function Header() {
             <span className="mobile-phone-label">Call us today</span>
             <span className="mobile-phone-number">(404) 731-2371</span>
           </a>
-          {NAV_ITEMS.map(({ page, label, href }) =>
+          {NAV_ITEMS.map(({ page, label, href, scrollId }) =>
             href ? (
               <Link
                 key={page}
@@ -153,7 +157,7 @@ export default function Header() {
                 ref={(el) => {
                   btnRefs.current[page] = el;
                 }}
-                onClick={() => handleNavClick(page)}
+                onClick={() => handleNavClick(page, scrollId)}
               >
                 {label}
               </button>

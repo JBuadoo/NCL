@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 // import Link from "next/link";
-import { scrollToSection } from "@/lib/scroll";
+import { scrollToId, scrollToSection } from "@/lib/scroll";
 
 const HERO_SLIDES = [
   "/img/IhmE7JRA.jpeg",
@@ -131,7 +131,7 @@ export default function HomePage() {
               Locations Available in Atlanta &amp; Middle GA
             </p>
             <div className="hero-ctas">
-              <button className="btn btn-primary" onClick={() => scrollToSection("referral")}>
+              <button className="btn btn-primary" onClick={() => scrollToId("apply-options")}>
                 Residency
               </button>
               <button className="btn btn-ghost" onClick={handleScheduleTour}>

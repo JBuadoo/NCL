@@ -1,6 +1,6 @@
 "use client";
 
-import { scrollToSection } from "@/lib/scroll";
+import { scrollToId } from "@/lib/scroll";
 
 export default function LifePage() {
   return (
@@ -57,7 +57,7 @@ export default function LifePage() {
                 type="button"
                 className="btn"
                 style={{ background: "var(--gold)", color: "var(--navy-deep)", fontWeight: 700 }}
-                onClick={() => scrollToSection("referral")}
+                onClick={() => scrollToId("apply-options")}
               >
                 Apply for residency
               </button>

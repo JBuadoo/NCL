@@ -161,7 +161,7 @@ export default function ApplyWizard() {
           <p>
             Our team will follow up shortly. For anything urgent, call (404) 731-2371.
           </p>
-          <a href="/#page-referral" className="btn btn-primary" style={{ marginTop: 20 }}>
+          <a href="/#apply-options" className="btn btn-primary" style={{ marginTop: 20 }}>
             Back to site
           </a>
         </div>
