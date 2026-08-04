@@ -173,24 +173,30 @@
       position: relative;
     }
 
-    .nav-links button {
+    .nav-links button,
+    .nav-links a[data-page] {
       padding: 10px 16px;
       border-radius: 8px;
       font-size: 0.95rem;
       font-weight: 500;
       color: var(--charcoal);
       transition: background 0.15s, color 0.15s;
+      display: inline-flex;
+      align-items: center;
       position: relative;
       z-index: 2;
     }
 
     .nav-links button:hover,
-    .nav-links button:focus-visible {
+    .nav-links button:focus-visible,
+    .nav-links a[data-page]:hover,
+    .nav-links a[data-page]:focus-visible {
       background: rgba(27, 43, 94, 0.07);
       color: var(--navy);
     }
 
-    .nav-links button.active {
+    .nav-links button.active,
+    .nav-links a[data-page].active {
       color: var(--navy);
       font-weight: 700;
     }
@@ -375,7 +381,8 @@
         transform: translateX(0);
       }
 
-      .nav-links button {
+      .nav-links button,
+      .nav-links a[data-page] {
         text-align: left;
         padding: 16px;
         font-size: 1.05rem;
@@ -482,6 +489,8 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      width: fit-content;
+      max-width: 100%;
       font-size: 0.95rem;
       font-weight: 700;
       letter-spacing: 1.4px;
@@ -492,6 +501,12 @@
       padding: 8px 16px;
       border-radius: 100px;
       margin-bottom: 22px;
+    }
+
+    .path-card .eyebrow,
+    .benefits-grid .eyebrow,
+    .split.equal-cards .eyebrow {
+      align-self: flex-start;
     }
 
     .eyebrow::before {
@@ -2748,6 +2763,47 @@
       color: #2D3748;
       font-size: 1.08rem;
       line-height: 1.65;
+    }
+
+    /* ===== EQUAL-HEIGHT CARD GRIDS ===== */
+    .benefits-grid,
+    .split.equal-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .benefits-grid > .path-card,
+    .benefits-grid > .info-card,
+    .split.equal-cards > .path-card,
+    .split.equal-cards > .info-card {
+      height: 100%;
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+
+    .benefits-grid-cta {
+      border: 2px solid var(--gold);
+      justify-content: center;
+    }
+
+    .benefits-grid .path-card-cta,
+    .split.equal-cards .path-card-cta {
+      margin-top: auto;
+    }
+
+    .split.equal-cards .info-card ul {
+      flex: 1;
+    }
+
+    @media (max-width: 760px) {
+      .benefits-grid,
+      .split.equal-cards {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* ===== RESIDENCY PATH CARDS ===== */

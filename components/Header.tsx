@@ -1,15 +1,16 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import BrandLogo from "./BrandLogo";
 import { scrollToSection } from "@/lib/scroll";
 
-const NAV_ITEMS: { page: string; label: string }[] = [
+const NAV_ITEMS: { page: string; label: string; href?: string }[] = [
   { page: "home", label: "Home" },
   { page: "about", label: "About Us" },
   { page: "life", label: "Life at NCL" },
   { page: "referral", label: "Residency" },
-  // { page: "benefits", label: "Get Benefits" },
+  { page: "benefits", label: "Get Benefits", href: "/benefits" },
   { page: "locations", label: "Locations" },
   { page: "faq", label: "FAQ" },
 ];
@@ -23,7 +24,7 @@ export default function Header() {
     width: number;
   }>({ display: "none", left: 0, width: 0 });
 
-  const btnRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const btnRefs = useRef<Record<string, HTMLElement | null>>({});
   const activePageRef = useRef(activePage);
   activePageRef.current = activePage;
 
@@ -130,19 +131,34 @@ export default function Header() {
             <span className="mobile-phone-label">Call us today</span>
             <span className="mobile-phone-number">(404) 731-2371</span>
           </a>
-          {NAV_ITEMS.map(({ page, label }) => (
-            <button
-              key={page}
-              data-page={page}
-              className={activePage === page ? "active" : undefined}
-              ref={(el) => {
-                btnRefs.current[page] = el;
-              }}
-              onClick={() => handleNavClick(page)}
-            >
-              {label}
-            </button>
-          ))}
+          {NAV_ITEMS.map(({ page, label, href }) =>
+            href ? (
+              <Link
+                key={page}
+                href={href}
+                data-page={page}
+                className={activePage === page ? "active" : undefined}
+                ref={(el) => {
+                  btnRefs.current[page] = el;
+                }}
+                onClick={() => setMenuOpen(false)}
+              >
+                {label}
+              </Link>
+            ) : (
+              <button
+                key={page}
+                data-page={page}
+                className={activePage === page ? "active" : undefined}
+                ref={(el) => {
+                  btnRefs.current[page] = el;
+                }}
+                onClick={() => handleNavClick(page)}
+              >
+                {label}
+              </button>
+            )
+          )}
           <button className="nav-cta" onClick={() => handleNavClick("referral")}>
             (404) 731-2371
           </button>

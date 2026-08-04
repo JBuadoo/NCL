@@ -11,7 +11,7 @@ import {
   YES_NO,
 } from "@/lib/residency-fields";
 import OnboardingShell from "./OnboardingShell";
-// import BenefitsFormLink from "./BenefitsFormLink";
+import BenefitsFormLink from "./BenefitsFormLink";
 import { NavButtons, RadioGroup, YesNoExplain } from "./FieldHelpers";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -259,9 +259,7 @@ export default function ApplyWizard() {
               value={data.benefit_type}
               onChange={(v) => setField("benefit_type", v)}
             />
-            {/* Benefits assistance temporarily hidden
             {data.benefit_type === "Not yet approved" && <BenefitsFormLink />}
-            */}
             <div className="field">
               <label htmlFor="monthly_benefit_amount">
                 How much are you receiving from your benefits monthly?

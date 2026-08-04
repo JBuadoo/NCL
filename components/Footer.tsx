@@ -1,12 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import BrandLogo from "./BrandLogo";
 import { scrollToSection } from "@/lib/scroll";
 
-const FOOTER_LINKS: { page: string; label: string }[] = [
+const FOOTER_LINKS: { page: string; label: string; href?: string }[] = [
   { page: "about", label: "About Us" },
   { page: "life", label: "Life at NCL" },
-  // { page: "benefits", label: "Get Benefits" },
+  { page: "benefits", label: "Get Benefits", href: "/benefits" },
   { page: "faq", label: "FAQ" },
   { page: "referral", label: "Residency" },
   { page: "locations", label: "Locations" },
@@ -34,17 +35,21 @@ export default function Footer() {
         <div>
           <h5>Navigate</h5>
           <ul>
-            {FOOTER_LINKS.map(({ page, label }) => (
+            {FOOTER_LINKS.map(({ page, label, href }) => (
               <li key={page}>
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection(page);
-                  }}
-                >
-                  {label}
-                </a>
+                {href ? (
+                  <Link href={href}>{label}</Link>
+                ) : (
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection(page);
+                    }}
+                  >
+                    {label}
+                  </a>
+                )}
               </li>
             ))}
           </ul>

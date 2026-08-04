@@ -131,8 +131,8 @@ export default function ReferralPage() {
 
           <TourModal open={tourOpen} onClose={() => setTourOpen(false)} />
 
-          <div className="split" style={{ marginBottom: 36 }}>
-            <div className="info-card" style={{ marginBottom: 0 }}>
+          <div className="split equal-cards" style={{ marginBottom: 36 }}>
+            <div className="info-card">
               <h3>
                 <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.8">
                   <circle cx="12" cy="12" r="9" />
@@ -147,7 +147,7 @@ export default function ReferralPage() {
                 <li>You&apos;ll get a direct line to our team for follow-up</li>
               </ul>
             </div>
-            <div className="info-card" style={{ marginBottom: 0 }}>
+            <div className="info-card">
               <h3>
                 <svg viewBox="0 0 24 24" fill="none" strokeWidth="1.8">
                   <path d="M20 21a8 8 0 10-16 0" />
@@ -164,7 +164,7 @@ export default function ReferralPage() {
             </div>
           </div>
 
-          <div className="split">
+          <div className="split equal-cards">
             <Link href="/apply" className="path-card">
               <span className="eyebrow">For You</span>
               <h3>Applying for myself</h3>
