@@ -1,3 +1,6 @@
+import { readFileSync } from "fs";
+import { join } from "path";
+
 export type SubmissionKind =
   | "application"
   | "referral"
@@ -21,6 +24,108 @@ const KIND_LABEL: Record<SubmissionKind, string> = {
 };
 
 const SUPPORT_PHONE = "(404) 731-2371";
+const DEFAULT_SITE_URL = "https://www.newcreationliving.org";
+const EMAIL_LOGO_CID = "ncl-logo";
+
+let cachedEmailLogoBase64: string | null = null;
+
+function getSiteUrl(): string {
+  return (process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_SITE_URL).replace(/\/$/, "");
+}
+
+function getEmailLogoBase64(): string | null {
+  if (cachedEmailLogoBase64) return cachedEmailLogoBase64;
+
+  try {
+    const logoPath = join(process.cwd(), "public", "img", "ncl-email-logo.png");
+    cachedEmailLogoBase64 = readFileSync(logoPath).toString("base64");
+    return cachedEmailLogoBase64;
+  } catch (error) {
+    console.error("Email logo not found at public/img/ncl-email-logo.png:", error);
+    return null;
+  }
+}
+
+function getInlineLogoAttachment():
+  | { filename: string; content: string; content_id: string }
+  | null {
+  const content = getEmailLogoBase64();
+  if (!content) return null;
+
+  return {
+    filename: "ncl-email-logo.png",
+    content,
+    content_id: EMAIL_LOGO_CID,
+  };
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
+function paragraphsToHtml(paragraphs: string[]): string {
+  return paragraphs
+    .map(
+      (paragraph) =>
+        `<p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:#2D3748;">${escapeHtml(paragraph)}</p>`
+    )
+    .join("");
+}
+
+function buildEmailSignatureHtml(): string {
+  const siteUrl = getSiteUrl();
+  const logoSrc = getEmailLogoBase64()
+    ? `cid:${EMAIL_LOGO_CID}`
+    : `${siteUrl}/img/ncl-email-logo.png`;
+
+  return `
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-top:32px;border-top:1px solid #E8E2D6;">
+  <tr>
+    <td style="padding-top:24px;text-align:center;">
+      <a href="${siteUrl}" style="text-decoration:none;">
+        <img src="${logoSrc}" alt="New Creation Living" width="120" height="93" style="display:block;margin:0 auto 14px;border:0;" />
+      </a>
+      <p style="margin:0 0 6px;font-family:Georgia,'Times New Roman',serif;font-size:15px;font-weight:700;letter-spacing:1.2px;color:#1B2B5E;">
+        NEW CREATION LIVING
+      </p>
+      <p style="margin:0 0 14px;font-family:Georgia,'Times New Roman',serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#B8963E;">
+        From Benefits to Belonging
+      </p>
+      <p style="margin:0;font-size:14px;line-height:1.5;color:#5B6478;">
+        <a href="tel:+14047312371" style="color:#1B2B5E;text-decoration:none;">${SUPPORT_PHONE}</a>
+        &nbsp;·&nbsp;
+        <a href="mailto:support@newcreationliving.org" style="color:#1B2B5E;text-decoration:none;">support@newcreationliving.org</a>
+      </p>
+    </td>
+  </tr>
+</table>`.trim();
+}
+
+function wrapUserEmailHtml(bodyParagraphs: string[]): string {
+  return `<!DOCTYPE html>
+<html lang="en">
+  <body style="margin:0;padding:0;background:#F7F4EE;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#F7F4EE;padding:24px 12px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width:560px;background:#FFFFFF;border:1px solid #E8E2D6;border-radius:12px;">
+            <tr>
+              <td style="padding:32px 28px 28px;font-family:Arial,Helvetica,sans-serif;">
+                ${paragraphsToHtml(bodyParagraphs)}
+                ${buildEmailSignatureHtml()}
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`;
+}
 
 function formatDetails(details: NotificationPayload["details"]): string {
   return Object.entries(details)
@@ -39,7 +144,13 @@ async function sendResendEmail(opts: {
   to: string;
   subject: string;
   text: string;
+  html?: string;
   replyTo?: string | null;
+  attachments?: Array<{
+    filename: string;
+    content: string;
+    content_id?: string;
+  }>;
 }): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
@@ -59,6 +170,8 @@ async function sendResendEmail(opts: {
       ...(opts.replyTo?.trim() ? { reply_to: opts.replyTo.trim() } : {}),
       subject: opts.subject,
       text: opts.text,
+      ...(opts.html ? { html: opts.html } : {}),
+      ...(opts.attachments?.length ? { attachments: opts.attachments } : {}),
     }),
   });
 
@@ -95,6 +208,7 @@ async function sendStaffEmail(payload: NotificationPayload): Promise<void> {
 function buildUserConfirmation(payload: NotificationPayload): {
   subject: string;
   text: string;
+  html: string;
 } | null {
   const name = (payload.userName || "").trim() || "there";
   const preferredDate =
@@ -119,6 +233,12 @@ function buildUserConfirmation(payload: NotificationPayload): {
           "",
           "— New Creation Living",
         ].join("\n"),
+        html: wrapUserEmailHtml([
+          `Hi ${name},`,
+          "Thank you for applying to New Creation Living. We've received your application and our team will review it shortly.",
+          "We'll follow up with you by phone or email — usually within a few hours during business hours.",
+          `If you have questions in the meantime, call us at ${SUPPORT_PHONE}.`,
+        ]),
       };
     case "referral":
       return {
@@ -136,6 +256,14 @@ function buildUserConfirmation(payload: NotificationPayload): {
           "",
           "— New Creation Living",
         ].join("\n"),
+        html: wrapUserEmailHtml([
+          `Hi ${name},`,
+          referee
+            ? `Thank you for referring ${referee} to New Creation Living. We've received your referral and our team will review it shortly.`
+            : "Thank you for your referral to New Creation Living. We've received it and our team will review it shortly.",
+          "We'll follow up with you by phone or email — usually within a few hours during business hours.",
+          `If you have questions in the meantime, call us at ${SUPPORT_PHONE}.`,
+        ]),
       };
     case "tour_request":
       return {
@@ -151,6 +279,13 @@ function buildUserConfirmation(payload: NotificationPayload): {
           "",
           "— New Creation Living",
         ].join("\n"),
+        html: wrapUserEmailHtml([
+          `Hi ${name},`,
+          preferredDate
+            ? `Thank you for requesting a tour. We've received your preferred date of ${preferredDate} and will confirm a time with you soon.`
+            : "Thank you for requesting a tour. We've received your request and will confirm a time with you soon.",
+          `If you need to reach us sooner, call ${SUPPORT_PHONE}.`,
+        ]),
       };
     case "benefits_screening":
       return {
@@ -164,6 +299,11 @@ function buildUserConfirmation(payload: NotificationPayload): {
           "",
           "— New Creation Living",
         ].join("\n"),
+        html: wrapUserEmailHtml([
+          `Hi ${name},`,
+          "Thank you for reaching out about benefits assistance. We've received your screening request and our team will follow up shortly.",
+          `If you have questions in the meantime, call us at ${SUPPORT_PHONE}.`,
+        ]),
       };
     default:
       return null;
@@ -182,10 +322,14 @@ async function sendUserConfirmation(payload: NotificationPayload): Promise<void>
   const message = buildUserConfirmation(payload);
   if (!message) return;
 
+  const logoAttachment = getInlineLogoAttachment();
+
   await sendResendEmail({
     to,
     subject: message.subject,
     text: message.text,
+    html: message.html,
+    attachments: logoAttachment ? [logoAttachment] : undefined,
   });
 }
 

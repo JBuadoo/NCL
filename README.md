@@ -43,7 +43,7 @@ Add these to `.env.local` (see `.env.local.example`):
 | `RESEND_FROM_EMAIL` | Verified From address |
 | `TWILIO_ACCOUNT_SID` / `TWILIO_AUTH_TOKEN` / `TWILIO_FROM_NUMBER` | Twilio credentials |
 
-If these are missing, the form still saves to Supabase — notifications are skipped and logged. Notification failures never fail the visitor's submit.
+Staff alerts and customer confirmations use Resend. If notification settings are missing, the form still saves to Supabase — notifications are skipped and logged. Notification failures never fail the visitor's submit.
 
 ## Project structure
 
