@@ -39,6 +39,7 @@ async function sendResendEmail(opts: {
   to: string;
   subject: string;
   text: string;
+  replyTo?: string | null;
 }): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
@@ -55,6 +56,7 @@ async function sendResendEmail(opts: {
     body: JSON.stringify({
       from: getFromAddress(),
       to: [opts.to],
+      ...(opts.replyTo?.trim() ? { reply_to: opts.replyTo.trim() } : {}),
       subject: opts.subject,
       text: opts.text,
     }),
@@ -84,6 +86,7 @@ async function sendStaffEmail(payload: NotificationPayload): Promise<void> {
 
   await sendResendEmail({
     to,
+    replyTo: payload.userEmail,
     subject: `New NCL ${label}: ${payload.summary}`,
     text: body,
   });
