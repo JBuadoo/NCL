@@ -134,10 +134,78 @@ function formatDetails(details: NotificationPayload["details"]): string {
     .join("\n");
 }
 
+const DEFAULT_NOTIFY_EMAIL = "support@newcreationliving.org";
+const DEFAULT_STAFF_FROM =
+  "New Creation Living Alerts <notifications@newcreationliving.org>";
+
+function extractEmailAddress(value: string): string {
+  const match = value.match(/<([^>]+)>/);
+  return (match?.[1] || value).trim().toLowerCase();
+}
+
 function getFromAddress(): string {
   return (
     process.env.RESEND_FROM_EMAIL || "New Creation Living <onboarding@resend.dev>"
   );
+}
+
+/** Prefer a From address that is not identical to the staff inbox. */
+function getStaffFromAddress(staffTo: string): string {
+  const configured =
+    process.env.RESEND_STAFF_FROM_EMAIL ||
+    process.env.RESEND_FROM_EMAIL ||
+    DEFAULT_STAFF_FROM;
+  const staffAddress = extractEmailAddress(staffTo);
+  const fromAddress = extractEmailAddress(configured);
+
+  if (fromAddress && fromAddress === staffAddress) {
+    return DEFAULT_STAFF_FROM;
+  }
+
+  return configured;
+}
+
+function getStaffNotifyEmail(): string {
+  return (process.env.NOTIFY_EMAIL || DEFAULT_NOTIFY_EMAIL).trim().toLowerCase();
+}
+
+function buildStaffEmailHtml(payload: NotificationPayload, label: string): string {
+  const rows = Object.entries(payload.details)
+    .filter(([, value]) => value != null && String(value).trim() !== "")
+    .map(
+      ([key, value]) =>
+        `<tr>
+          <td style="padding:8px 12px;border-bottom:1px solid #E8E2D6;color:#5B6478;font-size:14px;width:38%;">${escapeHtml(key)}</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #E8E2D6;color:#1B2B5E;font-size:14px;font-weight:600;">${escapeHtml(String(value))}</td>
+        </tr>`
+    )
+    .join("");
+
+  return `<!DOCTYPE html>
+<html lang="en">
+  <body style="margin:0;padding:0;background:#F7F4EE;font-family:Arial,Helvetica,sans-serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="padding:24px 12px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="100%" style="max-width:560px;background:#FFFFFF;border:1px solid #E8E2D6;border-radius:12px;">
+            <tr>
+              <td style="padding:28px;">
+                <p style="margin:0 0 8px;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#B8963E;font-weight:700;">New ${escapeHtml(label)}</p>
+                <h1 style="margin:0 0 16px;font-size:22px;line-height:1.3;color:#1B2B5E;">${escapeHtml(payload.summary)}</h1>
+                <p style="margin:0 0 18px;font-size:15px;line-height:1.6;color:#2D3748;">
+                  A visitor submitted the ${escapeHtml(label.toLowerCase())} form on New Creation Living.
+                </p>
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #E8E2D6;border-radius:10px;overflow:hidden;">
+                  ${rows}
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`;
 }
 
 async function sendResendEmail(opts: {
@@ -145,6 +213,7 @@ async function sendResendEmail(opts: {
   subject: string;
   text: string;
   html?: string;
+  from?: string;
   replyTo?: string | null;
   attachments?: Array<{
     filename: string;
@@ -154,10 +223,11 @@ async function sendResendEmail(opts: {
 }): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    console.warn("Email skipped: set RESEND_API_KEY in .env.local");
+    console.warn("Email skipped: set RESEND_API_KEY in .env.local / production env");
     return;
   }
 
+  const from = opts.from || getFromAddress();
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
@@ -165,7 +235,7 @@ async function sendResendEmail(opts: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: getFromAddress(),
+      from,
       to: [opts.to],
       ...(opts.replyTo?.trim() ? { reply_to: opts.replyTo.trim() } : {}),
       subject: opts.subject,
@@ -177,17 +247,15 @@ async function sendResendEmail(opts: {
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`Resend failed (${response.status}): ${errorText}`);
+    throw new Error(
+      `Resend failed (${response.status}) from=${from} to=${opts.to}: ${errorText}`
+    );
   }
 }
 
 async function sendStaffEmail(payload: NotificationPayload): Promise<void> {
-  const to = process.env.NOTIFY_EMAIL;
-  if (!to) {
-    console.warn("Staff email notify skipped: set NOTIFY_EMAIL in .env.local");
-    return;
-  }
-
+  const to = getStaffNotifyEmail();
+  const from = getStaffFromAddress(to);
   const label = KIND_LABEL[payload.kind];
   const body = [
     `New ${label} submission on New Creation Living.`,
@@ -197,11 +265,15 @@ async function sendStaffEmail(payload: NotificationPayload): Promise<void> {
     formatDetails(payload.details),
   ].join("\n");
 
+  console.info(`Sending staff ${payload.kind} email to ${to} from ${from}`);
+
   await sendResendEmail({
     to,
+    from,
     replyTo: payload.userEmail,
     subject: `New NCL ${label}: ${payload.summary}`,
     text: body,
+    html: buildStaffEmailHtml(payload, label),
   });
 }
 

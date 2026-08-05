@@ -37,10 +37,11 @@ Add these to `.env.local` (see `.env.local.example`):
 
 | Variable | Purpose |
 |---|---|
-| `NOTIFY_EMAIL` | Inbox that receives alerts |
+| `NOTIFY_EMAIL` | Inbox that receives alerts (defaults to `support@newcreationliving.org`) |
 | `NOTIFY_PHONE` | Phone that receives texts (E.164, e.g. `+14047312371`) |
 | `RESEND_API_KEY` | Resend API key |
-| `RESEND_FROM_EMAIL` | Verified From address |
+| `RESEND_FROM_EMAIL` | Verified From address for customer emails |
+| `RESEND_STAFF_FROM_EMAIL` | Optional From for staff alerts (recommended: `notifications@…`) |
 | `TWILIO_ACCOUNT_SID` / `TWILIO_AUTH_TOKEN` / `TWILIO_FROM_NUMBER` | Twilio credentials |
 
 Staff alerts and customer confirmations use Resend. If notification settings are missing, the form still saves to Supabase — notifications are skipped and logged. Notification failures never fail the visitor's submit.
