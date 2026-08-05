@@ -37,7 +37,7 @@ Add these to `.env.local` (see `.env.local.example`):
 
 | Variable | Purpose |
 |---|---|
-| `NOTIFY_EMAIL` | Inbox that receives alerts (defaults to `support@newcreationliving.org`) |
+| `NOTIFY_EMAIL` | Inbox(es) for staff alerts. Comma-separated OK. Prefer a real mailbox you check — not only `support@` if MX is on Resend Receiving |
 | `NOTIFY_PHONE` | Phone that receives texts (E.164, e.g. `+14047312371`) |
 | `RESEND_API_KEY` | Resend API key |
 | `RESEND_FROM_EMAIL` | Verified From address for customer emails |

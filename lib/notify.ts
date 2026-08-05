@@ -165,8 +165,14 @@ function getStaffFromAddress(staffTo: string): string {
   return configured;
 }
 
-function getStaffNotifyEmail(): string {
-  return (process.env.NOTIFY_EMAIL || DEFAULT_NOTIFY_EMAIL).trim().toLowerCase();
+function getStaffNotifyEmails(): string[] {
+  const raw = (process.env.NOTIFY_EMAIL || DEFAULT_NOTIFY_EMAIL).trim();
+  const emails = raw
+    .split(/[,;\s]+/)
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean);
+
+  return emails.length > 0 ? [...new Set(emails)] : [DEFAULT_NOTIFY_EMAIL];
 }
 
 function buildStaffEmailHtml(payload: NotificationPayload, label: string): string {
@@ -254,8 +260,8 @@ async function sendResendEmail(opts: {
 }
 
 async function sendStaffEmail(payload: NotificationPayload): Promise<void> {
-  const to = getStaffNotifyEmail();
-  const from = getStaffFromAddress(to);
+  const recipients = getStaffNotifyEmails();
+  const from = getStaffFromAddress(recipients[0]);
   const label = KIND_LABEL[payload.kind];
   const body = [
     `New ${label} submission on New Creation Living.`,
@@ -264,17 +270,38 @@ async function sendStaffEmail(payload: NotificationPayload): Promise<void> {
     "",
     formatDetails(payload.details),
   ].join("\n");
+  const html = buildStaffEmailHtml(payload, label);
+  const subject = `New NCL ${label}: ${payload.summary}`;
 
-  console.info(`Sending staff ${payload.kind} email to ${to} from ${from}`);
+  console.info(
+    `Sending staff ${payload.kind} email to [${recipients.join(", ")}] from ${from}`
+  );
 
-  await sendResendEmail({
-    to,
-    from,
-    replyTo: payload.userEmail,
-    subject: `New NCL ${label}: ${payload.summary}`,
-    text: body,
-    html: buildStaffEmailHtml(payload, label),
-  });
+  // Send individually so one bad recipient doesn't block the rest.
+  const results = await Promise.allSettled(
+    recipients.map((to) =>
+      sendResendEmail({
+        to,
+        from,
+        replyTo: payload.userEmail,
+        subject,
+        text: body,
+        html,
+      })
+    )
+  );
+
+  const failures = results.filter((result) => result.status === "rejected");
+  if (failures.length === results.length) {
+    throw new Error(
+      `All staff email recipients failed for ${payload.kind}: ${recipients.join(", ")}`
+    );
+  }
+  for (const failure of failures) {
+    if (failure.status === "rejected") {
+      console.error("Staff email recipient failed:", failure.reason);
+    }
+  }
 }
 
 function buildUserConfirmation(payload: NotificationPayload): {
