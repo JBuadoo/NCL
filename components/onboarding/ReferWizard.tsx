@@ -510,9 +510,16 @@ export default function ReferWizard() {
             />
             <div className="field onboarding-callout">
               <p>
-                Housing is roommate-style with a personal bed, door code, and vetted housemates. By
-                continuing, you confirm the referee is ready to invest $25 a day in security, dignity,
-                and their future.
+                Yes, they&apos;ll share the home but they&apos;ll have their own bed, personal door code,
+                privacy, and clear house rules, alongside a small group of vetted adults who have
+                passed background checks.
+              </p>
+              <p>
+                Our in-house management creates the structure, safety, and accountability that make
+                shared living feel like a real home—not a chaotic roommate situation.
+              </p>
+              <p>
+                For $25 a day, invest in their security, dignity, and future.
               </p>
             </div>
             <RadioGroup

@@ -32,7 +32,11 @@ create table if not exists public.applications (
   referring_party_info text not null,
   how_heard text not null,
   move_timeline text not null,
-  emergency_contact text
+  emergency_contact text,
+  favorability_score integer,
+  favorability_max_score integer,
+  favorability_percent integer,
+  favorability_label text
 );
 
 -- ============ Residency / Referral form ============
@@ -73,7 +77,11 @@ create table if not exists public.referrals (
   roommate_commitment text not null,
   how_heard text not null,
   move_timeline text not null,
-  emergency_contact text
+  emergency_contact text,
+  favorability_score integer,
+  favorability_max_score integer,
+  favorability_percent integer,
+  favorability_label text
 );
 
 -- ============ Tour scheduling requests ============

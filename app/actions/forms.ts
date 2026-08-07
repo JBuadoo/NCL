@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@supabase/supabase-js";
+import { scoreApplication, scoreReferral } from "@/lib/favorability-score";
 import { notifyNewSubmission } from "@/lib/notify";
 
 export type FormActionResult =
@@ -106,6 +107,8 @@ export async function submitApplication(formData: FormData): Promise<FormActionR
 
   if (explainError) return { ok: false, error: explainError };
 
+  const favorability = scoreApplication(payload);
+
   try {
     const { error } = await getServerSupabase().from("applications").insert({
       ...payload,
@@ -114,6 +117,10 @@ export async function submitApplication(formData: FormData): Promise<FormActionR
       crime_explanation: payload.crime_explanation || null,
       medical_explanation: payload.medical_explanation || null,
       emergency_contact: payload.emergency_contact || null,
+      favorability_score: favorability.score,
+      favorability_max_score: favorability.max_score,
+      favorability_percent: favorability.percent,
+      favorability_label: favorability.label,
     });
 
     if (error) {
@@ -123,10 +130,11 @@ export async function submitApplication(formData: FormData): Promise<FormActionR
 
     await notifyNewSubmission({
       kind: "application",
-      summary: `${payload.first_name} ${payload.last_name}`,
+      summary: `${payload.first_name} ${payload.last_name} (${favorability.display})`,
       userEmail: payload.email,
       userName: payload.first_name,
       details: {
+        "Favorability score": `${favorability.display} — ${favorability.label}`,
         Name: `${payload.first_name} ${payload.last_name}`,
         Phone: payload.phone,
         Email: payload.email,
@@ -233,6 +241,8 @@ export async function submitReferral(formData: FormData): Promise<FormActionResu
 
   if (explainError) return { ok: false, error: explainError };
 
+  const favorability = scoreReferral(payload);
+
   try {
     const { error } = await getServerSupabase().from("referrals").insert({
       ...payload,
@@ -244,6 +254,10 @@ export async function submitReferral(formData: FormData): Promise<FormActionResu
       crime_explanation: payload.crime_explanation || null,
       medical_explanation: payload.medical_explanation || null,
       emergency_contact: payload.emergency_contact || null,
+      favorability_score: favorability.score,
+      favorability_max_score: favorability.max_score,
+      favorability_percent: favorability.percent,
+      favorability_label: favorability.label,
     });
 
     if (error) {
@@ -253,10 +267,11 @@ export async function submitReferral(formData: FormData): Promise<FormActionResu
 
     await notifyNewSubmission({
       kind: "referral",
-      summary: `${payload.referrer_name} referred ${payload.referee_first_name} ${payload.referee_last_name}`,
+      summary: `${payload.referrer_name} referred ${payload.referee_first_name} ${payload.referee_last_name} (${favorability.display})`,
       userEmail: payload.email,
       userName: payload.referrer_name,
       details: {
+        "Favorability score": `${favorability.display} — ${favorability.label}`,
         Referrer: payload.referrer_name,
         Role: payload.referrer_role,
         Organization: payload.organization || "—",

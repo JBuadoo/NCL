@@ -421,13 +421,16 @@ export default function ApplyWizard() {
             />
             <div className="field onboarding-callout">
               <p>
-                Our housing is roommate-style, and most of our residents came from shelters, couches,
-                or the streets where they were already sharing space with strangers they never chose.
-                Here, you have your own bed, your own personal door code, and a small group of vetted
-                adults who passed the same background check you are completing right now. The
-                difference is not roommates — it is the difference between chaos and structure. By
-                continuing I confirm I am ready to invest $25 a day in my security, my dignity, and my
-                future.
+                Yes, you&apos;ll share the home but you&apos;ll have your own bed, personal door code,
+                privacy, and clear house rules, alongside a small group of vetted adults who have
+                passed background checks.
+              </p>
+              <p>
+                Our in-house management creates the structure, safety, and accountability that make
+                shared living feel like a real home—not a chaotic roommate situation.
+              </p>
+              <p>
+                For $25 a day, invest in your security, dignity, and future.
               </p>
             </div>
             <RadioGroup
