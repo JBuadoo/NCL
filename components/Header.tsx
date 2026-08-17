@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import BrandLogo from "./BrandLogo";
 import { scrollToId, scrollToSection } from "@/lib/scroll";
+import { useCopy } from "@/components/SiteContentProvider";
 
 const NAV_ITEMS: { page: string; label: string; href?: string; scrollId?: string }[] = [
   { page: "home", label: "Home" },
@@ -16,6 +17,7 @@ const NAV_ITEMS: { page: string; label: string; href?: string; scrollId?: string
 ];
 
 export default function Header() {
+  const copy = useCopy();
   const [menuOpen, setMenuOpen] = useState(false);
   const [activePage, setActivePage] = useState("home");
   const [indicator, setIndicator] = useState<{
@@ -109,7 +111,7 @@ export default function Header() {
           </div>
           <div className="brand-text">
             <strong>New Creation Living</strong>
-            <span>From Benefits to Belonging</span>
+            <span>{copy("brand.tagline")}</span>
           </div>
         </a>
         <button

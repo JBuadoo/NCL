@@ -1,19 +1,20 @@
 "use client";
 
 import { scrollToId } from "@/lib/scroll";
+import { useCopy, useCopyList } from "@/components/SiteContentProvider";
 
 export default function LocationsPage({ onWatchVideo }: { onWatchVideo: () => void }) {
+  const copy = useCopy();
+  const copyList = useCopyList();
+  const features = copyList("locations.features");
   return (
     <div className="page" id="page-locations">
       <section className="band" style={{ paddingTop: 56 }}>
         <div className="wrap">
           <div className="sec-head">
-            <span className="eyebrow">Locations</span>
-            <h2>Where we are</h2>
-            <p>
-              Every property is chosen for proximity to public transit, so you don't need a car to
-              get where you're going.
-            </p>
+            <span className="eyebrow">{copy("locations.eyebrow")}</span>
+            <h2>{copy("locations.title")}</h2>
+            <p>{copy("locations.body")}</p>
           </div>
 
           <div className="loc-card">
@@ -24,13 +25,14 @@ export default function LocationsPage({ onWatchVideo }: { onWatchVideo: () => vo
               />
             </div>
             <div className="loc-body">
-              <span className="loc-status">Open &amp; Accepting Residents</span>
-              <h3>South Fulton Location</h3>
+              <span className="loc-status">{copy("locations.status")}</span>
+              <h3>{copy("locations.name")}</h3>
               <div className="loc-feats">
-                <span className="loc-feat">Near MARTA bus routes</span>
-                <span className="loc-feat">All-inclusive $25/day</span>
-                <span className="loc-feat">On-site house manager</span>
-                <span className="loc-feat">Shared common areas</span>
+                {features.map((feat) => (
+                  <span className="loc-feat" key={feat}>
+                    {feat}
+                  </span>
+                ))}
               </div>
               <div className="loc-actions">
                 <button
@@ -38,7 +40,7 @@ export default function LocationsPage({ onWatchVideo }: { onWatchVideo: () => vo
                   type="button"
                   onClick={() => scrollToId("apply-options")}
                 >
-                  Apply to This Location
+                  {copy("locations.apply_cta")}
                 </button>
                 <button
                   className="btn btn-ghost"
@@ -53,18 +55,15 @@ export default function LocationsPage({ onWatchVideo }: { onWatchVideo: () => vo
                   >
                     <polygon points="5 3 19 12 5 21 5 3" />
                   </svg>
-                  Watch Video Tour
+                  {copy("locations.video_cta")}
                 </button>
               </div>
             </div>
           </div>
 
           <div className="expansion-note">
-            <h4>Expanding across Metro &amp; Middle Georgia</h4>
-            <p>
-              We're actively adding new locations. Call (404) 731-2371 to ask about upcoming
-              availability in your area.
-            </p>
+            <h4>{copy("locations.expansion_title")}</h4>
+            <p>{copy("locations.expansion_body")}</p>
           </div>
         </div>
       </section>

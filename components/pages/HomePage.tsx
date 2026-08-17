@@ -3,50 +3,13 @@
 import { useEffect, useState } from "react";
 // import Link from "next/link";
 import { scrollToId, scrollToSection } from "@/lib/scroll";
+import { useCopy, useCopyList } from "@/components/SiteContentProvider";
 
 const HERO_SLIDES = [
   "/img/IhmE7JRA.jpeg",
   "/img/s4HJJoUA.jpeg",
   "/img/y4YPXGDQ.jpeg",
   "/img/zY7wDXjw.jpeg",
-];
-
-const COST_ITEMS = [
-  "Furnished Room",
-  "Water, Gas & Electricity",
-  "Wifi",
-  "Laundry",
-  "High End Finishes & High Standard of Living",
-  "Sober & Drug Free Environment",
-  "Access to Public Transportation",
-  "Community Support",
-  "On Site Management",
-];
-
-const PARTNER_ROW_1 = [
-  "SOCIAL WORKERS & CASE MANAGERS",
-  "REHABILITATION HOSPITALS & EMERGENCY DEPARTMENTS",
-  "BEHAVIORAL HEALTH ORGANIZATIONS",
-  "SUBSTANCE USE TREATMENT CENTERS",
-  "SKILLED NURSING FACILITIES",
-  "VETERAN HOUSING, SHELTERS & HOSPITALS",
-  "FAMILY MEMBERS/FRIENDS",
-];
-
-const PARTNER_ROW_2 = [
-  "COUNSELORS",
-  "SENIOR CENTERS & AREA AGENCIES ON AGING",
-  "NON PROFIT ORGANIZATIONS AND MORE",
-  "DETOX & OUTPATIENT PROGRAMS",
-  "FAITH COMMUNITIES & CHURCHES",
-  "PRIMARY CARE CLINICS",
-];
-
-const RECIPIENTS = [
-  "SSI RECIPIENTS",
-  "SSDI RECIPIENTS",
-  "VA PENSION & DISABILITY RECIPIENTS",
-  "SOCIAL SECURITY RETIREMENT RECIPIENTS",
 ];
 
 function CheckIcon() {
@@ -58,7 +21,13 @@ function CheckIcon() {
 }
 
 export default function HomePage() {
+  const copy = useCopy();
+  const copyList = useCopyList();
   const [activeSlide, setActiveSlide] = useState(0);
+  const costItems = copyList("home.cost.items");
+  const recipients = copyList("home.serve.recipients");
+  const partnerRow1 = copyList("home.partners.row1");
+  const partnerRow2 = copyList("home.partners.row2");
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -94,7 +63,7 @@ export default function HomePage() {
               <svg viewBox="0 0 24 24">
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
               </svg>
-              A Trusted Structured Independent Living Provider
+              {copy("home.hero.tag")}
             </span>
             <h1
               style={{
@@ -104,7 +73,7 @@ export default function HomePage() {
                 lineHeight: 1.1,
               }}
             >
-              New Creation Living
+              {copy("home.hero.headline")}
             </h1>
             <p
               className="lead"
@@ -116,7 +85,7 @@ export default function HomePage() {
                 lineHeight: 1.35,
               }}
             >
-              An All-Inclusive Home for Independent Adults on Fixed Income
+              {copy("home.hero.lead")}
             </p>
             <p
               style={{
@@ -128,14 +97,14 @@ export default function HomePage() {
                 letterSpacing: "1.2px",
               }}
             >
-              Locations Available in Atlanta &amp; Middle GA
+              {copy("home.hero.locations")}
             </p>
             <div className="hero-ctas">
               <button className="btn btn-primary" onClick={() => scrollToId("apply-options")}>
-                Residency
+                {copy("home.hero.cta_residency")}
               </button>
               <button className="btn btn-ghost" onClick={handleScheduleTour}>
-                Schedule a Tour
+                {copy("home.hero.cta_tour")}
               </button>
             </div>
           </div>
@@ -161,16 +130,16 @@ export default function HomePage() {
                 letterSpacing: "0.5px",
               }}
             >
-              All-Inclusive Living
+              {copy("home.cost.title")}
             </h3>
             <div className="cost-rows" style={{ marginBottom: 16 }}>
-              {COST_ITEMS.map((item, index) => (
+              {costItems.map((item, index) => (
                 <div
                   key={item}
                   className="cost-row"
                   style={{
                     borderBottom:
-                      index === COST_ITEMS.length - 1
+                      index === costItems.length - 1
                         ? "none"
                         : "1px solid rgba(255,255,255,0.12)",
                     padding: "7px 0",
@@ -192,9 +161,11 @@ export default function HomePage() {
                 }}
               >
                 {" "}
-                <span style={{ color: "#FF5252", fontSize: "1.05em", fontWeight: 800 }}>$25</span>
+                <span style={{ color: "#FF5252", fontSize: "1.05em", fontWeight: 800 }}>
+                  {copy("home.cost.price")}
+                </span>
                 <span style={{ fontSize: "1.4rem", color: "var(--gold-light)", fontWeight: 700 }}>
-                  /day
+                  {copy("home.cost.period")}
                 </span>
               </div>
               <p
@@ -205,7 +176,7 @@ export default function HomePage() {
                   fontWeight: 600,
                 }}
               >
-                (Everything included at no cost. No hidden deposits/fees)
+                {copy("home.cost.note")}
               </p>
             </div>
           </div>
@@ -216,12 +187,12 @@ export default function HomePage() {
         <div className="wrap">
           <div className="philosophy-showcase">
             <div className="philosophy-content">
-              <span className="eyebrow">Our Philosophy</span>
+              <span className="eyebrow">{copy("home.philosophy.eyebrow")}</span>
               <h2 className="philosophy-title">
-                Independence forged through structure and accountability
+                {copy("home.philosophy.title")}
               </h2>
               <p className="philosophy-lead">
-                We build our homes around structure and support to secure your peace of mind.
+                {copy("home.philosophy.lead")}
               </p>
 
               <div className="philosophy-pillars">
@@ -233,11 +204,8 @@ export default function HomePage() {
                     </svg>
                   </div>
                   <div className="phil-pillar-body">
-                    <h3>Move in within 48 hours</h3>
-                    <p>
-                      No long waitlists. Once your application clears, you have keys. You are
-                      officially one of us!
-                    </p>
+                    <h3>{copy("home.philosophy.pillar1_title")}</h3>
+                    <p>{copy("home.philosophy.pillar1_body")}</p>
                   </div>
                 </div>
 
@@ -248,11 +216,8 @@ export default function HomePage() {
                     </svg>
                   </div>
                   <div className="phil-pillar-body">
-                    <h3>A Home, not just a House</h3>
-                    <p>
-                      New Creation Living provides a community for all residents through community
-                      collaboration, events and support.
-                    </p>
+                    <h3>{copy("home.philosophy.pillar2_title")}</h3>
+                    <p>{copy("home.philosophy.pillar2_body")}</p>
                   </div>
                 </div>
               </div>
@@ -273,7 +238,7 @@ export default function HomePage() {
                     </svg>
                   </div>
                   <div className="badge-text" style={{ flex: 1 }}>
-                    <strong>Premium Living</strong>
+                    <strong>{copy("home.philosophy.badge")}</strong>
                     <span style={{ display: "none" }}>Atlanta &amp; Middle GA</span>
                   </div>
                 </div>
@@ -283,14 +248,11 @@ export default function HomePage() {
 
           <div className="whowe-serve" style={{ marginBottom: 40 }}>
             <div>
-              <h3>Who we are built for</h3>
-              <p>
-                Independent adults who receive fixed government benefits and need stable, structured
-                housing.
-              </p>
+              <h3>{copy("home.serve.title")}</h3>
+              <p>{copy("home.serve.body")}</p>
             </div>
             <div className="recipient-grid">
-              {RECIPIENTS.map((label) => (
+              {recipients.map((label) => (
                 <div className="recipient-card" key={label}>
                   <div className="recipient-check">
                     <CheckIcon />
@@ -311,11 +273,10 @@ export default function HomePage() {
                   marginBottom: 14,
                 }}
               >
-                Who We Partner With
+                {copy("home.partners.title")}
               </h3>
               <p style={{ color: "#5B6478", fontSize: "1rem", marginBottom: 0 }}>
-                We collaborate closely with healthcare professionals, advocates, and families to
-                coordinate placements and support.
+                {copy("home.partners.body")}
               </p>
             </div>
 
@@ -324,7 +285,7 @@ export default function HomePage() {
               <div className="partner-carousel-row">
                 <div className="partner-track scroll-left">
                   {/* Duplicated set for seamless loop */}
-                  {[...PARTNER_ROW_1, ...PARTNER_ROW_1].map((tag, index) => (
+                  {[...partnerRow1, ...partnerRow1].map((tag, index) => (
                     <span className="tag" key={`${tag}-${index}`}>
                       {tag}
                     </span>
@@ -335,7 +296,7 @@ export default function HomePage() {
               {/* Row 2: scrolls right */}
               <div className="partner-carousel-row">
                 <div className="partner-track scroll-right">
-                  {[...PARTNER_ROW_2, ...PARTNER_ROW_2].map((tag, index) => (
+                  {[...partnerRow2, ...partnerRow2].map((tag, index) => (
                     <span className="tag" key={`${tag}-${index}`}>
                       {tag}
                     </span>

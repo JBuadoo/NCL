@@ -1,11 +1,38 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { loadSiteContent } from "@/lib/site-content-server";
 
-export const metadata: Metadata = {
-  title: "New Creation Living — Structured Housing on Fixed Income",
-  description:
-    "Structured independent living for adults on fixed government income across Metro Atlanta & Middle Georgia.",
-};
+const SITE_URL = "https://www.newcreationliving.org";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await loadSiteContent();
+  const title =
+    content["seo.title"] || "New Creation Living — Structured Housing on Fixed Income";
+  const description =
+    content["seo.description"] ||
+    "Structured independent living for adults on fixed government income across Metro Atlanta & Middle Georgia.";
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title,
+    description,
+    alternates: {
+      canonical: "/",
+    },
+    openGraph: {
+      type: "website",
+      url: SITE_URL,
+      siteName: "New Creation Living",
+      title,
+      description,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
 
 export default function RootLayout({
   children,

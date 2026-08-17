@@ -3,22 +3,26 @@
 import { useState } from "react";
 import Link from "next/link";
 import TourModal from "@/components/TourModal";
+import { useCopy, useCopyList } from "@/components/SiteContentProvider";
 
 export default function ReferralPage() {
+  const copy = useCopy();
+  const copyList = useCopyList();
   const [tourOpen, setTourOpen] = useState(false);
+  const afterItems = copyList("residency.after.items");
+  const acceptItems = copyList("residency.accept.items");
 
   return (
     <div className="page" id="page-referral">
       <section className="band" style={{ paddingTop: 56 }}>
         <div className="wrap">
           <div className="sec-head" style={{ marginBottom: 36 }}>
-            <span className="eyebrow">Apply or Refer</span>
+            <span className="eyebrow">{copy("residency.eyebrow")}</span>
             <h2 style={{ fontSize: "clamp(2.2rem, 3.6vw, 2.9rem)", color: "var(--navy)" }}>
-              Residency
+              {copy("residency.title")}
             </h2>
             <p style={{ fontSize: "1.2rem", color: "#2D3748" }}>
-              Choose how you&apos;d like to get started. We&apos;ll walk you through a short guided
-              application — typically a few minutes — and follow up within a few hours.
+              {copy("residency.body")}
             </p>
           </div>
 
@@ -52,7 +56,7 @@ export default function ReferralPage() {
                     border: "1px solid var(--gold-light)",
                   }}
                 >
-                  Schedule a Tour
+                  {copy("residency.tour.eyebrow")}
                 </span>
                 <h3
                   style={{
@@ -63,7 +67,7 @@ export default function ReferralPage() {
                     fontFamily: "'Fraunces', serif",
                   }}
                 >
-                  Schedule a Tour of Our Locations
+                  {copy("residency.tour.title")}
                 </h3>
                 <p
                   style={{
@@ -73,9 +77,7 @@ export default function ReferralPage() {
                     lineHeight: 1.6,
                   }}
                 >
-                  Experience New Creation Living firsthand! Come visit our beautiful,
-                  fully-furnished homes in Metro Atlanta &amp; Middle Georgia before or during your
-                  application process.
+                  {copy("residency.tour.body")}
                 </p>
               </div>
               <div
@@ -107,7 +109,7 @@ export default function ReferralPage() {
                   >
                     <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
                   </svg>
-                  Call (404) 731-2371
+                  {copy("residency.tour.call_cta")}
                 </a>
                 <button
                   type="button"
@@ -123,7 +125,7 @@ export default function ReferralPage() {
                     fontWeight: 700,
                   }}
                 >
-                  Schedule a Tour Now
+                  {copy("residency.tour.schedule_cta")}
                 </button>
               </div>
             </div>
@@ -138,13 +140,12 @@ export default function ReferralPage() {
                   <circle cx="12" cy="12" r="9" />
                   <path d="M12 7v5l3 3" />
                 </svg>
-                What happens after you submit
+                {copy("residency.after.title")}
               </h3>
               <ul>
-                <li>We review the application or referral and confirm benefit type and eligibility</li>
-                <li>We contact you or the individual directly, usually within a few hours</li>
-                <li>If it&apos;s a fit, we can place most people within 24 to 48 hours</li>
-                <li>You&apos;ll get a direct line to our team for follow-up</li>
+                {afterItems.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
               </ul>
             </div>
             <div className="info-card">
@@ -153,36 +154,29 @@ export default function ReferralPage() {
                   <path d="M20 21a8 8 0 10-16 0" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
-                Who we accept
+                {copy("residency.accept.title")}
               </h3>
               <ul>
-                <li>Adults on SSI, SSDI, VA Pension, VA Disability, or Social Security</li>
-                <li>Patients being discharged from acute care, rehab, or skilled nursing</li>
-                <li>Veterans transitioning from VA housing programs</li>
-                <li>Anyone on fixed income!</li>
+                {acceptItems.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
               </ul>
             </div>
           </div>
 
           <div id="apply-options" className="split equal-cards">
             <Link href="/apply" className="path-card">
-              <span className="eyebrow">For You</span>
-              <h3>Applying for myself</h3>
-              <p>
-                Start a guided application for your own residency. We&apos;ll ask about your
-                situation, benefits, and readiness step by step.
-              </p>
-              <span className="path-card-cta">Start application →</span>
+              <span className="eyebrow">{copy("residency.apply.eyebrow")}</span>
+              <h3>{copy("residency.apply.title")}</h3>
+              <p>{copy("residency.apply.body")}</p>
+              <span className="path-card-cta">{copy("residency.apply.cta")}</span>
             </Link>
 
             <Link href="/refer" className="path-card">
-              <span className="eyebrow">For Professionals &amp; Families</span>
-              <h3>Referral</h3>
-              <p>
-                Refer someone else for placement. Walk through their eligibility and situation in a
-                short guided flow.
-              </p>
-              <span className="path-card-cta">Start referral →</span>
+              <span className="eyebrow">{copy("residency.refer.eyebrow")}</span>
+              <h3>{copy("residency.refer.title")}</h3>
+              <p>{copy("residency.refer.body")}</p>
+              <span className="path-card-cta">{copy("residency.refer.cta")}</span>
             </Link>
           </div>
 
@@ -200,7 +194,7 @@ export default function ReferralPage() {
               <svg viewBox="0 0 24 24" fill="none" stroke="#E4CE8C" strokeWidth="1.8">
                 <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
               </svg>
-              Prefer to call?
+              {copy("residency.call.title")}
             </h3>
             <p
               style={{
@@ -210,10 +204,10 @@ export default function ReferralPage() {
                 marginTop: 8,
               }}
             >
-              (404) 731-2371
+              {copy("footer.contact_phone")}
             </p>
             <p style={{ color: "rgba(255,255,255,0.85)", fontSize: "0.98rem", marginTop: 4 }}>
-              SUPPORT@NEWCREATIONLIVING.ORG
+              {copy("footer.contact_email")}
             </p>
           </div>
         </div>

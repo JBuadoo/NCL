@@ -3,6 +3,7 @@
 import Link from "next/link";
 import BrandLogo from "./BrandLogo";
 import { scrollToId, scrollToSection } from "@/lib/scroll";
+import { useCopy } from "@/components/SiteContentProvider";
 
 const FOOTER_LINKS: { page: string; label: string; href?: string; scrollId?: string }[] = [
   { page: "about", label: "About Us" },
@@ -14,6 +15,7 @@ const FOOTER_LINKS: { page: string; label: string; href?: string; scrollId?: str
 ];
 
 export default function Footer() {
+  const copy = useCopy();
   return (
     <footer>
       <div className="footer-grid">
@@ -24,13 +26,10 @@ export default function Footer() {
             </div>
             <div className="brand-text">
               <strong style={{ color: "white" }}>New Creation Living</strong>
-              <span>From Benefits to Belonging</span>
+              <span>{copy("brand.tagline")}</span>
             </div>
           </div>
-          <p>
-            Structured independent living for adults on fixed government income across Metro
-            Atlanta & middle Georgia.
-          </p>
+          <p>{copy("footer.blurb")}</p>
         </div>
         <div>
           <h5>Navigate</h5>
@@ -61,9 +60,9 @@ export default function Footer() {
         <div>
           <h5>Contact</h5>
           <ul>
-            <li>(404) 731-2371</li>
-            <li>SUPPORT@NEWCREATIONLIVING.ORG</li>
-            <li>Atlanta &amp; Middle Georgia</li>
+            <li>{copy("footer.contact_phone")}</li>
+            <li>{copy("footer.contact_email")}</li>
+            <li>{copy("footer.contact_area")}</li>
           </ul>
         </div>
       </div>
@@ -80,7 +79,7 @@ export default function Footer() {
             yetrontech.com
           </a>
         </span>
-        <span>Structured Independent Living. Not a licensed personal care home.</span>
+        <span>{copy("footer.disclaimer")}</span>
       </div>
     </footer>
   );

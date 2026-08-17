@@ -114,11 +114,24 @@ create table if not exists public.benefits_screenings (
   monthly_income_assets text not null
 );
 
+-- ============ Editable marketing-site copy ============
+-- Seeded by supabase/migrate_site_content.sql
+create table if not exists public.site_content (
+  key text primary key,
+  value text not null,
+  section text not null,
+  label text not null,
+  field_type text not null default 'text',
+  sort_order integer not null default 0,
+  updated_at timestamptz not null default now()
+);
+
 -- ============ Row Level Security ============
 alter table public.referrals enable row level security;
 alter table public.applications enable row level security;
 alter table public.tour_requests enable row level security;
 alter table public.benefits_screenings enable row level security;
+alter table public.site_content enable row level security;
 
 drop policy if exists "Allow anonymous referral submissions" on public.referrals;
 create policy "Allow anonymous referral submissions"
@@ -147,3 +160,10 @@ create policy "Allow anonymous benefits screening submissions"
   for insert
   to anon
   with check (true);
+
+drop policy if exists "Allow public read of site content" on public.site_content;
+create policy "Allow public read of site content"
+  on public.site_content
+  for select
+  to anon, authenticated
+  using (true);

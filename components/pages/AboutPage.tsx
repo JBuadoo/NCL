@@ -3,8 +3,10 @@
 import { useState } from "react";
 // import Link from "next/link";
 import { scrollToId } from "@/lib/scroll";
+import { useCopy } from "@/components/SiteContentProvider";
 
 export default function AboutPage() {
+  const copy = useCopy();
   // Benefits assistance flow temporarily hidden — keep fixed-income path only
   const [activeFlow] = useState<"fixed" | "need">("fixed");
 
@@ -14,16 +16,10 @@ export default function AboutPage() {
         <div className="wrap">
           <div className="about-grid">
             <div className="about-intro">
-              <span className="eyebrow">About Us</span>
-              <h2>What we do</h2>
+              <span className="eyebrow">{copy("about.eyebrow")}</span>
+              <h2>{copy("about.title")}</h2>
               <div className="about-text-border">
-                <p>
-                  New Creation Living is a Structured Independent Living Housing Provider. Not a
-                  shelter, not a Personal Care Home. We give adults on fixed government income a
-                  safe, stable, affordable place to live while shattering traditional "low-quality"
-                  housing assumptions, proving that a fixed income doesn't have to mean compromising
-                  on quality or dignity.
-                </p>
+                <p>{copy("about.body")}</p>
               </div>
             </div>
 
@@ -36,12 +32,9 @@ export default function AboutPage() {
                       <path d="M8 21h8M12 17v4" />
                     </svg>
                   </div>
-                  <h3>Structure</h3>
+                  <h3>{copy("about.structure_title")}</h3>
                 </div>
-                <p>
-                  A House Manager on-site, a daily rhythm, and a community of people who want the
-                  same thing: Safety, Stability, Structure with a high standard of living
-                </p>
+                <p>{copy("about.structure_body")}</p>
               </div>
 
               {/* Benefits Support pillar temporarily hidden
@@ -78,8 +71,8 @@ export default function AboutPage() {
           </div>
 
           <div className="sec-head" style={{ marginTop: 80 }}>
-            <span className="eyebrow">How It Works</span>
-            <h2>From First Call to Move-In</h2>
+            <span className="eyebrow">{copy("about.how.eyebrow")}</span>
+            <h2>{copy("about.how.title")}</h2>
           </div>
 
           {/* Benefits tab temporarily hidden — fixed-income flow shown by default
@@ -104,40 +97,29 @@ export default function AboutPage() {
             <div className="how-grid-4">
               <div className="how-step-card">
                 <span className="how-step-num">01</span>
-                <h4>Apply</h4>
-                <p>
-                  A short application: Click the link below, give us a call, or get help from a case
-                  worker or a family member.
-                </p>
+                <h4>{copy("about.step1_title")}</h4>
+                <p>{copy("about.step1_body")}</p>
                 <button className="btn btn-ghost" onClick={() => scrollToId("apply-options")}>
-                  Apply now
+                  {copy("about.step1_cta")}
                 </button>
               </div>
 
               <div className="how-step-card">
                 <span className="how-step-num">02</span>
-                <h4>We Review</h4>
-                <p>
-                  We confirm benefit eligibility and run a standard background check within 24 to 48
-                  hours.
-                </p>
+                <h4>{copy("about.step2_title")}</h4>
+                <p>{copy("about.step2_body")}</p>
               </div>
 
               <div className="how-step-card">
                 <span className="how-step-num">03</span>
-                <h4>We Connect</h4>
-                <p>
-                  Approved applicants are matched to an available room based on location and needs.
-                </p>
+                <h4>{copy("about.step3_title")}</h4>
+                <p>{copy("about.step3_body")}</p>
               </div>
 
               <div className="how-step-card">
                 <span className="how-step-num">04</span>
-                <h4>Move In</h4>
-                <p>
-                  Usually within 48 hours of approval. Onboarding covers house rules, your room, and
-                  your community.
-                </p>
+                <h4>{copy("about.step4_title")}</h4>
+                <p>{copy("about.step4_body")}</p>
               </div>
             </div>
           </div>

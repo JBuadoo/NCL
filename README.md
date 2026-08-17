@@ -56,7 +56,10 @@ Staff alerts and customer confirmations use Resend. If notification settings are
 - `app/actions/forms.ts` — Next.js server actions that insert into Supabase and trigger notify
 - `lib/notify.ts` — Resend email + Twilio SMS helper
 - `lib/supabase.ts` — shared Supabase client helper
+- `lib/site-content.ts` — editable marketing-copy catalog (keys, labels, defaults)
+- `lib/site-content-server.ts` — loads `site_content` from Supabase with fallbacks
 - `supabase/schema.sql` — database schema + RLS policies
+- `supabase/migrate_site_content.sql` — creates and seeds editable website copy
 - `supabase/migrate_residency_fields.sql` — migration if older tables already exist
 - `public/img/` — site images
 

@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import BrandLogo from "@/components/BrandLogo";
+import { useCopy } from "@/components/SiteContentProvider";
 
 export default function OnboardingShell({
   title,
@@ -17,6 +18,7 @@ export default function OnboardingShell({
   totalSteps: number;
   children: ReactNode;
 }) {
+  const copy = useCopy();
   const progress = Math.round(((step + 1) / totalSteps) * 100);
 
   return (
@@ -28,7 +30,7 @@ export default function OnboardingShell({
           </div>
           <div className="brand-text">
             <strong>New Creation Living</strong>
-            <span>From Benefits to Belonging</span>
+            <span>{copy("brand.tagline")}</span>
           </div>
         </Link>
         <Link href="/" className="onboarding-exit">

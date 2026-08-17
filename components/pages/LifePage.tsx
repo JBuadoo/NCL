@@ -1,8 +1,12 @@
 "use client";
 
 import { scrollToId } from "@/lib/scroll";
+import { useCopy, useCopyList } from "@/components/SiteContentProvider";
 
 export default function LifePage() {
+  const copy = useCopy();
+  const copyList = useCopyList();
+  const rewardItems = copyList("life.rewards_items");
   return (
     <div className="page" id="page-life">
       <section
@@ -27,7 +31,7 @@ export default function LifePage() {
                   border: "1px solid rgba(201,168,76,0.3)",
                 }}
               >
-                Life at NCL
+                {copy("life.eyebrow")}
               </span>
               <h2
                 style={{
@@ -37,7 +41,7 @@ export default function LifePage() {
                   marginBottom: 18,
                 }}
               >
-                The NCL Mindset
+                {copy("life.title")}
               </h2>
               <p
                 style={{
@@ -47,11 +51,7 @@ export default function LifePage() {
                   lineHeight: 1.6,
                 }}
               >
-                New Creation Living isn&apos;t just a home. It&apos;s a system built around one
-                simple idea: when you show up for yourself, you earn something back. Through our
-                unique rewards program, your everyday consistency turns into real gift cards, rent
-                credits, birthday celebrations, and a safe, supportive community that gets better
-                the longer you stay.
+                {copy("life.body")}
               </p>
               <button
                 type="button"
@@ -59,7 +59,7 @@ export default function LifePage() {
                 style={{ background: "var(--gold)", color: "var(--navy-deep)", fontWeight: 700 }}
                 onClick={() => scrollToId("apply-options")}
               >
-                Apply for residency
+                {copy("life.cta")}
               </button>
             </div>
             <div
@@ -77,10 +77,10 @@ export default function LifePage() {
                     <circle cx="12" cy="12" r="9" />
                   </svg>
                 </div>
-                <h4>Rewards Program</h4>
-                <p>Show up for yourself — and earn something real back.</p>
+                <h4>{copy("life.rewards_title")}</h4>
+                <p>{copy("life.rewards_body")}</p>
                 <div className="screening-benefits-list">
-                  {["Gift cards & rent credits", "Birthday celebrations", "Stronger community"].map(
+                  {rewardItems.map(
                     (item) => (
                       <div className="screening-benefit-item" key={item}>
                         <svg viewBox="0 0 24 24" fill="none">
@@ -104,35 +104,28 @@ export default function LifePage() {
                 border: "1px solid rgba(201,168,76,0.3)",
               }}
             >
-              The Culture
+              {copy("life.culture.eyebrow")}
             </span>
-            <h2 style={{ color: "white" }}>This is what living here feels like</h2>
+            <h2 style={{ color: "white" }}>{copy("life.culture.title")}</h2>
             <p style={{ fontSize: "1.15rem", color: "rgba(255,255,255,0.8)" }}>
-              Community isn&apos;t a slogan. It&apos;s a schedule.
+              {copy("life.culture.lead")}
             </p>
           </div>
           <div className="culture-grid">
             <div className="culture-card">
-              <span className="culture-tag">Every Saturday · 7 PM</span>
-              <h3>Game Night</h3>
-              <p>Cards, board games, laughter. The common area fills up. You show up as you are.</p>
+              <span className="culture-tag">{copy("life.card1.tag")}</span>
+              <h3>{copy("life.card1.title")}</h3>
+              <p>{copy("life.card1.body")}</p>
             </div>
             <div className="culture-card">
-              <span className="culture-tag">Last Saturday · Monthly</span>
-              <h3>House Cookout</h3>
-              <p>
-                Every last Saturday of the month, the whole house eats together. Food and drinks
-                provided. Residents only: this table is yours.
-              </p>
+              <span className="culture-tag">{copy("life.card2.tag")}</span>
+              <h3>{copy("life.card2.title")}</h3>
+              <p>{copy("life.card2.body")}</p>
             </div>
             <div className="culture-card">
-              <span className="culture-tag">Twice a Year</span>
-              <h3>The Big Event</h3>
-              <p>
-                An outdoor gathering with food, games, raffles, and partners from across the
-                community. <strong>Free for every resident.</strong> Points unlock extras: bring a
-                family member, earn VIP seating, get raffle tickets for real prizes.
-              </p>
+              <span className="culture-tag">{copy("life.card3.tag")}</span>
+              <h3>{copy("life.card3.title")}</h3>
+              <p>{copy("life.card3.body")}</p>
             </div>
           </div>
         </div>
