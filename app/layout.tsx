@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
     content["seo.title"] || "New Creation Living — Structured Housing on Fixed Income";
   const description =
     content["seo.description"] ||
-    "Structured independent living for adults on fixed government income across Metro Atlanta & Middle Georgia.";
+    "New Creation Living provides all-inclusive homes for independent adults on fixed incomes. We also help individuals access and obtain government benefits and resources they may qualify for. Our goal is to provide safe, supportive housing and help individuals build greater stability and independence.";
 
   return {
     metadataBase: new URL(SITE_URL),

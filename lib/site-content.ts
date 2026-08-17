@@ -25,7 +25,7 @@ export const SITE_CONTENT_FIELDS: SiteContentField[] = [
     label: "Google description",
     type: "textarea",
     defaultValue:
-      "Structured independent living for adults on fixed government income across Metro Atlanta & Middle Georgia. All-inclusive homes from $25/day.",
+      "New Creation Living provides all-inclusive homes for independent adults on fixed incomes. We also help individuals access and obtain government benefits and resources they may qualify for. Our goal is to provide safe, supportive housing and help individuals build greater stability and independence.",
   },
   {
     key: "brand.tagline",
