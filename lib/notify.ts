@@ -134,7 +134,10 @@ function formatDetails(details: NotificationPayload["details"]): string {
     .join("\n");
 }
 
-const DEFAULT_NOTIFY_EMAIL = "support@newcreationliving.org";
+const DEFAULT_NOTIFY_EMAILS = [
+  "support@newcreationliving.org",
+  "nclresidences@gmail.com",
+];
 const DEFAULT_STAFF_FROM =
   "New Creation Living Alerts <notifications@newcreationliving.org>";
 
@@ -166,13 +169,23 @@ function getStaffFromAddress(staffTo: string): string {
 }
 
 function getStaffNotifyEmails(): string[] {
-  const raw = (process.env.NOTIFY_EMAIL || DEFAULT_NOTIFY_EMAIL).trim();
+  const raw = (process.env.NOTIFY_EMAIL || DEFAULT_NOTIFY_EMAILS.join(",")).trim();
   const emails = raw
     .split(/[,;\s]+/)
     .map((value) => value.trim().toLowerCase())
     .filter(Boolean);
 
-  return emails.length > 0 ? [...new Set(emails)] : [DEFAULT_NOTIFY_EMAIL];
+  const unique = emails.length > 0 ? [...new Set(emails)] : [...DEFAULT_NOTIFY_EMAILS];
+
+  // Always keep the Gmail backup when support@ is the only configured inbox.
+  if (
+    unique.includes("support@newcreationliving.org") &&
+    !unique.includes("nclresidences@gmail.com")
+  ) {
+    unique.push("nclresidences@gmail.com");
+  }
+
+  return unique;
 }
 
 function buildStaffEmailHtml(payload: NotificationPayload, label: string): string {
